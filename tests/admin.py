@@ -4,9 +4,9 @@ from .models import TestPrototype, QuestionPrototype, AnswerPrototype, ImageProt
 class TestAdmin(admin.ModelAdmin):
     model = TestPrototype
     def response_add(self, request, obj, post_url_continue=None):
-    	if form.is_valid():
-    		return HttpResponseRedirect('../../questionprototype')
-    	else:
-    		return HttpResponseRedirect('../../')
+    	#if form.is_valid():
+    	return HttpResponseRedirect('../../questionprototype')
+    	#else:
+    		#return HttpResponseRedirect('../../')
 
 admin.site.register(TestPrototype, TestAdmin)

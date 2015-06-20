@@ -6,8 +6,8 @@ from django.shortcuts import render
 class QuestionAdmin(admin.ModelAdmin):
 	model = QuestionPrototype
 	add_form_template = 'question_form.html'
-    #def add_view(self, request, form_url="", extra_context=None):
-    	#return render(request, 'question_form.html', {'form' : self.form, 'i' : 5})
+    def add_view(self, request, form_url="", extra_context=None):
+    	return render(request, 'question_form.html', {'form' : self.form, 'i' : '5'})
 
 class QuestionInline(admin.StackedInline):
     model = QuestionPrototype

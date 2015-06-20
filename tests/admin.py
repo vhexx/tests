@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import TestPrototype, QuestionPrototype, AnswerPrototype, ImagePrototype
+from django.http import HttpResponseRedirect
 
 class TestAdmin(admin.ModelAdmin):
     model = TestPrototype

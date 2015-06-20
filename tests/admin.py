@@ -13,8 +13,7 @@ class QuestionForm(ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(QuestionForm, self).__init__(*args, **kwargs)
 		if self.test_id:
-			self.fields['test'].initial = test_id
-
+			self.fields['test'].queryset = model.filter(test=self.test_id)
 class QuestionAdmin(admin.ModelAdmin):
 	model = QuestionPrototype
 	inlines = [AnswerInline]

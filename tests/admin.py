@@ -3,14 +3,14 @@ from .models import TestPrototype, QuestionPrototype, AnswerPrototype, ImageProt
 from django.forms import ModelForm
 from django.shortcuts import render
 
-class QuestionForm(forms.ModelForm):
-	class Meta:
-		model = QuestionPrototype
-	i = 10
+#class QuestionForm(forms.ModelForm):
+	#class Meta:
+		#model = QuestionPrototype
+	#i = 10
 
 class QuestionAdmin(admin.ModelAdmin):
 	model = QuestionPrototype
-	add_form_template = 'question_form.html'
+	#add_form_template = 'question_form.html'
 	#form = QuestionForm
 
 class QuestionInline(admin.StackedInline):

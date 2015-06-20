@@ -19,10 +19,10 @@ class QuestionAdmin(admin.ModelAdmin):
 	model = QuestionPrototype
 	inlines = [AnswerInline]
 	form = QuestionForm
-	def add_view(self, request, obj, form, change):
+	def add_view(self, request, form_url='', extra_context=None):
 		if test_id in request:
-			QuestionAdmin.form.test_id = int(request.test_id)
-		return super(QuestionAdmin, self).add_view(self, request, obj, form, change)
+			form.test_id = int(request.test_id)
+		return super(QuestionAdmin, self).add_view(self, request, form_url, extra_context)
     
 
 class TestAdmin(admin.ModelAdmin):

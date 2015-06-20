@@ -9,7 +9,7 @@ class QuestionForm(forms.ModelForm):
 	#answers = forms.CharField(max_length=100)
 
 class QuestionAdmin(admin.ModelAdmin):
-	model = QuestionPrototype
+	#model = QuestionPrototype
 	form = QuestionForm
 
 class QuestionInline(admin.StackedInline):

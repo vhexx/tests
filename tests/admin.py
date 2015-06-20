@@ -18,5 +18,5 @@ class TestAdmin(admin.ModelAdmin):
     inlines = [QuestionInline]
     extra = 3
 
-admin.site.register(QuestionPrototype, QuestionAdmin)
+#admin.site.register(QuestionPrototype, QuestionAdmin)
 admin.site.register(TestPrototype, TestAdmin)

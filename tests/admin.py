@@ -12,7 +12,7 @@ class QuestionForm(ModelForm):
 	test_id = None
 	def __init__(self, *args, **kwargs):
 		super(QuestionForm, self).__init__(*args, **kwargs)
-		if test_id:
+		if self.test_id:
 			self.fields['test'].initial = test_id
 
 class QuestionAdmin(admin.ModelAdmin):

@@ -32,8 +32,8 @@ class QuestionInline(admin.StackedInline):
 
 
 class TestAdmin(admin.ModelAdmin):
-    actions = [add_questions]
-    #inlines = [QuestionInline]
+    #actions = [add_questions]
+    inlines = [QuestionInline]
 
 admin.site.register(QuestionPrototype, QuestionAdmin)
 admin.site.register(TestPrototype, TestAdmin)

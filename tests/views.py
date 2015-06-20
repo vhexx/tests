@@ -1,10 +1,14 @@
+from django.http import HttpResponseNotFound
 from django.shortcuts import render_to_response
 from tests.models import TestPrototype
 
 
 def test(request):
     test_id = request.GET.get('id')
-    test_instance = TestPrototype.objects.get(id=test_id)
+    try:
+        test_instance = TestPrototype.objects.get(id=test_id)
+    except Exception:
+        return HttpResponseNotFound('Такого теста не существует')
     context = {
         'test_title': test_instance.title
     }

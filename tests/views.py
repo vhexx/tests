@@ -1,8 +1,10 @@
 from django.http import HttpResponseNotFound
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from tests.models import TestPrototype, QuestionPrototype, AnswerPrototype
 from tests.utils.serialize import serialize_questions
 
+def index(requst):
+    return redirect('/admin')
 
 def test(request):
     print(dict(request.session))

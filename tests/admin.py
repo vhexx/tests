@@ -7,23 +7,29 @@ from django.http import HttpResponseRedirect
 class addQuestionsForm(forms.Form):
 	message = forms.CharField(max_length=100)
 
-def add_questions(modeladmin, request, queryset):
-	form = None
-	if request.method == 'POST':
-		form = addQuestionsForm(request.POST)
-		if form.is_valid():
-			message = form.cleaned_data['message']
-			modeladmin.message_user(request, "%s !!!" % (message))
-			return HttpResponseRedirect('base_site.html')
-	if not form:
-		form = addQuestionsForm()
-	return render(request, '/workspace/tests/tests/static/admin/addquestions.html', {'form' : form})
+#def add_questions(modeladmin, request, queryset):
+	#form = None
+	#if request.method == 'POST':
+		#form = addQuestionsForm(request.POST)
+		#if form.is_valid():
+			#message = form.cleaned_data['message']
+			#modeladmin.message_user(request, "%s !!!" % (message))
+			#return HttpResponseRedirect('base_site.html')
+	#if not form:
+		#form = addQuestionsForm()
+	#return render(request, '/workspace/tests/tests/templates/addquestions.html', {'form' : form})
+
+class AnswerInline(admin.StackedInline):
+	model = AnswerPrototype
+
+class QuestionAdmin(admin.ModelAdmin):
+	inlines = [AnswerInline]
 
 class QuestionInline(admin.StackedInline):
 	model = QuestionPrototype
 
 class TestAdmin(admin.ModelAdmin):
-	actions = [add_questions]
+	#actions = [add_questions]
 	inlines = [QuestionInline]
 
 admin.site.register(TestPrototype, TestAdmin)

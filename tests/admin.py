@@ -1,22 +1,14 @@
 from django.contrib import admin
 from .models import TestPrototype, QuestionPrototype, AnswerPrototype, ImagePrototype
-from nested_inline.admin import NestedStackedInline, NestedModelAdmin
 
-class AnswerInline(NestedStackedInline):
-    model = AnswerPrototype
-    fk_name = 'question'
-
-class QuestionInline(NestedStackedInline):
+class QuestionInline(model.StackedInline):
     model = QuestionPrototype
     fk_name = 'test'
-    inlines = [AnswerInline]
     extra = 3
 
-class TestAdmin(NestedModelAdmin):
+class TestAdmin(model.ModelAdmin):
     model = TestPrototype
     inlines = [QuestionInline]
     extra = 3
 
-admin.site.register(AnswerPrototype)
-admin.site.register(QuestionPrototype)
 admin.site.register(TestPrototype, TestAdmin)

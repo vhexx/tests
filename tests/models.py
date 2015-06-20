@@ -29,7 +29,7 @@ class AnswerPrototype(models.Model):
     image = models.ForeignKey(ImagePrototype, null=True, blank=True)
 
     def __str__(self):
-        if self.statement is not None:
+        if self.statement is not None and len(self.statement) > 0:
             return ('answer:'+str(self.statement))
         elif self.statement is not None:
             return ('img:' + str(self.image))

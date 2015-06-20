@@ -33,5 +33,5 @@ class AnswerPrototype(models.Model):
             return ('Answer:'+str(self.statement))
         elif self.statement is not None:
             return ('img:' + str(self.image))
-        else
+        else:
             return ('Empty')

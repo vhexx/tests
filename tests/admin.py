@@ -20,7 +20,7 @@ class QuestionAdmin(admin.ModelAdmin):
 	inlines = [AnswerInline]
 	form = QuestionForm
 	def add_view(self, request, form_url='', extra_context=None):
-		if test_id in request:
+		if 'test_id' in request:
 			form.test_id = int(request.test_id)
 		return super(QuestionAdmin, self).add_view(self, request, form_url, extra_context)
     

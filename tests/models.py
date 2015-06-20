@@ -10,7 +10,7 @@ class QuestionPrototype(models.Model):
     test = models.ForeignKey(TestPrototype)
 
 class ImagePrototype(models.Model):
-    img = models.ImageField()
+    ref = models.CharField(max_length=200)
 
 class AnswerPrototype(models.Model):
     question = models.ForeignKey(QuestionPrototype)

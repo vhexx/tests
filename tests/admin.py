@@ -27,6 +27,3 @@ class TestAdmin(admin.ModelAdmin):
 	inlines = [QuestionInline]
 
 admin.site.register(TestPrototype, TestAdmin)
-admin.site.register(QuestionPrototype)
-admin.site.register(AnswerPrototype)
-admin.site.register(ImagePrototype)

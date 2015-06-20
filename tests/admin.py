@@ -16,4 +16,5 @@ class TestAdmin(NestedModelAdmin):
     model = TestPrototype
     inlines = [QuestionInline]
 
+admin.site.register(QuestionInline, QuestionPrototype)
 admin.site.register(TestPrototype, TestAdmin)

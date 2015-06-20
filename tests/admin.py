@@ -6,7 +6,7 @@ from django.shortcuts import render
 class QuestionForm(forms.ModelForm):
 	class Meta:
 		model = QuestionPrototype
-	answers = forms.CharField(label='answers', max_length=100)
+	#answers = forms.CharField(max_length=100)
 
 class QuestionAdmin(admin.ModelAdmin):
 	model = QuestionPrototype

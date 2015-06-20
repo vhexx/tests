@@ -11,6 +11,7 @@ class QuestionForm(forms.ModelForm):
 class QuestionAdmin(admin.ModelAdmin):
 	model = QuestionPrototype
 	add_form_template = 'question_form.html'
+	form = QuestionForm
 
 class QuestionInline(admin.StackedInline):
     model = QuestionPrototype

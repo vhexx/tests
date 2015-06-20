@@ -10,7 +10,7 @@ class QuestionForm(forms.ModelForm):
 
 class QuestionAdmin(admin.ModelAdmin):
 	model = QuestionPrototype
-	form = QuestionForm
+	#form = QuestionForm
 
 class QuestionInline(admin.StackedInline):
     model = QuestionPrototype

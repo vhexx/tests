@@ -1,24 +1,12 @@
 from django.contrib import admin
 from .models import TestPrototype, QuestionPrototype, AnswerPrototype, ImagePrototype
-from django import forms
-
-class QuestionForm(forms.ModelForm):
-	class Meta:
-		model = QuestionPrototype
-	answers = forms.CharField(max_length=100)
-
-class QuestionAdmin(admin.ModelAdmin):
-	model = QuestionPrototype
-	form = QuestionForm
-
-class QuestionInline(admin.StackedInline):
-    model = QuestionPrototype
-    fk_name = 'test'
-    extra = 3
 
 class TestAdmin(admin.ModelAdmin):
     model = TestPrototype
-    inlines = [QuestionInline]
+    def response_add(self, request, obj, post_url_continue=None):
+    	if form.is_valid():
+    		return HttpResponseRedirect('../../questionprototype')
+    	else:
+    		return HttpResponseRedirect('../../')
 
-admin.site.register(QuestionPrototype, QuestionAdmin)
 admin.site.register(TestPrototype, TestAdmin)

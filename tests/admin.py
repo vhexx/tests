@@ -6,7 +6,7 @@ from django.shortcuts import render
 class QuestionForm(forms.ModelForm):
 	class Meta:
 		model = QuestionPrototype
-	#i = 10
+	i = 10
 
 class QuestionAdmin(admin.ModelAdmin):
 	model = QuestionPrototype

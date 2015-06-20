@@ -1,8 +1,10 @@
 from django.http import HttpResponseNotFound
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from tests.models import TestPrototype, QuestionPrototype, AnswerPrototype
 from tests.utils.serialize import serialize_questions
 
+def index(requst):
+    return redirect('/admin')
 
 def test(request):
     print(dict(request.session))
@@ -30,7 +32,7 @@ def test(request):
 def question(request):
     question_id = request.GET.get('id')
     try:
-        question_instance = TestPrototype.objects.get(id=question_id)
+        question_instance = QuestionPrototype.objects.get(id=question_id)
     except Exception:
         return HttpResponseNotFound('Такого вопроса не существует')
 

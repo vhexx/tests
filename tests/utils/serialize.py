@@ -2,7 +2,7 @@
 def serialize_questions(question_set):
     question_string = ''
     for q in question_set:
-        question_string = question_string + q.id + ';'
+        question_string = question_string + str(q.id) + ';'
     return question_string[:-1]
 
 # gets serialized string and resturns list of ids(int)

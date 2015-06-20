@@ -5,12 +5,14 @@
     <title></title>
 </head>
 <body>
-{{ test_title }}
+{{ question_title }}
 
+<ul>
 {% for a in answers %}
-    <p>{{ a.statement|default_if_none:"" }}</p>
-    <p>{{ a.image|default_if_none:"" }}</p>
+    <li>{{ a.statement|default_if_none:"" }}{{ a.image|default_if_none:"" }}</li>
     <br/>
 {% endfor %}
+</ul>
+
 </body>
 </html>

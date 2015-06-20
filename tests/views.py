@@ -1,6 +1,7 @@
 from django.http import HttpResponseNotFound
 from django.shortcuts import render_to_response
-from tests.models import TestPrototype, QuestionPrototype
+from tests.models import TestPrototype, QuestionPrototype, AnswerPrototype
+from tests.utils.serialize import serialize_questions
 
 
 def test(request):
@@ -16,11 +17,9 @@ def test(request):
 
     #retrieve related questions and put them in session
     related_questions = QuestionPrototype.objects.filter(test=test_id)
-    question_list = []
-    for q in related_questions:
-        question_list.append(q.id)
 
-    request.session['question_ids'] = list
+    question_string = serialize_questions(related_questions)
+    request.session['question_ids'] = question_string
 
     context = {
         'test_title': test_instance.title
@@ -29,5 +28,14 @@ def test(request):
 
 
 def question(request):
-    id = request.GET.get('id')
-    return render_to_response('question.html')
+    question_id = request.GET.get('id')
+    try:
+        question_instance = TestPrototype.objects.get(id=question_id)
+    except Exception:
+        return HttpResponseNotFound('Такого вопроса не существует')
+
+    context = {
+        'question_title': question_instance.title,
+        'answers': AnswerPrototype.objects.filter(question=question_id)
+    }
+    return render_to_response('question.html', context)

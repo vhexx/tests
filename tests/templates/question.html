@@ -5,6 +5,12 @@
     <title></title>
 </head>
 <body>
-Question
+{{ test_title }}
+
+{% for a in answers %}
+    <p>{{ a.statement|default_if_none:"" }}</p>
+    <p>{{ a.image|default_if_none:"" }}</p>
+    <br/>
+{% endfor %}
 </body>
 </html>

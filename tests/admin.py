@@ -15,5 +15,8 @@ class QuestionInline(NestedStackedInline):
 class TestAdmin(NestedModelAdmin):
     model = TestPrototype
     inlines = [QuestionInline]
+    extra = 3
 
+admin.site.register(AnswerPrototype)
+admin.site.register(QuestionPrototype)
 admin.site.register(TestPrototype, TestAdmin)

@@ -9,12 +9,10 @@ class QuestionPrototype(models.Model):
     title = models.CharField(max_length=200)
     test = models.ForeignKey(TestPrototype)
 
+class ImagePrototype(models.Model):
+    img = models.ImageField()
 
 class AnswerPrototype(models.Model):
     question = models.ForeignKey(QuestionPrototype)
     statement = models.CharField(max_length=300, null=True)
     image = models.ForeignKey(ImagePrototype, null=True)
-
-
-class ImagePrototype(models.Model):
-    img = models.ImageField()

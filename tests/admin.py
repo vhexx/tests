@@ -5,6 +5,7 @@ from nested_inline.admin import NestedStackedInline, NestedModelAdmin
 class AnswerInline(NestedStackedInline):
     model = AnswerPrototype
     fk_name = 'question'
+    max_num = 10
 
 class QuestionInline(NestedStackedInline):
     model = QuestionPrototype

@@ -1,8 +1,8 @@
 from django.contrib import admin
 from .models import TestPrototype, QuestionPrototype, AnswerPrototype, ImagePrototype
-from django.forms import ModelForm
+from django import forms
 
-class QuestionForm(ModelForm):
+class QuestionForm(forms.ModelForm):
 	class Meta:
 		model = QuestionPrototype
 	answers = forms.CharField(max_length=100)

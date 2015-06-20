@@ -30,7 +30,7 @@ def test(request):
 def question(request):
     question_id = request.GET.get('id')
     try:
-        question_instance = TestPrototype.objects.get(id=question_id)
+        question_instance = QuestionPrototype.objects.get(id=question_id)
     except Exception:
         return HttpResponseNotFound('Такого вопроса не существует')
 

@@ -16,7 +16,7 @@ class QuestionForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         if self.test_id:
-            self.Meta.fields['test'].queryset = TestPrototype.objects.get(pk=self.test_id)
+            self.Meta.fields['test'].queryset = TestPrototype.objects.get(pk=int(self.test_id))
             #self.Meta.readonly_fields = ('test',)
         super(QuestionForm, self).__init__(*args, **kwargs)
 
@@ -27,7 +27,7 @@ class QuestionAdmin(admin.ModelAdmin):
 
     def add_view(self, request, form_url='', extra_context=None):
         test_id = request.GET.get('test_id')
-        self.form.test_id = int(test_id)
+        self.form.test_id = test_id
         print('test_id:'+str(test_id))
         return super(QuestionAdmin, self).add_view(request, form_url, extra_context)
 

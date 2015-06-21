@@ -25,7 +25,6 @@ class QuestionAdmin(admin.ModelAdmin):
     model = QuestionPrototype
     inlines = [AnswerInline]
 
-    global form
     form = QuestionForm
 
     def add_view(self, request, form_url='', extra_context=None):

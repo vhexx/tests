@@ -18,7 +18,7 @@ class QuestionForm(ModelForm):
     def __init__(self, *args, **kwargs):
         if self.test_id:
             tests_set = TestPrototype.objects.get(pk=int(self.test_id))
-            self.fields['test'] = forms.ModelChoiceField(queryset=tests_set)
+            self.test = forms.ModelChoiceField(queryset=tests_set)
         super(QuestionForm, self).__init__(*args, **kwargs)
 
 class QuestionAdmin(admin.ModelAdmin):

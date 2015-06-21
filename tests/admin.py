@@ -16,10 +16,9 @@ class QuestionForm(ModelForm):
     test_id = None
 
     def __init__(self, *args, **kwargs):
-        super(QuestionForm, self).__init__(*args, **kwargs)
         if self.test_id:
-            self.fields['test'].queryset = model.objects().filter(test=self.test_id)
-
+            self.fields['test'].queryset = model.objects.get(test=self.test_id)
+        super(QuestionForm, self).__init__(*args, **kwargs)
 
 class QuestionAdmin(admin.ModelAdmin):
     model = QuestionPrototype
@@ -28,9 +27,8 @@ class QuestionAdmin(admin.ModelAdmin):
     form = QuestionForm
 
     def add_view(self, request, form_url='', extra_context=None):
-        #тут он ругается: global name 'form' is not defined, если раскоментить след строку
-        #form.test_id = request.GET.get('test_id')
         test_id = request.GET.get('test_id')
+        self.form.test_id = test_id
         #debug
         print('test_id:'+str(test_id))
         return super(QuestionAdmin, self).add_view(request, form_url, extra_context)

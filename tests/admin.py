@@ -16,8 +16,8 @@ class QuestionForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         if self.test_id:
-            self.fields['test'].queryset = TestPrototype.objects.get(pk=self.test_id)
-            self.readonly_fields = ('test',)
+            self.Meta.fields['test'].queryset = TestPrototype.objects.get(pk=self.test_id)
+            #self.Meta.readonly_fields = ('test',)
         super(QuestionForm, self).__init__(*args, **kwargs)
 
 class QuestionAdmin(admin.ModelAdmin):

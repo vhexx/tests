@@ -27,7 +27,7 @@ class QuestionAdmin(admin.ModelAdmin):
 class TestAdmin(admin.ModelAdmin):
     model = TestPrototype
     def response_add(self, request, obj, post_url_continue=None):
-    	return HttpResponseRedirect(reverse('../../questionprototype/add/', kwargs={'test':2}))
+    	return HttpResponseRedirect('../../questionprototype/add/')#здесь нужно передать в запрос obj.test
 
 admin.site.register(QuestionPrototype, QuestionAdmin)
 admin.site.register(TestPrototype, TestAdmin)

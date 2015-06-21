@@ -845,3 +845,7 @@ table#change-history tbody th {
     background: #eee url(../img/nav-bg.gif) bottom left repeat-x;
     color: #666;
 }
+
+.model-questionprototype {
+  display: none;
+}

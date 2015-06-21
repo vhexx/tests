@@ -17,14 +17,13 @@ class QuestionForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         if self.test_id:
-            self.fields['test'].queryset = model.objects.get(test=self.test_id)
+            self.fields['test'].queryset = self.Meta.model.objects.get(test=self.test_id)
             self.readonly_fields = ('test',)
         super(QuestionForm, self).__init__(*args, **kwargs)
 
 class QuestionAdmin(admin.ModelAdmin):
     model = QuestionPrototype
     inlines = [AnswerInline]
-
     form = QuestionForm
 
     def add_view(self, request, form_url='', extra_context=None):

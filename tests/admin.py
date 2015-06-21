@@ -25,9 +25,10 @@ class QuestionAdmin(admin.ModelAdmin):
     model = QuestionPrototype
     inlines = [AnswerInline]
 
-    form = QuestionForm()
+    form = QuestionForm
 
     def add_view(self, request, form_url='', extra_context=None):
+        #тут он ругается: global name 'form' is not defined, если раскоментить след строку
         #form.test_id = request.GET.get('test_id')
         test_id = request.GET.get('test_id')
         return super(QuestionAdmin, self).add_view(request, form_url, extra_context)

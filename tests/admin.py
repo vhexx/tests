@@ -28,7 +28,8 @@ class QuestionAdmin(admin.ModelAdmin):
     form = QuestionForm
 
     def add_view(self, request, form_url='', extra_context=None):
-        form.test_id = 1  # здесь нужно получить id теста по запросу
+        form.test_id = request.GET.get('test_id')
+	print(form.test_id)
         return super(QuestionAdmin, self).add_view(request, form_url, extra_context)
 
 
@@ -36,7 +37,7 @@ class TestAdmin(admin.ModelAdmin):
     model = TestPrototype
 
     def response_add(self, request, obj, post_url_continue=None):
-        return HttpResponseRedirect('../../questionprototype/add?test_id=%s' % str(form.test_id))
+        return HttpResponseRedirect('../../questionprototype/add?test_id=%s' % str(obj.id))
 
 
 admin.site.register(QuestionPrototype, QuestionAdmin)

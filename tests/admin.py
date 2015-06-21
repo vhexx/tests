@@ -29,7 +29,6 @@ class QuestionAdmin(admin.ModelAdmin):
 
     def add_view(self, request, form_url='', extra_context=None):
         form.test_id = request.GET.get('test_id')
-	print(form.test_id)
         return super(QuestionAdmin, self).add_view(request, form_url, extra_context)
 
 

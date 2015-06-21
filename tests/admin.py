@@ -31,6 +31,8 @@ class QuestionAdmin(admin.ModelAdmin):
         #тут он ругается: global name 'form' is not defined, если раскоментить след строку
         #form.test_id = request.GET.get('test_id')
         test_id = request.GET.get('test_id')
+        #debug
+        print('test_id:'+str(test_id))
         return super(QuestionAdmin, self).add_view(request, form_url, extra_context)
 
 

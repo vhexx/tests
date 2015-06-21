@@ -17,8 +17,7 @@ class QuestionForm(ModelForm):
 			self.fields['test'].queryset = model.objects().filter(test=self.test_id)
 
 class QuestionAdmin(admin.ModelAdmin):
-    global form
-
+    #global form
 	model = QuestionPrototype
 	inlines = [AnswerInline]
     form = QuestionForm
@@ -30,7 +29,8 @@ class QuestionAdmin(admin.ModelAdmin):
 class TestAdmin(admin.ModelAdmin):
     model = TestPrototype
     def response_add(self, request, obj, post_url_continue=None):
-    	return HttpResponseRedirect(reverse('../../questionprototype/add/',kwargs={'test': form.test_id}))#здесь нужно передать в запрос obj.test
+        return HttpResponseRedirect('/')
+    #	return HttpResponseRedirect(reverse('../../questionprototype/add/',kwargs={'test': form.test_id}))#здесь нужно передать в запрос obj.test
 
 admin.site.register(QuestionPrototype, QuestionAdmin)
 admin.site.register(TestPrototype, TestAdmin)

@@ -18,21 +18,18 @@ class QuestionForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
         if self.test_id:
-            tests_set = TestPrototype.objects.get(pk=self.test_id)
+            tests_set = TestPrototype.objects.all()#get(pk=self.test_id)
             self.fields['test'] = forms.ModelChoiceField(queryset=tests_set)
 
 class QuestionAdmin(admin.ModelAdmin):
     model = QuestionPrototype
     inlines = [AnswerInline]
-    #form = QuestionForm
+    form = QuestionForm
 
     def add_view(self, request, form_url='', extra_context=None):
         test_id = request.GET.get('test_id')
-        #self.form.test_id = test_id
+        self.form.test_id = test_id
         #print('test_id:'+str(test_id))
-        if test_id:
-            self.readonly_fields = ['test']
-            self.fields['test'].queryset = TestPrototype.objects.get(pk=int(test_id))
         return super(QuestionAdmin, self).add_view(request, form_url, extra_context)
 
     def response_add(self, request, obj, post_url_continue=None):

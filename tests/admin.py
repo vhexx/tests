@@ -42,10 +42,10 @@ class QuestionAdmin(admin.ModelAdmin):
 class QuestionInline(admin.StackedInline):
     model = QuestionPrototype
     template = 'question_form.html'
-    show_change_link = True
 
 class TestAdmin(admin.ModelAdmin):
     model = TestPrototype
+    inlines = []
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
         self.inlines = [QuestionInline]

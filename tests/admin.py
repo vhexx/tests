@@ -39,7 +39,7 @@ class QuestionAdmin(admin.ModelAdmin):
         obj.delete()
         return super(QuestionAdmin, self).delete_model(request, obj)
 
-class QuestionInline(admin.TabularInline):
+class QuestionInline(admin.StackedInline):
     model = QuestionPrototype
     template = 'question_form.html'
 

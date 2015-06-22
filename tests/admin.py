@@ -19,7 +19,7 @@ class QuestionForm(ModelForm):
         super(QuestionForm, self).__init__(*args, **kwargs)
         if self.test_id:
             tests_set = TestPrototype.objects.filter(id=int(self.test_id))
-            self.fields['test'] = forms.ModelChoiceField(queryset=tests_set)
+            self.fields['test'] = forms.ModelChoiceField(queryset=tests_set, empty_label=None)
 
 class QuestionAdmin(admin.ModelAdmin):
     model = QuestionPrototype

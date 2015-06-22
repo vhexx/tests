@@ -16,10 +16,10 @@ class QuestionForm(ModelForm):
     test_id = None
 
     def __init__(self, *args, **kwargs):
+        super(QuestionForm, self).__init__(*args, **kwargs)
         if self.test_id:
             tests_set = TestPrototype.objects.get(pk=self.test_id)
             self.fields['test'] = forms.ModelChoiceField(queryset=tests_set)
-        super(QuestionForm, self).__init__(*args, **kwargs)
 
 class QuestionAdmin(admin.ModelAdmin):
     model = QuestionPrototype

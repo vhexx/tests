@@ -17,7 +17,7 @@ class QuestionForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         if self.test_id:
-            tests_set = TestPrototype.objects.get(pk=int(self.test_id))
+            tests_set = TestPrototype.objects.get(id=int(self.test_id))
             self.test = forms.ModelChoiceField(queryset=tests_set)
         super(QuestionForm, self).__init__(*args, **kwargs)
 

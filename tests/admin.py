@@ -42,6 +42,7 @@ class QuestionAdmin(admin.ModelAdmin):
 class QuestionInline(admin.StackedInline):
     model = QuestionPrototype
     template = 'question_form.html'
+    show_change_link = True
 
 class TestAdmin(admin.ModelAdmin):
     model = TestPrototype

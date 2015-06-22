@@ -39,8 +39,16 @@ class QuestionAdmin(admin.ModelAdmin):
         obj.delete()
         return super(QuestionAdmin, self).delete_model(request, obj)
 
+class QuestionInline(admin.StackedInline):
+    model = QuestionPrototype
+    change_form_template = 'question_form.html'
+
 class TestAdmin(admin.ModelAdmin):
     model = TestPrototype
+
+    def change_view(request, object_id, form_url='', extra_context=None):
+        inlines = [QuestionInline]
+        return super(TestAdmin).change_view(request, object_id, form_url, extra_context)
 
     def response_add(self, request, obj, post_url_continue=None):
         return HttpResponseRedirect('../../questionprototype/add?test_id=%s' % str(obj.id))

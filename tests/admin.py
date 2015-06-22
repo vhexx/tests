@@ -35,10 +35,6 @@ class QuestionAdmin(admin.ModelAdmin):
     def response_add(self, request, obj, post_url_continue=None):
         return HttpResponseRedirect('../../questionprototype/add?test_id=%s' % str(self.form.test_id))
 
-    def delete_model(request, obj):
-        obj.delete()
-        return super(QuestionAdmin, self).delete_model(request, obj)
-
 class QuestionInline(admin.StackedInline):
     model = QuestionPrototype
     template = 'question_form.html'
@@ -57,6 +53,10 @@ class TestAdmin(admin.ModelAdmin):
         return HttpResponseRedirect('../../questionprototype/add?test_id=%s' % str(obj.id))
 
     def delete_model(self, request, obj):
+        rel_questions = QuestionPrototype.objects.filter(test=obj.id)
+        for q in rel_questions:
+            AnswerPrototype.objects.filter(question=q.id).delete()
+        rel_questions.delete()
         obj.delete()
         return super(TestAdmin, self).delete_model(request, obj)
 

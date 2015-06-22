@@ -32,6 +32,7 @@ class QuestionAdmin(admin.ModelAdmin):
         #print('test_id:'+str(test_id))
         if test_id:
             self.readonly_fields = ['test']
+            self.fields['test'].queryset = TestPrototype.objects.get(pk=int(test_id))
         return super(QuestionAdmin, self).add_view(request, form_url, extra_context)
 
     def response_add(self, request, obj, post_url_continue=None):

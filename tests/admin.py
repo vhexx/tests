@@ -58,7 +58,8 @@ class TestAdmin(admin.ModelAdmin):
             AnswerPrototype.objects.filter(question=q.id).delete()
         rel_questions.delete()
         res = super(TestAdmin, self).delete_model(request, obj)
-        obj.delete()
+        if obj.id:
+            obj.delete()
         return res
 
 

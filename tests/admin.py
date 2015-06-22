@@ -45,7 +45,9 @@ class QuestionInline(admin.StackedInline):
 
 class TestAdmin(admin.ModelAdmin):
     model = TestPrototype
-    inlines = []
+    def add_view(self, request, form_url='', extra_context=None):
+        self.inlines = []
+        return super(TestAdmin, self).add_view(request, form_url, extra_context)
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
         self.inlines = [QuestionInline]

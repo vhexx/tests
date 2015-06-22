@@ -57,8 +57,9 @@ class TestAdmin(admin.ModelAdmin):
         for q in rel_questions:
             AnswerPrototype.objects.filter(question=q.id).delete()
         rel_questions.delete()
+        res = super(TestAdmin, self).delete_model(request, obj)
         obj.delete()
-        return super(TestAdmin, self).delete_model(request, obj)
+        return res
 
 
 admin.site.register(QuestionPrototype, QuestionAdmin)

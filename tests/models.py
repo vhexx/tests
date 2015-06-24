@@ -8,6 +8,7 @@ class Test(models.Model):
     def __str__(self):
         return self.title
 
+
 class QuestionType(models.Model):
     type = models.CharField(max_length=50)
 
@@ -30,7 +31,6 @@ class PreQuestion(Question):
 
 class PostQuestion(Question):
     pass
-
 
 
 class Answer(models.Model):

@@ -33,7 +33,7 @@ class QuestionAdmin(admin.ModelAdmin):
         return super(QuestionAdmin, self).add_view(request, form_url, extra_context)
 
     def change_view(self, request, object_id, extra_context=None):
-        self.form.test_id = None
+        self.form.test_id = QuestionPrototype.objects.get(pk=object_id).test
         return super(QuestionAdmin, self).change_view(request, object_id, extra_context)
 
     def response_add(self, request, obj, post_url_continue=None):
@@ -54,7 +54,8 @@ class TestAdmin(admin.ModelAdmin):
         return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)
 
     def response_add(self, request, obj, post_url_continue=None):
-        return HttpResponseRedirect('../../questionprototype/add?test_id=%s' % str(obj.id))
+        #return HttpResponseRedirect('../../questionprototype/add?test_id=%s' % str(obj.id))
+        return HttpResponseRedirect('../%s' % str(obj.id))
 
     def delete_model(self, request, obj):
         rel_questions = QuestionPrototype.objects.filter(test=obj.id)

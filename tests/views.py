@@ -20,8 +20,8 @@ def test(request):
     #retrieve related questions and put them in session
     related_questions = QuestionPrototype.objects.filter(test=test_id)
 
-    question_string = serialize_questions(related_questions)
-    request.session['question_ids'] = question_string
+    question_list = list(related_questions)
+    request.session['question_ids'] = question_list
 
     context = {
         'test_title': test_instance.title

@@ -11,7 +11,7 @@ class Test(models.Model):
 
 class Question(models.Model):
     title = models.CharField(max_length=200)
-    test = models.ForeignKey(TestPrototype)
+    test = models.ForeignKey(Test)
     type = models.ForeignKey(QuestionType)
 
     def __str__(self):

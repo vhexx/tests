@@ -1,6 +1,69 @@
 from django.db import models
 
 
+class Test(models.Model):
+    title = models.CharField(max_length=100)
+    seconds = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+
+class Question(models.Model):
+    title = models.CharField(max_length=200)
+    test = models.ForeignKey(TestPrototype)
+    type = models.ForeignKey(QuestionType)
+
+    def __str__(self):
+        return self.title
+
+
+class PreQuestion(Question):
+    pass
+
+
+class PostQuestion(Question):
+    pass
+
+
+class QuestionType(models.Model):
+    type = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.type
+
+
+class Answer(models.Model):
+    statement = models.CharField(max_length=300, null=True, blank=True)
+    checked = models.BooleanField(null=True, blank=True)
+    question = models.ForeignKey(QuestionPrototype)
+
+    def __str__(self):
+        return self.statement
+
+
+class FailureCriterion(models.Model):
+    func = models.CharField(max_length=100)
+    question = models.ForeignKey(Question)
+
+    def __str__(self):
+        return self.func
+
+
+class Image(models.Model):
+    img = models.ImageField
+    test = models.ForeignKey(Test)
+
+
+class ImagePair(models.Model):
+    test = models.ForeignKey(Test)
+    img1 = models.ForeignKey(Image)
+    img2 = models.ForeignKey(Image)
+
+
+# ########################################################
+# ########################################################
+# ########################################################
 class TestPrototype(models.Model):
     title = models.CharField(max_length=100)
 
@@ -30,8 +93,9 @@ class AnswerPrototype(models.Model):
 
     def __str__(self):
         if self.statement is not None and len(self.statement) > 0:
-            return ('answer:'+str(self.statement))
+            return ('answer:' + str(self.statement))
         elif self.statement is not None:
             return ('img:' + str(self.image))
         else:
             return ('Empty')
+

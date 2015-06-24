@@ -21,6 +21,15 @@ class QuestionInline(admin.StackedInline):
     model = QuestionPrototype
     template = 'question_form.html'
 
+class A(admin.StackedInline):
+    model = AnswerPrototype
+    fields = ('question', 'statement', 'test')
+    fk_name = 'test'
+    def formfield_for_foreignkey(db_field, request, **kwargs):
+        if db_field == 'test':
+            kwargs['queryset'] = TestPrototype.objects.all()
+        return super(A, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
 class TestAdmin(admin.ModelAdmin):
     model = TestPrototype
     def add_view(self, request, form_url='', extra_context=None):
@@ -28,7 +37,7 @@ class TestAdmin(admin.ModelAdmin):
         return super(TestAdmin, self).add_view(request, form_url, extra_context)
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
-        self.inlines = [QuestionInline,]
+        self.inlines = [QuestionInline, A]
         return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)
 
     def response_add(self, request, obj, post_url_continue=None):

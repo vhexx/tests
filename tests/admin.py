@@ -28,7 +28,7 @@ class TestAdmin(admin.ModelAdmin):
         return super(TestAdmin, self).add_view(request, form_url, extra_context)
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
-        self.inlines = [QuestionInline, AnswerInline]
+        self.inlines = [QuestionInline]
         return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)
 
     def response_add(self, request, obj, post_url_continue=None):

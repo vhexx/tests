@@ -33,7 +33,7 @@ class QuestionAdmin(admin.ModelAdmin):
         return super(QuestionAdmin, self).add_view(request, form_url, extra_context)
 
     def change_view(self, request, object_id, extra_context=None):
-        self.form.test_id = QuestionPrototype.objects.get(pk=object_id).test
+        self.form.test_id = QuestionPrototype.objects.get(id=object_id).test.id
         return super(QuestionAdmin, self).change_view(request, object_id, extra_context)
 
     def response_add(self, request, obj, post_url_continue=None):

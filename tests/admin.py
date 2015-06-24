@@ -14,8 +14,8 @@ class QuestionAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
     readonly_fields = ('test',)
 
-    def response_change(request, obj):
-        return HttpResponseRedirect('../../testprototype/%s' % str(obj.test.id))
+    #def response_change(request, obj):
+        #return HttpResponseRedirect('../../testprototype/%s' % str(obj.test.id))
 
 class QuestionInline(admin.StackedInline):
     model = QuestionPrototype

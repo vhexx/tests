@@ -12,7 +12,7 @@ class AnswerInline(admin.StackedInline):
 class QuestionAdmin(admin.ModelAdmin):
     model = QuestionPrototype
     inlines = [AnswerInline]
-    exclude = ('test',)
+    readonly_fields = ('test',)
 
     def response_change(request, obj):
         return HttpResponseRedirect('../../testprototype/%s' % str(obj.test.id))

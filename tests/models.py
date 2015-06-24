@@ -51,6 +51,7 @@ class FailureCriterion(models.Model):
 
 
 class Image(models.Model):
+    name = models.CharField(max_length=100)
     img = models.ImageField
     test = models.ForeignKey(Test)
 

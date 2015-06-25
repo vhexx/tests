@@ -14,6 +14,7 @@ class ImageInline(admin.StackedInline):
 class ImagePairInline(admin.StackedInline):
     model = ImagePair
     fk_name = 'test'
+    extra = 0
 
     test_id = None
 
@@ -51,6 +52,9 @@ class PreQuestionAdmin(admin.ModelAdmin):
         obj.delete()
         par.delete()
 
+    def get_model_perms(self, request):
+        return {}
+
 
 class PreQuestionInline(admin.StackedInline):
     model = PreQuestion
@@ -66,6 +70,9 @@ class PostQuestionAdmin(admin.ModelAdmin):
 
     def delete_model(self, request, obj):
         PreQuestionAdmin.delete_model(self, request, obj)
+
+    def get_model_perms(self, request):
+        return {}
 
 
 class PostQuestionInline(admin.StackedInline):

@@ -35,7 +35,7 @@ class QuestionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
         if QuestionForm.last: # автозаполнения поля order
-            self.fields['order'].initial = QuestionForm.last
+            self.fields['order'].initial = QuestionForm.last+1
 
 
 class PreQuestionAdmin(admin.ModelAdmin):

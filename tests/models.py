@@ -36,7 +36,6 @@ class PostQuestion(Question):
 
 class Answer(models.Model):
     statement = models.CharField(max_length=300, null=True, blank=True)
-    checked = models.BooleanField(null=True, blank=True)
     question = models.ForeignKey(Question)
 
     def __str__(self):

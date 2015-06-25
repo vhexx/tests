@@ -45,7 +45,7 @@ class Answer(models.Model):
 
 class FailureCriterion(models.Model):
     func = models.CharField(max_length=100)
-    question = models.ForeignKey(Question)
+    test = models.ForeignKey(Test)
 
     def __str__(self):
         return self.func

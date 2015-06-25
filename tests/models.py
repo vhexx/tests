@@ -55,48 +55,14 @@ class Image(models.Model):
     img = models.ImageField()
     test = models.ForeignKey(Test)
 
+    def __str__(self):
+        return self.name
+
 
 class ImagePair(models.Model):
     test = models.ForeignKey(Test)
     left = models.ForeignKey(Image, related_name='%(class)s_left')
     right = models.ForeignKey(Image, related_name='%(class)s_right')
 
-
-# ########################################################
-# ########################################################
-# ########################################################
-class TestPrototype(models.Model):
-    title = models.CharField(max_length=100)
-
     def __str__(self):
-        return (self.title)
-
-
-class QuestionPrototype(models.Model):
-    title = models.CharField(max_length=200)
-    test = models.ForeignKey(TestPrototype)
-
-    def __str__(self):
-        return (self.title)
-
-
-class ImagePrototype(models.Model):
-    ref = models.CharField(max_length=200)
-
-    def __str__(self):
-        return (str(self.ref))
-
-
-class AnswerPrototype(models.Model):
-    question = models.ForeignKey(QuestionPrototype)
-    statement = models.CharField(max_length=300, null=True, blank=True)
-    image = models.ForeignKey(ImagePrototype, null=True, blank=True)
-
-    def __str__(self):
-        if self.statement is not None and len(self.statement) > 0:
-            return ('answer:' + str(self.statement))
-        elif self.statement is not None:
-            return ('img:' + str(self.image))
-        else:
-            return ('Empty')
-
+        return 'pair(%s,%s)' % str(self.left), str(self.right)

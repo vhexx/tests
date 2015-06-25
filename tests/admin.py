@@ -86,7 +86,7 @@ class FailureCriterionForm(forms.ModelForm):
     answer = forms.ModelChoiceField(queryset=Answer.objects.none())
 
     def __init__(self, *args, **kwargs):
-        super(QuestionForm, self).__init__(*args, **kwargs)
+        super(FailureCriterionForm, self).__init__(*args, **kwargs)
         if (self.test_id):
             self.fields['question'].queryset = PreQuestion.objects.filter(test=self.test_id)    
 

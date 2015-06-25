@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Test, Question, Answer, PreQuestion, PostQuestion
+from .models import Test, Question, Answer, PreQuestion, PostQuestion, Image, ImagePair
 from django import forms
 from django.forms import ModelForm
 from django.http import HttpResponseRedirect

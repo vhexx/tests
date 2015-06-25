@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Test, Question, Answer, PreQuestion, PostQuestion, Image, ImagePair
+from .models import Test, Question, Answer, PreQuestion, PostQuestion, Image, ImagePair, FailureCriterion
 from django import forms
 from django.forms import ModelForm
 from django.http import HttpResponseRedirect
@@ -47,10 +47,8 @@ class PreQuestionAdmin(admin.ModelAdmin):
         rel_answers = Answer.objects.filter(question=obj.question_ptr)
         rel_answers.delete()
         par = Question.objects.get(id=obj.question_ptr)
-        if obj:
-            obj.delete()
-        if par:
-            par.delete()
+        obj.delete()
+        par.delete()
 
 
 class PreQuestionInline(admin.StackedInline):
@@ -66,13 +64,7 @@ class PostQuestionAdmin(admin.ModelAdmin):
     readonly_fields = ('test',)
 
     def delete_model(self, request, obj):
-        rel_answers = Answer.objects.filter(question=obj.question_ptr)
-        rel_answers.delete()
-        par = Question.objects.get(id=obj.question_ptr)
-        if obj:
-            obj.delete()
-        if par:
-            par.delete()
+        PreQuestionAdmin.delete_model(self, request, obj)
 
 
 class PostQuestionInline(admin.StackedInline):
@@ -80,6 +72,28 @@ class PostQuestionInline(admin.StackedInline):
     template = 'question_form.html'
     form = QuestionForm
     extra = 0
+
+
+class FailureCriterionForm(forms.ModelForm):
+    class Meta:
+        model = FailureCriterion
+        fields = ['func', 'question', 'answer']
+
+    test_id = None
+
+    question = forms.ModelChoiceField()
+    answer = forms.ModelChoiceField()
+
+    def __init__(self, *args, **kwargs):
+        super(QuestionForm, self).__init__(*args, **kwargs)
+        if (self.test_id):
+            self.fields['question'].queryset = PreQuestion.objects.filter(test=self.test_id)    
+
+
+class FailureCriterionInline(admin.StackedInline):
+    model = FailureCriterion
+    fk_name = 'test'
+    form = FailureCriterionForm
 
 
 class TestAdmin(admin.ModelAdmin):
@@ -93,14 +107,11 @@ class TestAdmin(admin.ModelAdmin):
         self.inlines = [PreQuestionInline, PostQuestionInline, ImageInline, ImagePairInline]
         QuestionForm.last = Question.objects.order_by('-order')[:1].get().order
         ImagePairInline.test_id = object_id
+        FailureCriterionForm.test_id = object_id
         return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)
 
     def response_add(self, request, obj, post_url_continue=None):
         return HttpResponseRedirect('../%s' % str(obj.id))
-
-    def delete_model(self, request, obj):
-        
-        pass
 
 
 admin.site.register(PreQuestion, PreQuestionAdmin)

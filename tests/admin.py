@@ -18,7 +18,7 @@ class QuestionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
-        if QuestionForm.last and not self.instance:
+        if QuestionForm.last and (not self.instance):
             QuestionForm.last += 1
             self.fields['order'].initial = QuestionForm.last
 

@@ -95,9 +95,7 @@ class FailureCriterionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(FailureCriterionForm, self).__init__(*args, **kwargs)
         if (self.test_id):
-            self.fields['question'].queryset = PreQuestion.objects.filter(test=self.test_id)
-            qptr = self.cleaned_data['question'].question_ptr    
-            self.fields['answer'].queryset = Answer.objects.filter(question=qptr)
+            self.fields['question'].queryset = PreQuestion.objects.filter(test=self.test_id)   
 
 
 class FailureCriterionInline(admin.StackedInline):

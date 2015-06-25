@@ -10,6 +10,19 @@ class AnswerInline(admin.StackedInline):
     model = Answer
 
 
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+
+    last = None
+
+    def __init__(self, *args, **kwargs):
+        super(QuestionForm, self).__init__(*args, **kwargs)
+        if QuestionForm.last:
+            QuestionForm.last += 1
+            self.fields['order'].initial = QuestionForm.last
+
+
 class PreQuestionAdmin(admin.ModelAdmin):
     model = PreQuestion
     inlines = [AnswerInline]
@@ -19,6 +32,7 @@ class PreQuestionAdmin(admin.ModelAdmin):
 class PreQuestionInline(admin.StackedInline):
     model = PreQuestion
     template = 'question_form.html'
+    form = QuestionForm
 
 
 class PostQuestionAdmin(admin.ModelAdmin):
@@ -30,6 +44,7 @@ class PostQuestionAdmin(admin.ModelAdmin):
 class PostQuestionInline(admin.StackedInline):
     model = PostQuestion
     template = 'question_form.html'
+    form = QuestionForm
 
 
 class TestAdmin(admin.ModelAdmin):
@@ -41,6 +56,7 @@ class TestAdmin(admin.ModelAdmin):
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
         self.inlines = [PreQuestionInline, PostQuestionInline]
+        QuestionForm.last = Question.objects.order_by('-order')[:1].get().order
         return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)
 
     def response_add(self, request, obj, post_url_continue=None):

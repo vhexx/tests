@@ -8,13 +8,11 @@ from django.core.urlresolvers import reverse
 
 class ImageInline(admin.StackedInline):
     model = Image
-    readonly_fields = ('test',)
 
 
 class ImagePairInline(admin.StackedInline):
     model = ImagePair
     fk_name = 'test'
-    readonly_fields = ('test',)
 
     test_id = None
 
@@ -75,7 +73,7 @@ class TestAdmin(admin.ModelAdmin):
         return super(TestAdmin, self).add_view(request, form_url, extra_context)
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
-        self.inlines = [PreQuestionInline, PostQuestionInline, ImageInline]
+        self.inlines = [PreQuestionInline, PostQuestionInline, ImageInline, ImagePairInline]
         QuestionForm.last = Question.objects.order_by('-order')[:1].get().order
         ImagePairInline.test_id = object_id
         return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)

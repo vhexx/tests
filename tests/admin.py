@@ -6,6 +6,24 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 
+class ImageInline(admin.StackedInline):
+    model = Image
+    readonly_fields = ('test',)
+
+
+class ImagePairInline(admin.StackedInline):
+    model = ImagePair
+    fk_name = 'test'
+    readonly_fields = ('test',)
+
+    test_id = None
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if self.test_id and ((db_field.name == 'left') or (db_field.name == 'left')):
+            kwargs['queryset'] = Image.objects.filter(test=self.test_id)
+        return super(ImageInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+
 class AnswerInline(admin.StackedInline):
     model = Answer
 
@@ -18,7 +36,7 @@ class QuestionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
-        if QuestionForm.last and (not self.instance.order):
+        if QuestionForm.last and (not self.instance.order): # автозаполнения поля order
             QuestionForm.last += 1
             self.fields['order'].initial = QuestionForm.last
 
@@ -33,6 +51,7 @@ class PreQuestionInline(admin.StackedInline):
     model = PreQuestion
     template = 'question_form.html'
     form = QuestionForm
+    extra = 0
 
 
 class PostQuestionAdmin(admin.ModelAdmin):
@@ -45,6 +64,7 @@ class PostQuestionInline(admin.StackedInline):
     model = PostQuestion
     template = 'question_form.html'
     form = QuestionForm
+    extra = 0
 
 
 class TestAdmin(admin.ModelAdmin):
@@ -55,8 +75,9 @@ class TestAdmin(admin.ModelAdmin):
         return super(TestAdmin, self).add_view(request, form_url, extra_context)
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
-        self.inlines = [PreQuestionInline, PostQuestionInline]
+        self.inlines = [PreQuestionInline, PostQuestionInline, ImageInline]
         QuestionForm.last = Question.objects.order_by('-order')[:1].get().order
+        ImagePairInline.test_id = object_id
         return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)
 
     def response_add(self, request, obj, post_url_continue=None):

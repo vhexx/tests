@@ -18,7 +18,7 @@ class QuestionType(models.Model):
 
 class Question(models.Model):
     title = models.CharField(max_length=200)
-    order = models.IntegerField()
+    order = models.IntegerField(unique=True)
     test = models.ForeignKey(Test)
     type = models.ForeignKey(QuestionType)
 

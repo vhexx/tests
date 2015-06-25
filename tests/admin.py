@@ -18,9 +18,9 @@ class QuestionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
-        if QuestionForm.last and (self.instance.order>QuestionForm.last):
+        if QuestionForm.last and (not self.instance.order):
             QuestionForm.last += 1
-            self.fields['order'].initial = self.instance.order#QuestionForm.last
+            self.fields['order'].initial = QuestionForm.last
 
 
 class PreQuestionAdmin(admin.ModelAdmin):

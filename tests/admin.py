@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Test, Question, Answer, PreQuestion
+from .models import Test, Question, Answer, PreQuestion, PostQuestion
 from django import forms
 from django.forms import ModelForm
 from django.http import HttpResponseRedirect
@@ -14,13 +14,25 @@ class PreQuestionAdmin(admin.ModelAdmin):
     model = PreQuestion
     inlines = [AnswerInline]
     readonly_fields = ('test',)
-
     # def response_change(request, obj):
-    #return HttpResponseRedirect('../../testprototype/%s' % str(obj.test.id))
+    # return HttpResponseRedirect('../../testprototype/%s' % str(obj.test.id))
 
 
 class PreQuestionInline(admin.StackedInline):
     model = PreQuestion
+    template = 'question_form.html'
+
+
+class PostQuestionAdmin(admin.ModelAdmin):
+    model = PostQuestion
+    inlines = [AnswerInline]
+    readonly_fields = ('test',)
+    # def response_change(request, obj):
+    # return HttpResponseRedirect('../../testprototype/%s' % str(obj.test.id))
+
+
+class PostQuestionInline(admin.StackedInline):
+    model = PostQuestion
     template = 'question_form.html'
 
 
@@ -39,15 +51,18 @@ class TestAdmin(admin.ModelAdmin):
         return HttpResponseRedirect('../%s' % str(obj.id))
 
     def delete_model(self, request, obj):
-        rel_questions = PreQuestionInline.objects.filter(test=obj.id)
-        for q in rel_questions:
-            Answer.objects.filter(question=q.id).delete()
-        rel_questions.delete()
-        res = super(TestAdmin, self).delete_model(request, obj)
-        if obj.id:
-            obj.delete()
-        return res
+        # rel_prequestions = PreQuestionInline.objects.filter(test=obj.id)
+        # for q in rel_prequestions:
+        #     Answer.objects.filter(question=q.id).delete()
+        # rel_prequestions.delete()
+        #
+        # res = super(TestAdmin, self).delete_model(request, obj)
+        # if obj.id:
+        #     obj.delete()
+        # return res
+        pass
 
 
 admin.site.register(PreQuestion, PreQuestionAdmin)
+admin.site.register(PostQuestion, PostQuestionAdmin)
 admin.site.register(Test, TestAdmin)

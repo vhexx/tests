@@ -34,7 +34,6 @@ class QuestionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
-        count += 1
         if QuestionForm.last: # автозаполнения поля order
             #QuestionForm.last += 1
             self.fields['order'].initial = self.instance.order #QuestionForm.last

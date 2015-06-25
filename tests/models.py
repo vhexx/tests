@@ -58,8 +58,8 @@ class Image(models.Model):
 
 class ImagePair(models.Model):
     test = models.ForeignKey(Test)
-    img1 = models.ForeignKey(Image)
-    img2 = models.ForeignKey(Image)
+    left = models.ForeignKey(Image)
+    right = models.ForeignKey(Image)
 
 
 # ########################################################

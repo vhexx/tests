@@ -43,6 +43,15 @@ class PreQuestionAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
     readonly_fields = ('test',)
 
+    def delete_model(self, request, obj):
+        rel_answers = Answer.objects.filter(question=obj.question_ptr)
+        rel_answers.delete()
+        par = Question.objects.get(id=obj.question_ptr)
+        if obj:
+            obj.delete()
+        if par:
+            par.delete()
+
 
 class PreQuestionInline(admin.StackedInline):
     model = PreQuestion
@@ -55,6 +64,15 @@ class PostQuestionAdmin(admin.ModelAdmin):
     model = PostQuestion
     inlines = [AnswerInline]
     readonly_fields = ('test',)
+
+    def delete_model(self, request, obj):
+        rel_answers = Answer.objects.filter(question=obj.question_ptr)
+        rel_answers.delete()
+        par = Question.objects.get(id=obj.question_ptr)
+        if obj:
+            obj.delete()
+        if par:
+            par.delete()
 
 
 class PostQuestionInline(admin.StackedInline):
@@ -81,15 +99,7 @@ class TestAdmin(admin.ModelAdmin):
         return HttpResponseRedirect('../%s' % str(obj.id))
 
     def delete_model(self, request, obj):
-        # rel_prequestions = PreQuestionInline.objects.filter(test=obj.id)
-        # for q in rel_prequestions:
-        #     Answer.objects.filter(question=q.id).delete()
-        # rel_prequestions.delete()
-        #
-        # res = super(TestAdmin, self).delete_model(request, obj)
-        # if obj.id:
-        #     obj.delete()
-        # return res
+        
         pass
 
 

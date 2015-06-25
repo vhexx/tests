@@ -19,7 +19,7 @@ class ImagePairInline(admin.StackedInline):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if self.test_id and ((db_field.name == 'left') or (db_field.name == 'left')):
             kwargs['queryset'] = Image.objects.filter(test=self.test_id)
-        return super(ImageInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
+        return super(ImagePairInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 class AnswerInline(admin.StackedInline):

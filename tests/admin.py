@@ -6,6 +6,18 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 
+class ImageAdmin(admin.ModelAdmin):
+    model = Image
+
+    def delete_model(self, request, obj):
+        img = obj.img
+        super(ImageAdmin, self).delete_model(request, obj)
+        os.remove(img.path)
+
+    def get_model_perms(self, request):
+        return {}
+
+
 class ImageInline(admin.StackedInline):
     model = Image
     extra = 0
@@ -130,4 +142,5 @@ class TestAdmin(admin.ModelAdmin):
 
 admin.site.register(PreQuestion, PreQuestionAdmin)
 admin.site.register(PostQuestion, PostQuestionAdmin)
+admin.site.register(Image, ImageAdmin)
 admin.site.register(Test, TestAdmin)

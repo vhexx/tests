@@ -123,6 +123,15 @@ class TestAdmin(admin.ModelAdmin):
     def response_add(self, request, obj, post_url_continue=None):
         return HttpResponseRedirect('../%s' % str(obj.id))
 
+    def delete_model(self, request, obj):
+        pre_questions = PreQuestion.objects.filter(test=obj.id)
+        post_questions = PostQuestion.objects.filter(test=obj.id)
+        for q in pre_questions:
+            PreQuestionAdmin.delete_model(request, q)
+        for q in post_questions:
+            PostQuestionAdmin.delete_model(request, q)
+        obj.delete()
+
 
 admin.site.register(PreQuestion, PreQuestionAdmin)
 admin.site.register(PostQuestion, PostQuestionAdmin)

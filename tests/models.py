@@ -18,9 +18,12 @@ class QuestionType(models.Model):
 
 class Question(models.Model):
     title = models.CharField(max_length=200)
-    order = models.IntegerField(unique=True)
+    order = models.IntegerField()
     test = models.ForeignKey(Test)
     type = models.ForeignKey(QuestionType)
+
+    class Meta:
+        unique_together = (('test','order'),)
 
     def __str__(self):
         return self.title
@@ -52,7 +55,7 @@ class FailureCriterion(models.Model):
 
 class Image(models.Model):
     name = models.CharField(max_length=100)
-    img = models.ImageField()
+    img = models.ImageField(upload_to='img/')
     test = models.ForeignKey(Test)
 
     def __str__(self):

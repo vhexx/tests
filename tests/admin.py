@@ -39,6 +39,8 @@ class QuestionForm(forms.ModelForm):
         super(QuestionForm, self).__init__(*args, **kwargs)
         if QuestionForm.last: # автозаполнения поля order
             self.fields['order'].initial = QuestionForm.last+1
+        else:
+            self.fields['order'].initial = 1
 
 
 class PreQuestionAdmin(admin.ModelAdmin):
@@ -115,7 +117,7 @@ class TestAdmin(admin.ModelAdmin):
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
         self.inlines = [PreQuestionInline, PostQuestionInline, ImageInline, ImagePairInline, FailureCriterionInline]
-        QuestionForm.last = Question.objects.order_by('-order')[:1].get().order
+        QuestionForm.last = Question.objects.filter(test=object_id).order_by('-order')[:1].get().order
         ImagePairInline.test_id = object_id
         FailureCriterionForm.test_id = object_id
         return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)

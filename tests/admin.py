@@ -14,6 +14,7 @@ class ImageAdmin(admin.ModelAdmin):
     def delete_model(self, request, obj):
         img = obj.img
         super(ImageAdmin, self).delete_model(request, obj)
+        print(MEDIA_ROOT+img.path)
         os.remove(MEDIA_ROOT+img.path)
 
     def get_model_perms(self, request):

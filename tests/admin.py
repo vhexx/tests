@@ -5,6 +5,7 @@ from django.forms import ModelForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 import os
+from .settings import MEDIA_ROOT
 
 
 class ImageAdmin(admin.ModelAdmin):
@@ -13,7 +14,7 @@ class ImageAdmin(admin.ModelAdmin):
     def delete_model(self, request, obj):
         img = obj.img
         super(ImageAdmin, self).delete_model(request, obj)
-        os.remove(img.path)
+        os.remove(MEDIA_ROOT+img.path)
 
     def get_model_perms(self, request):
         return {}

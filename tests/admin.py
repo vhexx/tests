@@ -117,7 +117,9 @@ class TestAdmin(admin.ModelAdmin):
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
         self.inlines = [PreQuestionInline, PostQuestionInline, ImageInline, ImagePairInline, FailureCriterionInline]
-        QuestionForm.last = Question.objects.filter(test=object_id).order_by('-order')[:1].get().order
+        questions = Question.objects.filter(test=object_id)
+        if questions:
+            QuestionForm.last = questions.order_by('-order')[:1].get().order
         ImagePairInline.test_id = object_id
         FailureCriterionForm.test_id = object_id
         return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)

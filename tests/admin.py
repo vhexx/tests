@@ -4,6 +4,7 @@ from django import forms
 from django.forms import ModelForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+import os
 
 
 class ImageAdmin(admin.ModelAdmin):

@@ -1,6 +1,6 @@
 from django.http import HttpResponseNotFound
 from django.shortcuts import render_to_response, redirect
-from tests.models import PreQuestion, Test, Answer
+from tests.models import PreQuestion, Test, Answer, PostQuestion
 
 
 def index(requst):
@@ -9,7 +9,7 @@ def index(requst):
 
 def test(request):
     print(dict(request.session))
-    test_id = request.GET.get('id')
+    test_id = int(request.GET.get('id'))
     try:
         test_instance = Test.objects.get(id=test_id)
     except Exception:
@@ -19,10 +19,10 @@ def test(request):
     request.session['test_id'] = test_id
 
     #retrieve related questions and put them in session
-    related_questions = PreQuestion.objects.filter(test=test_id)
+    prequestions = PreQuestion.objects.filter(test=test_id).order_by('order')
+    postquestions = PostQuestion.objects.filter(test=test_id).order_by('order')
 
-    question_list = list(related_questions)
-    request.session['question_ids'] = question_list
+    request.session['state'] = 'pre'
 
     context = {
         'test_title': test_instance.title

@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 class ImageInline(admin.StackedInline):
     model = Image
     extra = 0
+    template = 'inline_image_form.html'
 
 
 class ImagePairInline(admin.StackedInline):
@@ -95,7 +96,7 @@ class FailureCriterionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(FailureCriterionForm, self).__init__(*args, **kwargs)
         if (self.test_id):
-            self.fields['question'].queryset = PreQuestion.objects.filter(test=self.test_id)   
+            self.fields['question'].queryset = PreQuestion.objects.filter(test=self.test_id)
 
 
 class FailureCriterionInline(admin.StackedInline):

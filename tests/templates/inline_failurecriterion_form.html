@@ -73,7 +73,7 @@
           {
             answers.find('option[value='+cur+']').css({'display' : 'block'});
             i++;
-            str += answers.find('option[value='+cur+']').innerHTML();
+            str += answers.find('option[value='+cur+']').eq(0).innerHTML();
           }
           alert(str);
         },

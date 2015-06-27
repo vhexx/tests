@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% load staticfiles%}
+
 <html>
 <head lang="en">
     <meta charset="UTF-8">
@@ -6,7 +8,7 @@
 </head>
 <body>
     {{ test_title }}
-    <form action="/question?id={{ question_id }}/" method="POST">
+    <form action="/question?id=3/" method="POST">
         {% csrf_token %}
         <input type="submit" value="Перейти к вопросам"><br>
     </form>

@@ -1,30 +1,26 @@
 from django.contrib import admin
 from .models import Test, Question, Answer, PreQuestion, PostQuestion, Image, ImagePair, FailureCriterion
 from django import forms
-from django.forms import ModelForm
 from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
+#from django.core.urlresolvers import reverse
 import os
 from .settings import MEDIA_ROOT
 
 
-class ImageAdmin(admin.ModelAdmin):
-    model = Image
-
-    def delete_model(self, request, obj):
-        img = obj.img
-        super(ImageAdmin, self).delete_model(request, obj)
-        print(MEDIA_ROOT+img.path)
-        os.remove(MEDIA_ROOT+img.path)
-
-    def get_model_perms(self, request):
-        return {}
+class ImageInlineFormset(forms.models.BaseInlineFormSet):
+    def save():
+        ret = super(ImageInlineFormset, self).save()
+        del_obj = ImageInlineFormset.deleted_objects
+        for obj in del_obj:
+            os.remove(MEDIA_ROOT+obj.img.path)
+        return ret
 
 
 class ImageInline(admin.StackedInline):
     model = Image
     extra = 0
     template = 'inline_image_form.html'
+    formset = ImageInlineFormset
 
 
 class ImagePairInline(admin.StackedInline):
@@ -145,5 +141,4 @@ class TestAdmin(admin.ModelAdmin):
 
 admin.site.register(PreQuestion, PreQuestionAdmin)
 admin.site.register(PostQuestion, PostQuestionAdmin)
-admin.site.register(Image, ImageAdmin)
 admin.site.register(Test, TestAdmin)

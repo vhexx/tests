@@ -130,8 +130,8 @@ class TestAdmin(admin.ModelAdmin):
             QuestionForm.last = questions.order_by('-order')[:1].get().order
         ImagePairInline.test_id = object_id
         FailureCriterionForm.test_id = object_id
-        if request.method == 'POST' and request.is_ajax:
-            return HttpResponse('ajax.POST:'+request.POST)
+        #if request.method == 'POST' and request.is_ajax:
+            #return HttpResponse('ajax.POST:'+request.POST)
         return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)
 
     def response_add(self, request, obj, post_url_continue=None):

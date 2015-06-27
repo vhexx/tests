@@ -26,8 +26,11 @@
     deleteText: "{% filter escapejs %}{% trans "Remove" %}{% endfilter %}",
     addText: "{% filter escapejs %}{% blocktrans with verbose_name=inline_admin_formset.opts.verbose_name|capfirst %}Add another {{ verbose_name }}{% endblocktrans %}{% endfilter %}"
   });
-  $('#{{ inline_admin_formset.formset.prefix }}-group select').click(function () {
-    alert(this.value());
-  });
+  $('#{{ inline_admin_formset.formset.prefix }}-group').on('click', 'select',
+    function ()
+    {
+      alert(this.value());
+    }
+  );
 })(django.jQuery);
 </script>

@@ -8,11 +8,9 @@ import os
 
 class ImageInlineFormset(forms.models.BaseInlineFormSet):
     def save(self, commit=True):
-        ret = super(ImageInlineFormset, self).save(False)
-        for obj in self.deleted_objects:
-            os.remove(obj.img.path)
-            obj.delete()
-        return ret
+        for f in self.deleted_forms:
+            os.remove(f.instance.img.path)
+        return super(ImageInlineFormset, self).save(commit)
 
 
 class ImageInline(admin.StackedInline):

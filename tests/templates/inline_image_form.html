@@ -29,12 +29,12 @@
     deleteText: "{% filter escapejs %}{% trans "Remove" %}{% endfilter %}",
     addText: "{% filter escapejs %}{% blocktrans with verbose_name=inline_admin_formset.opts.verbose_name|capfirst %}Add another {{ verbose_name }}{% endblocktrans %}{% endfilter %}"
   });
-  var forms = $('#{{ inline_admin_formset.formset.prefix }}-group form');
+  var inputs = $('#{{ inline_admin_formset.formset.prefix }}-group fieldset input');
   $('#btn').click(function () {
     $.ajax({
-      type: forms.eq(0).attr('method'),
-      url: forms.eq(0).attr('action'),
-      data: forms.eq(0).serialize(),
+      type: 'POST',
+      url: '',
+      data: inputs.serializeobject(),
       success: function ()
       {
         alert('ajax secceed!');

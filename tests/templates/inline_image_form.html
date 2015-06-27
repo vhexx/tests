@@ -18,7 +18,7 @@
   {{ inline_admin_form.fk_field.field }}
 </div>{% endfor %}
 
-<input type="button" value="{% trans 'button' %}" id='btn' />
+<input type="button" value="{% trans 'button' %}" id='img_btn' />
 
 </div>
 
@@ -56,12 +56,12 @@
         }
     }
   });
-  $('#btn').click(function () {
-    var inputs = $('#{{ inline_admin_formset.formset.prefix }}-group fieldset input');
+  $('#img_btn').click(function () {
+    //var inputs = $('#{{ inline_admin_formset.formset.prefix }}-group fieldset input');
     $.ajax({
       type: 'POST',
       url: '',
-      data: inputs.serialize(),
+      data: $('#test_form').serialize(),
       success: function ()
       {
         alert('ajax secceed!');

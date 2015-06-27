@@ -25,7 +25,7 @@ def test(request):
 
     context = {
         'test_title': test_instance.title,
-        'question_id': prequestions[0]
+        'question_id': prequestions[0].id
     }
     return render_to_response('test.html', context)
 

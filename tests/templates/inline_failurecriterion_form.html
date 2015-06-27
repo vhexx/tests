@@ -59,6 +59,7 @@
     function ()
     {
       var quest_id = $(this).attr('value');
+      var answers_select = $(this).parent('fieldset').eq(0).find('.field-answer select');
       $.ajax({
         url: '',
         type: 'POST',
@@ -66,12 +67,11 @@
         success: function (data)
         {
           var i = 0;
-          var answers = $('#{{ inline_admin_formset.formset.prefix }}-group .field-answer');
-          answers.css({'display' : 'none'});
+          answers_select.find('option').css({'display' : 'none'});
           var str = '';
           while (cur = data.split(' ')[i], cur != '')
           {
-            answers.find('option[value='+cur+']').css({'display' : 'block'});
+            answers_select.find('option[value='+cur+']').css({'display' : 'block'});
             i++;
             str += cur+' ';
           }

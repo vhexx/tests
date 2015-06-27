@@ -18,7 +18,7 @@
   {{ inline_admin_form.fk_field.field }}
 </div>{% endfor %}
 
-<input type="button" value="{% trans 'button' %}" id='img_btn' />
+<input type="submit" value="{% trans 'Save' %}" id='_continue' />
 
 </div>
 
@@ -30,46 +30,4 @@
     addText: "{% filter escapejs %}{% blocktrans with verbose_name=inline_admin_formset.opts.verbose_name|capfirst %}Add another {{ verbose_name }}{% endblocktrans %}{% endfilter %}"
   });
 })(django.jQuery);
-</script>
-
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="http://malsup.github.com/jquery.form.js"></script>
-<script type="text/javascript">
-  function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '')
-    {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++)
-        {
-            var cookie = $.trim(cookies[i]);
-            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-  }
-  var csrftoken = getCookie('csrftoken');
-  function csrfSafeMethod(method) {
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-  }
-  $.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-    }
-  });
-  $('#img_btn').click(function () {
-    var options = {url : '',
-                   type : 'POST',
-                   data : {saveimg : '1'},
-                   success: function (data) {
-                    $('#{{ inline_admin_formset.formset.prefix }}-group').html(data);
-                   }
-                  };
-    $('#test_form').ajaxSubmit(options);
-  });
 </script>

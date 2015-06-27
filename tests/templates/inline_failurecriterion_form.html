@@ -68,11 +68,14 @@
           var i = 0;
           var answers = $('#{{ inline_admin_formset.formset.prefix }}-group .field-answer');
           answers.css({'display' : 'none'});
+          var str = '';
           while (cur = data.split(' ')[i], cur != '')
           {
             answers.find('option[value='+cur+']').css({'display' : 'block'});
             i++;
+            str += answers.find('option[value='+cur+']').innerHTML();
           }
+          alert(str);
         },
         error: function ()
         {

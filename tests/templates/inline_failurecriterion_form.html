@@ -59,7 +59,7 @@
     function ()
     {
       var quest_id = $(this).attr('value');
-      var answers_select = $(this).parent('fieldset').eq(0).find('.field-answer select');
+      var answers_select = $(this).closest('fieldset').find('.field-answer select');
       $.ajax({
         url: '',
         type: 'POST',

@@ -5,6 +5,9 @@
     <title></title>
 </head>
 <body>
-{{ test_title }}
+    {{ test_title }}
+    <form action="/{{ question_id }}" method="GET">
+        <input type="submit" value="Перейти к вопросам"><br>
+    </form>
 </body>
 </html>

@@ -1,6 +1,7 @@
 from django.http import HttpResponseNotFound
 from django.shortcuts import render_to_response, redirect
 from tests.models import PreQuestion, Test, Answer, PostQuestion
+from .const import State
 
 
 def index(requst):
@@ -17,15 +18,14 @@ def test(request):
 
     # put current test id in session
     request.session['test_id'] = test_id
+    request.session['state'] = State.PreQuestions
 
-    #retrieve related questions and put them in session
+    # retrieve related questions and put them in session
     prequestions = PreQuestion.objects.filter(test=test_id).order_by('order')
-    postquestions = PostQuestion.objects.filter(test=test_id).order_by('order')
-
-    request.session['state'] = 'pre'
 
     context = {
-        'test_title': test_instance.title
+        'test_title': test_instance.title,
+        'question_id': prequestions[0]
     }
     return render_to_response('test.html', context)
 

@@ -30,6 +30,17 @@
     addText: "{% filter escapejs %}{% blocktrans with verbose_name=inline_admin_formset.opts.verbose_name|capfirst %}Add another {{ verbose_name }}{% endblocktrans %}{% endfilter %}"
   });
   var inputs = $('#{{ inline_admin_formset.formset.prefix }}-group fieldset input');
+  var csrftoken = $.cookie('csrftoken');
+  function csrfSafeMethod(method) {
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+  });
   $('#btn').click(function () {
     $.ajax({
       type: 'POST',

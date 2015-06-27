@@ -29,6 +29,12 @@
     deleteText: "{% filter escapejs %}{% trans "Remove" %}{% endfilter %}",
     addText: "{% filter escapejs %}{% blocktrans with verbose_name=inline_admin_formset.opts.verbose_name|capfirst %}Add another {{ verbose_name }}{% endblocktrans %}{% endfilter %}"
   });
+})(django.jQuery);
+</script>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="jquery.cookie.js"></script>
+<script type="text/javascript">
   var inputs = $('#{{ inline_admin_formset.formset.prefix }}-group fieldset input');
   var csrftoken = $.cookie('csrftoken');
   function csrfSafeMethod(method) {
@@ -55,6 +61,5 @@
         alert('error sending ajax');
       }
     });
-});
-})(django.jQuery);
+  });
 </script>

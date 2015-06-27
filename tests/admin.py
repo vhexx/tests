@@ -114,6 +114,7 @@ class FailureCriterionInline(admin.StackedInline):
     fk_name = 'test'
     form = FailureCriterionForm
     extra = 0
+    template = 'inline_failurecriterion_form.html'
 
 
 class TestAdmin(admin.ModelAdmin):

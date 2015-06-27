@@ -12,10 +12,6 @@ class ImageInlineFormset(forms.models.BaseInlineFormSet):
         for obj in self.deleted_objects:
             os.remove(obj.img.path)
             obj.delete()
-        for obj in self.changed_objects:
-            obj.save()
-        for obj in self.new_objects:
-            obj.save()
         return ret
 
 

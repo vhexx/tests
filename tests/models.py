@@ -68,4 +68,5 @@ class ImagePair(models.Model):
     right = models.ForeignKey(Image, related_name='%(class)s_right')
 
     def __str__(self):
-        return 'pair(%s,%s)' % str(self.left), str(self.right)
+        #return 'pair(%s,%s)' % str(self.left), str(self.right)
+        return 'pair'

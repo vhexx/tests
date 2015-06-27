@@ -59,6 +59,10 @@
     function ()
     {
       var quest_id = $(this).attr('value');
+      if (quest_id == '')
+      {
+        return;
+      }
       var answers_select = $(this).closest('fieldset').find('.field-answer select');
       $.ajax({
         url: '',
@@ -68,14 +72,11 @@
         {
           var i = 0;
           answers_select.find('option').css({'display' : 'none'});
-          var str = '';
           while (cur = data.split(' ')[i], cur != '')
           {
             answers_select.find('option[value='+cur+']').css({'display' : 'block'});
             i++;
-            str += cur+' ';
           }
-          alert(str);
         },
         error: function ()
         {

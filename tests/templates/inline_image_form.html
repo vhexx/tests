@@ -22,6 +22,7 @@
 
 </div>
 
+<script src="http://malsup.github.com/jquery.form.js"></script>
 <script type="text/javascript">
 (function($) {
   $("#{{ inline_admin_formset.formset.prefix|escapejs }}-group .inline-related").stackedFormset({
@@ -57,8 +58,7 @@
     }
   });
   $('#img_btn').click(function () {
-    //var inputs = $('#{{ inline_admin_formset.formset.prefix }}-group fieldset input');
-    $.ajax({
+    /*$.ajax({
       type: 'POST',
       url: '',
       data: $('#test_form').serialize(),
@@ -70,7 +70,10 @@
       {
         alert('error sending ajax');
       }
-    });
+    });*/
+    var options = {url : '', type : 'POST',
+                   success: function () {alert('success');}};
+    $('#test_form').ajaxSubmit(options);
   });
 })(django.jQuery);
 </script>

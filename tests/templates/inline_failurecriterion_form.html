@@ -70,7 +70,7 @@
           answers.css({'display' : 'none'});
           while (cur = data.split(' ')[i], cur != '')
           {
-            answers.find('[value='+cur+']').css({'display' : 'block'});
+            answers.find('option[value='+cur+']').css({'display' : 'block'});
             i++;
           }
         },

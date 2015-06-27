@@ -29,7 +29,6 @@
     deleteText: "{% filter escapejs %}{% trans "Remove" %}{% endfilter %}",
     addText: "{% filter escapejs %}{% blocktrans with verbose_name=inline_admin_formset.opts.verbose_name|capfirst %}Add another {{ verbose_name }}{% endblocktrans %}{% endfilter %}"
   });
-  var inputs = $('#{{ inline_admin_formset.formset.prefix }}-group fieldset input');
   function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '')
@@ -38,7 +37,6 @@
         for (var i = 0; i < cookies.length; i++)
         {
             var cookie = $.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
             if (cookie.substring(0, name.length + 1) == (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -59,6 +57,7 @@
     }
   });
   $('#btn').click(function () {
+    var inputs = $('#{{ inline_admin_formset.formset.prefix }}-group fieldset input');
     $.ajax({
       type: 'POST',
       url: '',

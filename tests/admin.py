@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import Test, Question, Answer, PreQuestion, PostQuestion, Image, ImagePair, FailureCriterion
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render_to_response
 import os
 
 
@@ -134,6 +133,13 @@ class TestAdmin(admin.ModelAdmin):
             QuestionForm.last = questions.order_by('-order')[:1].get().order
         ImagePairInline.test_id = object_id
         FailureCriterionForm.test_id = object_id
+        if (request.method == 'POST') and ('fc_filter' in request.POST):
+            quest_id = int(request.POST.get('fc_filter', None))
+            if quest_id:
+                id_str = ''
+                for i in Answer.objects.filter(question=quest_id):
+                    id_str += str(i.id) + ' '
+                return HttpResponse(id_str)
         return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)
 
     def response_add(self, request, obj, post_url_continue=None):

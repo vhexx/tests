@@ -29,7 +29,27 @@
   $('#{{ inline_admin_formset.formset.prefix }}-group').on('click', '.field-question option',
     function ()
     {
-      alert($(this).attr('value'));
+      var quest_id = $(this).attr('value');
+      $.ajax({
+        url: '',
+        type: 'POST',
+        data: {fc_filter : quest_id},
+        success: function (data)
+        {
+          var i = 0;
+          var answers = $('#{{ inline_admin_formset.formset.prefix }}-group .field-answer');
+          answers.css({'display' : 'none'});
+          while (cur = data.split(' ')[i], cur != '')
+          {
+            answers.find('[value='+cur+']').css({'display' : 'block'});
+            i++;
+          }
+        },
+        error: function ()
+        {
+          alert('ajax failed');
+        }
+      });
     }
   );
 })(django.jQuery);

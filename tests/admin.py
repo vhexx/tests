@@ -10,7 +10,7 @@ from .settings import MEDIA_ROOT
 class ImageInlineFormset(forms.models.BaseInlineFormSet):
     def save():
         ret = super(ImageInlineFormset, self).save()
-        del_obj = ImageInlineFormset.deleted_objects
+        del_obj = self.deleted_objects
         for obj in del_obj:
             os.remove(MEDIA_ROOT+obj.img.path)
         return ret

@@ -1,5 +1,6 @@
 from django.http import HttpResponseNotFound
 from django.shortcuts import render_to_response, redirect
+from django.template import RequestContext
 from tests.models import PreQuestion, Test, Answer, PostQuestion
 from .const import prequestions_state
 
@@ -41,4 +42,4 @@ def question(request):
         'question_title': question_instance.title,
         'answers': Answer.objects.filter(question=question_id)
     }
-    return render_to_response('question.html', context)
+    return render_to_response('question.html', context, context_instance=RequestContext(request))

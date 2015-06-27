@@ -29,7 +29,7 @@
   $('#{{ inline_admin_formset.formset.prefix }}-group').on('click', '.field-question option',
     function ()
     {
-      alert(this.attr('value'));
+      alert($(this).attr('value'));
     }
   );
 })(django.jQuery);

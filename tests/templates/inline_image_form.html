@@ -22,7 +22,6 @@
 
 </div>
 
-<script src="http://malsup.github.com/jquery.form.js"></script>
 <script type="text/javascript">
 (function($) {
   $("#{{ inline_admin_formset.formset.prefix|escapejs }}-group .inline-related").stackedFormset({
@@ -30,6 +29,12 @@
     deleteText: "{% filter escapejs %}{% trans "Remove" %}{% endfilter %}",
     addText: "{% filter escapejs %}{% blocktrans with verbose_name=inline_admin_formset.opts.verbose_name|capfirst %}Add another {{ verbose_name }}{% endblocktrans %}{% endfilter %}"
   });
+})(django.jQuery);
+</script>
+
+<script src="http://malsup.github.com/jquery.form.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
   function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '')
@@ -75,5 +80,4 @@
                    success: function () {alert('success');}};
     $('#test_form').ajaxSubmit(options);
   });
-})(django.jQuery);
 </script>

@@ -63,7 +63,9 @@
     }
   });
   $('#img_btn').click(function () {
-    var options = {url : '', type : 'POST',
+    var options = {url : '',
+                   type : 'POST',
+                   data : {saveimg : '1'},
                    success: function (data) {
                     $('#test_form').html(data);
                    }

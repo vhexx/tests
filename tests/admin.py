@@ -130,7 +130,7 @@ class TestAdmin(admin.ModelAdmin):
             QuestionForm.last = questions.order_by('-order')[:1].get().order
         ImagePairInline.test_id = object_id
         FailureCriterionForm.test_id = object_id
-        if request.method == 'POST' and request.is_ajax:
+        if (request.method == 'POST') and ('saveimg' in  request.POST):
             return HttpResponse('!!!');
         return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)
 

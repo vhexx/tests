@@ -1,5 +1,4 @@
-from enum import Enum
-
+#constant definition
 
 prequestions_state = 0
 images_state = 1

@@ -4,14 +4,13 @@ from django import forms
 from django.http import HttpResponseRedirect
 #from django.core.urlresolvers import reverse
 import os
-from .settings import MEDIA_ROOT
 
 
 class ImageInlineFormset(forms.models.BaseInlineFormSet):
     def save(self, commit=True):
         ret = super(ImageInlineFormset, self).save(False)
         for obj in self.deleted_objects:
-            os.remove(MEDIA_ROOT+obj.img.path)
+            os.remove(obj.img.path)
             obj.delete()
         for obj in self.changed_objects:
             obj.save()

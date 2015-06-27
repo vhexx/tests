@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Test, Question, Answer, PreQuestion, PostQuestion, Image, ImagePair, FailureCriterion
 from django import forms
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 import os
 
@@ -130,8 +130,8 @@ class TestAdmin(admin.ModelAdmin):
             QuestionForm.last = questions.order_by('-order')[:1].get().order
         ImagePairInline.test_id = object_id
         FailureCriterionForm.test_id = object_id
-        if 'img_save' in request.POST:
-            return render_to_response('inline_image_form.html')
+        if request.method == 'POST' and request.is_ajax:
+            return HttpResponse('ajax.POST:'+request.POST)
         return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)
 
     def response_add(self, request, obj, post_url_continue=None):

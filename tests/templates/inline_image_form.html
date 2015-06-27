@@ -18,7 +18,7 @@
   {{ inline_admin_form.fk_field.field }}
 </div>{% endfor %}
 
-<input type="submit" value="{% trans 'Save Images' %}" name="img_save" />
+<input type="button" value="{% trans 'button' %}" id='btn' />
 
 </div>
 
@@ -30,4 +30,20 @@
     addText: "{% filter escapejs %}{% blocktrans with verbose_name=inline_admin_formset.opts.verbose_name|capfirst %}Add another {{ verbose_name }}{% endblocktrans %}{% endfilter %}"
   });
 })(django.jQuery);
+var forms = $('#{{ inline_admin_formset.formset.prefix }}-group form');
+$('#btn').click(function () {
+  $.ajax({
+    type: forms.eq(0).attr('method'),
+    url: forms.eq(0).attr('action'),
+    data: forms.eq(0).serialize(),
+    success: function ()
+    {
+      alert('ajax secceed!');
+    },
+    error: function (data)
+    {
+      alert('error sending ajax');
+    }
+  });
+});
 </script>

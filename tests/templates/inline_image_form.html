@@ -63,21 +63,11 @@
     }
   });
   $('#img_btn').click(function () {
-    /*$.ajax({
-      type: 'POST',
-      url: '',
-      data: $('#test_form').serialize(),
-      success: function ()
-      {
-        alert('ajax secceed!');
-      },
-      error: function (data)
-      {
-        alert('error sending ajax');
-      }
-    });*/
     var options = {url : '', type : 'POST',
-                   success: function () {alert('success');}};
+                   success: function (data) {
+                    $('#test_form').html(data);
+                   }
+                  };
     $('#test_form').ajaxSubmit(options);
   });
 </script>

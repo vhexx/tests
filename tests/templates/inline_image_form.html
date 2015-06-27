@@ -29,14 +29,25 @@
     deleteText: "{% filter escapejs %}{% trans "Remove" %}{% endfilter %}",
     addText: "{% filter escapejs %}{% blocktrans with verbose_name=inline_admin_formset.opts.verbose_name|capfirst %}Add another {{ verbose_name }}{% endblocktrans %}{% endfilter %}"
   });
-})(django.jQuery);
-</script>
-
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript" src="jquery.cookie.js"></script>
-<script type="text/javascript">
   var inputs = $('#{{ inline_admin_formset.formset.prefix }}-group fieldset input');
-  var csrftoken = $.cookie('csrftoken');
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '')
+    {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++)
+        {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }
+  var csrftoken = getCookie('csrftoken');
   function csrfSafeMethod(method) {
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
   }
@@ -62,4 +73,5 @@
       }
     });
   });
+})(django.jQuery);
 </script>

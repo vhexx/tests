@@ -67,7 +67,7 @@
                    type : 'POST',
                    data : {saveimg : '1'},
                    success: function (data) {
-                    $('#test_form').html(data);
+                    $('#{{ inline_admin_formset.formset.prefix }}-group').html(data);
                    }
                   };
     $('#test_form').ajaxSubmit(options);

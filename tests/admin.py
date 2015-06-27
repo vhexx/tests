@@ -8,7 +8,7 @@ from .settings import MEDIA_ROOT
 
 
 class ImageInlineFormset(forms.models.BaseInlineFormSet):
-    def save():
+    def save(commit=True):
         ret = super(ImageInlineFormset, self).save()
         del_obj = self.deleted_objects
         for obj in del_obj:

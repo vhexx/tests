@@ -32,6 +32,9 @@ def test(request, test_id):
 
 def question(request, question_id, model):
     test_id = request.session.get('test_id')
+    if test_id is None:
+        return HttpResponseNotFound('Вопрос недоступен')
+
     prequestions = model.objects.filter(test=test_id).order_by('order')
 
     if len(prequestions) == 0:

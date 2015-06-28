@@ -31,6 +31,7 @@ def test(request, test_id):
 
 
 def prequestion(request, question_id):
+    print('session key:' + str(request.session.session_key))
     print(dict(request.session))
     test_id = request.session.get('test_id')
     prequestions = PreQuestion.objects.filter(test=test_id).order_by('order')

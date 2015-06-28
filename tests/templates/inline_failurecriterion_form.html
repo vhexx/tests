@@ -28,9 +28,11 @@
   });
 
 $(document).ready(function () {
+  alert('!!!');
   $('#{{ inline_admin_formset.formset.prefix }}-group').on('click', '.field-question option',
     function ()
     {
+      alert('!!!');
       var quest_id = $(this).attr('value');
       if (quest_id == '')
       {

@@ -31,6 +31,7 @@
     function ()
     {
       var quest_id = $(this).attr('value');
+      alert(quest_id);
       if (quest_id == '')
       {
         return;
@@ -49,7 +50,6 @@
             answers_select.find('option[value='+cur+']').css({'display' : 'block'});
             i++;
           }
-          alert(data);
         },
         error: function ()
         {

@@ -158,6 +158,7 @@ class TestAdmin(admin.ModelAdmin):
                 for i in Answer.objects.filter(question=quest_id):
                     id_str += str(i.id) + ' '
                 return HttpResponse(id_str)
+        ret = super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)
         loaded_images = request.FILES.getlist('images', [])
         images = Image.objects.filter(test=object_id)
         last_id = 1
@@ -167,7 +168,7 @@ class TestAdmin(admin.ModelAdmin):
             new_image = Image(name='img'+str(last_id), img=i, test=Test.objects.get(id=object_id))
             new_image.save()
             last_id += 1
-        return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)
+        return ret
 
     def response_add(self, request, obj, post_url_continue=None):
         return HttpResponseRedirect('../%s' % str(obj.id))

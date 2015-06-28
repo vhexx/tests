@@ -43,7 +43,7 @@ def prequestion(request, question_id):
 
     for i in range(0, len(prequestions)):
         if prequestions[i].id == int(question_id):
-            question_instance = prequestions[i]
+            question_instance = prequestions[i].id
             if i != 0:
                 prev_id = prequestions[i - 1].id
             if i != len(prequestions) - 1:

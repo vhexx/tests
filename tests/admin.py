@@ -121,7 +121,7 @@ class FailureCriterionInline(admin.StackedInline):
     template = 'inline_failurecriterion_form.html'
 
 
-class MultipleFileInput(wigets.AdminFileWidget):
+class MultipleFileInput(widgets.AdminFileWidget):
     def render(self, name, value, attrs=None):
         attrs['multiple'] = 'true'
         output = super(MultiFileInput, self).render(name, value, attrs=attrs)

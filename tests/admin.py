@@ -19,11 +19,6 @@ class ImageInline(admin.StackedInline):
     extra = 0
     template = 'inline_image_form.html'
     formset = ImageInlineFormset
-    readonly_fields = ('img',)
-
-    def has_add_permission(self, request):
-        super(ImageInline, self).has_add_permission(request)
-        return False
 
 
 class ImagePairInline(admin.StackedInline):

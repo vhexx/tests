@@ -21,7 +21,7 @@ class ImageInline(admin.StackedInline):
     formset = ImageInlineFormset
     readonly_fields = ('img',)
 
-    def has_add_permission(request):
+    def has_add_permission(self, request):
         super(ImageInline, self).has_add_permission(request)
         return False
 

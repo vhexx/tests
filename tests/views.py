@@ -30,11 +30,9 @@ def test(request, test_id):
     return render_to_response('test.html', context)
 
 
-def prequestion(request, question_id):
-    print('session key:' + str(request.session.session_key))
-    print(dict(request.session))
+def question(request, question_id, model):
     test_id = request.session.get('test_id')
-    prequestions = PreQuestion.objects.filter(test=test_id).order_by('order')
+    prequestions = model.objects.filter(test=test_id).order_by('order')
 
     if len(prequestions) == 0:
         return HttpResponseNotFound('Вопросов к этому тесту не найдено')
@@ -59,3 +57,10 @@ def prequestion(request, question_id):
             return render_to_response('question.html', context)
 
     return HttpResponseNotFound('Такого вопроса не существует')
+
+
+def prequestion(request, question_id):
+    return question(request, question_id, PreQuestion)
+
+def postquestion(request, question_id):
+    return question(request, question_id, PostQuestion)

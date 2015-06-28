@@ -164,7 +164,7 @@ class TestAdmin(admin.ModelAdmin):
         if images:
             last_id = images.order_by('-id')[:1].get().id
         for i in loaded_images:
-            new_image = Image(name='img'+str(last_id), img=i, test=object_id)
+            new_image = Image(name='img'+str(last_id), img=i, test=Test.objects.get(id=object_id))
             new_image.save()
             last_id += 1
         return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)

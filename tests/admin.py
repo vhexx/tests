@@ -167,7 +167,7 @@ class TestAdmin(admin.ModelAdmin):
         for i in loaded_images:
             new_image = Image(name='img'+str(last_id), img=i, test=obj_id)
             new_image.save()
-            last_id++
+            last_id += 1
         return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)
 
     def response_add(self, request, obj, post_url_continue=None):

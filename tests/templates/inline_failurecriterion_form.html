@@ -26,8 +26,10 @@
     deleteText: "{% filter escapejs %}{% trans "Remove" %}{% endfilter %}",
     addText: "{% filter escapejs %}{% blocktrans with verbose_name=inline_admin_formset.opts.verbose_name|capfirst %}Add another {{ verbose_name }}{% endblocktrans %}{% endfilter %}"
   });
-
-  $('#{{ inline_admin_formset.formset.prefix }}-group').on('click', function () {alert('!!!');});
+  
+  document.ready(function () {
+    $('#{{ inline_admin_formset.formset.prefix }}-group').on('click', function () {alert('!!!');});
+  });
 
   $('#{{ inline_admin_formset.formset.prefix }}-group').on('click', '.field-question option',
     function ()

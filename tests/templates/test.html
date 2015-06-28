@@ -8,7 +8,7 @@
 </head>
 <body>
     {{ test_title }}
-    <form action="/question/{{ question_id }}" method="POST">
+    <form action="/question/{{ question_id }}/" method="POST">
         {% csrf_token %}
         <input type="submit" value="Перейти к вопросам"><br>
     </form>

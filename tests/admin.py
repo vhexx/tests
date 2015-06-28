@@ -152,8 +152,8 @@ class TestAdmin(admin.ModelAdmin):
         ImagePairInline.test_id = object_id
         FailureCriterionForm.test_id = object_id
         #for ajax filtration
-        if (request.method == 'POST') and ('fc_filter' in request.POST):
-            quest_id = int(request.POST.get('fc_filter', None))
+        if (request.method == 'GET') and ('fc_filter' in request.GET):
+            quest_id = int(request.GET.get('fc_filter', None))
             if quest_id:
                 id_str = ''
                 for i in Answer.objects.filter(question=quest_id):

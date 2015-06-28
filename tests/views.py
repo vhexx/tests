@@ -9,9 +9,8 @@ def index(requst):
     return redirect('/admin')
 
 
-def test(request):
+def test(request, test_id):
     print(dict(request.session))
-    test_id = int(request.GET.get('id'))
     try:
         test_instance = Test.objects.get(id=test_id)
     except Exception:
@@ -32,6 +31,7 @@ def test(request):
 
 
 def question(request, question_id):
+    print(dict(request.session))
     try:
         question_instance = PreQuestion.objects.get(id=question_id)
     except Exception:

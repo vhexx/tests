@@ -5,8 +5,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 import os
 from django.contrib.admin import widgets
 from django.utils.safestring import mark_safe
-from django.contrib import messages
-from django.utils.encoding import smart_str
 
 
 class ImageInlineFormset(forms.models.BaseInlineFormSet):
@@ -123,7 +121,7 @@ class FailureCriterionInline(admin.StackedInline):
     template = 'inline_failurecriterion_form.html'
 
 
-class MultipleFileInput(widgets.AdminFileWidget):
+class MultiFileInput(widgets.AdminFileWidget):
     def render(self, name, value, attrs=None):
         attrs['multiple'] = 'true'
         output = super(MultiFileInput, self).render(name, value, attrs=attrs)
@@ -134,9 +132,8 @@ class TestForm(forms.ModelForm):
     class Meta:
         model = Test
         fields = ['title', 'seconds', 'images']
-        #widgets = {'images' : MultipleFileInput}
 
-    images = forms.ImageField(widget=MultipleFileInput)
+    images = forms.ImageField(widget=MultiFileInput)
 
 
 class TestAdmin(admin.ModelAdmin):

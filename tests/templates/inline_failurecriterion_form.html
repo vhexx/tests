@@ -17,9 +17,6 @@
   {% if inline_admin_form.needs_explicit_pk_field %}{{ inline_admin_form.pk_field.field }}{% endif %}
   {{ inline_admin_form.fk_field.field }}
 </div>{% endfor %}
-
-<input type="submit" value="{% trans 'Save' %}" name='_continue' />
-
 </div>
 
 <script type="text/javascript">
@@ -29,5 +26,64 @@
     deleteText: "{% filter escapejs %}{% trans "Remove" %}{% endfilter %}",
     addText: "{% filter escapejs %}{% blocktrans with verbose_name=inline_admin_formset.opts.verbose_name|capfirst %}Add another {{ verbose_name }}{% endblocktrans %}{% endfilter %}"
   });
+  //=============
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '')
+    {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++)
+        {
+            var cookie = $.trim(cookies[i]);
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }
+  var csrftoken = getCookie('csrftoken');
+  function csrfSafeMethod(method) {
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+  });
+
+  $('#{{ inline_admin_formset.formset.prefix }}-group').on('click', '.field-question option',
+    function ()
+    {
+      var quest_id = $(this).attr('value');
+      if (quest_id == '')
+      {
+        return;
+      }
+      var answers_select = $(this).closest('fieldset').find('.field-answer select');
+      $.ajax({
+        url: '',
+        type: 'POST',
+        data: {fc_filter : quest_id},
+        success: function (data)
+        {
+          var i = 0;
+          answers_select.find('option').css({'display' : 'none'});
+          while (cur = data.split(' ')[i], cur != '')
+          {
+            answers_select.find('option[value='+cur+']').css({'display' : 'block'});
+            i++;
+          }
+        },
+        error: function ()
+        {
+          alert('ajax failed');
+        }
+      });
+    }
+  );
 })(django.jQuery);
 </script>

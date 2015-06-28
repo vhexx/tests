@@ -3,6 +3,8 @@ from .models import Test, Question, Answer, PreQuestion, PostQuestion, Image, Im
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse
 import os
+from django.contrib.admin import widgets
+from django.utils.safestring import mark_safe
 
 
 class ImageInlineFormset(forms.models.BaseInlineFormSet):
@@ -119,8 +121,22 @@ class FailureCriterionInline(admin.StackedInline):
     template = 'inline_failurecriterion_form.html'
 
 
+class MultipleFileInput(wigets.AdminFileWidget):
+    def render(self, name, value, attrs=None):
+        attrs['multiple'] = 'true'
+        output = super(MultiFileInput, self).render(name, value, attrs=attrs)
+        return mark_safe(output)
+
+
+class TestForm(forms.ModelForm):
+    class Meta:
+        model = Test
+        widgets = {'images' : MultipleFileInput}
+
+
 class TestAdmin(admin.ModelAdmin):
     model = Test
+    form = TestForm
 
     def add_view(self, request, form_url='', extra_context=None):
         self.inlines = []

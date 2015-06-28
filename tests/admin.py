@@ -5,6 +5,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 import os
 from django.contrib.admin import widgets
 from django.utils.safestring import mark_safe
+from django.contrib import messages
+from django.utils.encoding import smart_str
 
 
 class ImageInlineFormset(forms.models.BaseInlineFormSet):
@@ -131,18 +133,19 @@ class MultipleFileInput(widgets.AdminFileWidget):
 class TestForm(forms.ModelForm):
     class Meta:
         model = Test
+        fields = ['title', 'seconds', 'images']
         widgets = {'images' : MultipleFileInput}
 
 
 class TestAdmin(admin.ModelAdmin):
     model = Test
-    form = TestForm
 
     def add_view(self, request, form_url='', extra_context=None):
         self.inlines = []
         return super(TestAdmin, self).add_view(request, form_url, extra_context)
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
+        self.form = TestForm
         self.inlines = [PreQuestionInline, PostQuestionInline, ImageInline, ImagePairInline, FailureCriterionInline]
         questions = Question.objects.filter(test=object_id)
         if questions:
@@ -156,6 +159,18 @@ class TestAdmin(admin.ModelAdmin):
                 for i in Answer.objects.filter(question=quest_id):
                     id_str += str(i.id) + ' '
                 return HttpResponse(id_str)
+        loaded_images = request.FILES.getlist('image', [])
+        images = Image.objects.filter(test=object_id)
+        last_id = 1
+        if images:
+            last_id = images.order_by('-id')[:1].get().id
+        for i in loaded_images:
+            try:
+                new_image = Image(name='img'+str(last_id), img=i, test=obj_id)
+                new_image.save()
+            except Exception, e:
+                messages.error(request, smart_str(e))
+            last_id++
         return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)
 
     def response_add(self, request, obj, post_url_continue=None):

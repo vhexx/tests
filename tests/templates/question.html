@@ -18,12 +18,12 @@
     <form action="/prequestion/{{ prev_id }}/" method="GET">
         <input type="submit" value="Предыдущий вопрос"><br>
     </form>
-    {% endfor %}
+    {% endif %}
 
     {% if next_id != None %}
     <form action="/prequestion/{{ next_id }}/" method="GET">
         <input type="submit" value="Следующий вопрос"><br>
     </form>
-    {% endfor %}
+    {% endif %}
 </body>
 </html>

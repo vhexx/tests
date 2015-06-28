@@ -165,11 +165,8 @@ class TestAdmin(admin.ModelAdmin):
         if images:
             last_id = images.order_by('-id')[:1].get().id
         for i in loaded_images:
-            try:
-                new_image = Image(name='img'+str(last_id), img=i, test=obj_id)
-                new_image.save()
-            except Exception, e:
-                messages.error(request, smart_str(e))
+            new_image = Image(name='img'+str(last_id), img=i, test=obj_id)
+            new_image.save()
             last_id++
         return super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)
 

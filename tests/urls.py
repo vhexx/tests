@@ -4,7 +4,8 @@ from tests import views
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^test$', views.test),
-    url(r'^question$', views.question),
+    url(r'^test/(?P<test_id>[0-9]*)/$', views.test),
+    url(r'^prequestion/(?P<question_id>[0-9]*)/$', views.prequestion),
+    url(r'^postquestion/(?P<question_id>[0-9]*)/$', views.postquestion),
     url(r'^$', views.index),
 )

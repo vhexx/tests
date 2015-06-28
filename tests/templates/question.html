@@ -13,8 +13,17 @@
         <br/>
     {% endfor %}
     </ul>
-    <form action="/prequestion/{{ question_id }}/" method="GET">
+
+    {% if prev_id is not None %}
+    <form action="/prequestion/{{ prev_id }}/" method="GET">
+        <input type="submit" value="Предыдущий вопрос"><br>
+    </form>
+    {% endfor %}
+
+    {% if next_id is not None %}
+    <form action="/prequestion/{{ next_id }}/" method="GET">
         <input type="submit" value="Следующий вопрос"><br>
     </form>
+    {% endfor %}
 </body>
 </html>

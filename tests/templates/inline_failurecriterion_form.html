@@ -26,7 +26,11 @@
     deleteText: "{% filter escapejs %}{% trans "Remove" %}{% endfilter %}",
     addText: "{% filter escapejs %}{% blocktrans with verbose_name=inline_admin_formset.opts.verbose_name|capfirst %}Add another {{ verbose_name }}{% endblocktrans %}{% endfilter %}"
   });
+})(django.jQuery);
+</script>
 
+<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+<script type="text/javascript">
 $(document).ready(function () {
   alert('!!!');
   $('#{{ inline_admin_formset.formset.prefix }}-group').on('click', '.field-question option',
@@ -61,5 +65,4 @@ $(document).ready(function () {
     }
   );
 });
-})(django.jQuery);
 </script>

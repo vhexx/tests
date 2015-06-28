@@ -27,10 +27,11 @@
     addText: "{% filter escapejs %}{% blocktrans with verbose_name=inline_admin_formset.opts.verbose_name|capfirst %}Add another {{ verbose_name }}{% endblocktrans %}{% endfilter %}"
   });
 
+  $('#{{ inline_admin_formset.formset.prefix }}-group').on('click', function () {alert('!!!');});
+
   $('#{{ inline_admin_formset.formset.prefix }}-group').on('click', '.field-question option',
     function ()
     {
-      alert('!!');
       var quest_id = $(this).attr('value');
       if (quest_id == '')
       {

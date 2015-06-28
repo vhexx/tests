@@ -30,8 +30,8 @@
   $('#{{ inline_admin_formset.formset.prefix }}-group').on('click', '.field-question option',
     function ()
     {
+      alert('!!');
       var quest_id = $(this).attr('value');
-      alert(quest_id);
       if (quest_id == '')
       {
         return;

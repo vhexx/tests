@@ -33,7 +33,8 @@ def test(request, test_id):
 def prequestion(request, question_id):
     print(dict(request.session))
     #question_instance = PreQuestion.objects.get(id=question_id)
-    test_id = request.session.get('test_id')
+    test_id = request.session['test_id']
+    print('d0')
     prequestions = PreQuestion.objects.filter(test=test_id).order_by('order')
 
     print('d1')

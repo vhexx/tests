@@ -134,9 +134,9 @@ class TestForm(forms.ModelForm):
     class Meta:
         model = Test
         fields = ['title', 'seconds', 'images']
-        widgets = {'images' : MultipleFileInput}
+        #widgets = {'images' : MultipleFileInput}
 
-    images = forms.ImageField(upload_to='img/')
+    images = forms.ImageField(widget=MultipleFileInput)
 
 
 class TestAdmin(admin.ModelAdmin):

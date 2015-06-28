@@ -14,13 +14,13 @@
     {% endfor %}
     </ul>
 
-    {% if prev_id is not None %}
+    {% if prev_id != None %}
     <form action="/prequestion/{{ prev_id }}/" method="GET">
         <input type="submit" value="Предыдущий вопрос"><br>
     </form>
     {% endfor %}
 
-    {% if next_id is not None %}
+    {% if next_id != None %}
     <form action="/prequestion/{{ next_id }}/" method="GET">
         <input type="submit" value="Следующий вопрос"><br>
     </form>

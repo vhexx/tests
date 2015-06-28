@@ -49,11 +49,10 @@ def prequestion(request, question_id):
             if i != len(prequestions) - 1:
                 next_q = prequestions[i + 1].id
 
-    if prev_q is None and next_q is None:
-        return HttpResponseNotFound('Такого вопроса не существует')
+            context = {
+                'question_title': question_instance.title,
+                'answers': Answer.objects.filter(question=question_id)
+            }
+            return render_to_response('question.html', context)
 
-    context = {
-        'question_title': question_instance.title,
-        'answers': Answer.objects.filter(question=question_id)
-    }
-    return render_to_response('question.html', context)
+    return HttpResponseNotFound('Такого вопроса не существует')

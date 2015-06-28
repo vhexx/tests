@@ -25,7 +25,7 @@ def test(request, test_id):
     prequestions = PreQuestion.objects.filter(test=test_id).order_by('order')
     context = {
         'test_title': test_instance.title,
-        'question_id': prequestions[0].id if True else 0
+        'question_id': prequestions[0].id if len(prequestions) > 0 else 0
     }
     return render_to_response('test.html', context)
 

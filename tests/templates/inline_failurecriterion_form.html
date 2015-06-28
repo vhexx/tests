@@ -32,8 +32,7 @@
 <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
-  $(document).on('click', 'div', function () {alert('!!!');});
-  $('#{{ inline_admin_formset.formset.prefix }}-group').on('click', '.field-question option',
+  $('#{{ inline_admin_formset.formset.prefix }}-group').on('click', '.field-question select option',
     function ()
     {
       var quest_id = $(this).attr('value');

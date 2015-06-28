@@ -158,7 +158,7 @@ class TestAdmin(admin.ModelAdmin):
                 for i in Answer.objects.filter(question=quest_id):
                     id_str += str(i.id) + ' '
                 return HttpResponse(id_str)
-        loaded_images = request.FILES.getlist('image', [])
+        loaded_images = request.FILES.getlist('images', [])
         images = Image.objects.filter(test=object_id)
         last_id = 1
         if images:

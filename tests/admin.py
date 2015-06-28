@@ -133,7 +133,7 @@ class TestForm(forms.ModelForm):
         model = Test
         fields = ['title', 'seconds', 'images']
 
-    images = forms.ImageField(require=False, widget=MultiFileInput)
+    images = forms.ImageField(required=False, widget=MultiFileInput)
 
 
 class TestAdmin(admin.ModelAdmin):

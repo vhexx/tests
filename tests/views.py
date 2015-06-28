@@ -33,34 +33,26 @@ def test(request, test_id):
 def prequestion(request, question_id):
     print(dict(request.session))
     #question_instance = PreQuestion.objects.get(id=question_id)
-    test_id = 1
-    print('d0')
+    test_id = request.session.get('test_id')
     prequestions = PreQuestion.objects.filter(test=test_id).order_by('order')
 
-    print('d1')
     if len(prequestions) == 0:
-        print('d2')
         return HttpResponseNotFound('Вопросов к этому тесту не найдено')
     next_q = None
     prev_q = None
-    print('d3')
 
     for i in range(0, len(prequestions)):
-        print('d4')
-        if prequestions[i].id == question_id:
-            print('d5')
+        if prequestions[i].id == int(question_id):
             question_instance = prequestions[i]
             if i != 0:
                 prev_q = prequestions[i - 1].id
             if i != len(prequestions) - 1:
                 next_q = prequestions[i + 1].id
 
-            print('d6')
             context = {
                 'question_title': question_instance.title,
                 'answers': Answer.objects.filter(question=question_id)
             }
-            print('d7')
             return render_to_response('question.html', context)
 
     return HttpResponseNotFound('Такого вопроса не существует')

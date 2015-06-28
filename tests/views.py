@@ -31,8 +31,7 @@ def test(request):
     return render_to_response('test.html', context)
 
 
-def question(request):
-    question_id = request.GET.get('id')
+def question(request, question_id):
     try:
         question_instance = PreQuestion.objects.get(id=question_id)
     except Exception:
@@ -40,6 +39,6 @@ def question(request):
 
     context = {
         'question_title': question_instance.title,
-        'answers': Answer.objects.filter(question=question_id)
+        'answers': Answer.objects.filter(question=int(question_id))
     }
-    return render_to_response('question.html', context, context_instance=RequestContext(request))
+    return render_to_response('question.html', context)

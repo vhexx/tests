@@ -35,8 +35,12 @@ def prequestion(request, question_id):
     #question_instance = PreQuestion.objects.get(id=question_id)
     test_id = request.session.get('test_id')
     prequestions = PreQuestion.objects.filter(test=test_id).order_by('order')
+
+    if len(prequestions) == 0:
+        return HttpResponseNotFound('Вопросов к этому тесту не найдено')
     next_q = None
     prev_q = None
+
     for i in range(0, len(prequestions)):
         if prequestions[i].id == question_id:
             question_instance = prequestions[i]

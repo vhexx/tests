@@ -19,6 +19,10 @@ class ImageInline(admin.StackedInline):
     extra = 0
     template = 'inline_image_form.html'
     formset = ImageInlineFormset
+    readonly_fields = ('img',)
+
+    def has_add_permission(request):
+        return False
 
 
 class ImagePairInline(admin.StackedInline):
@@ -151,6 +155,7 @@ class TestAdmin(admin.ModelAdmin):
             QuestionForm.last = questions.order_by('-order')[:1].get().order
         ImagePairInline.test_id = object_id
         FailureCriterionForm.test_id = object_id
+        #for ajax filtration
         if (request.method == 'POST') and ('fc_filter' in request.POST):
             quest_id = int(request.POST.get('fc_filter', None))
             if quest_id:
@@ -158,17 +163,18 @@ class TestAdmin(admin.ModelAdmin):
                 for i in Answer.objects.filter(question=quest_id):
                     id_str += str(i.id) + ' '
                 return HttpResponse(id_str)
-        ret = super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)
+        default_return = super(TestAdmin, self).change_view(request, object_id, form_url, extra_context)
+        #for adding multiple images
         loaded_images = request.FILES.getlist('images', [])
-        images = Image.objects.filter(test=object_id)
-        last_id = 1
-        if images:
-            last_id = images.order_by('-id')[:1].get().id
+        #images = Image.objects.filter(test=object_id)
+        #last_id = 1
+        #if images:
+            #last_id = images.order_by('-id')[:1].get().id
         for i in loaded_images:
-            new_image = Image(name='img'+str(last_id), img=i, test=Test.objects.get(id=object_id))
+            new_image = Image(name=i.name, img=i, test=Test.objects.get(id=object_id))
             new_image.save()
-            last_id += 1
-        return ret
+            #last_id += 1
+        return default_return
 
     def response_add(self, request, obj, post_url_continue=None):
         return HttpResponseRedirect('../%s' % str(obj.id))

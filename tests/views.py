@@ -30,11 +30,22 @@ def test(request, test_id):
     return render_to_response('test.html', context)
 
 
-def question(request, question_id):
+def prequestion(request, question_id):
     print(dict(request.session))
-    try:
-        question_instance = PreQuestion.objects.get(id=question_id)
-    except Exception:
+    #question_instance = PreQuestion.objects.get(id=question_id)
+    test_id = request.session.get('test_id')
+    prequestions = PreQuestion.objects.filter(test=test_id).order_by('order')
+    next_q = None
+    prev_q = None
+    for i in range(0, len(prequestions)):
+        if prequestions[i].id == question_id:
+            question_instance = prequestions[i]
+            if i != 0:
+                prev_q = prequestions[i - 1].id
+            if i != len(prequestions) - 1:
+                next_q = prequestions[i + 1].id
+
+    if prev_q is None and next_q is None:
         return HttpResponseNotFound('Такого вопроса не существует')
 
     context = {

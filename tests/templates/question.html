@@ -5,14 +5,16 @@
     <title></title>
 </head>
 <body>
-{{ question_title }}
+    {{ question_title }}
 
-<ul>
-{% for a in answers %}
-    <li>{{ a.statement|default_if_none:"" }}{{ a.image|default_if_none:"" }}</li>
-    <br/>
-{% endfor %}
-</ul>
-
+    <ul>
+    {% for a in answers %}
+        <li>{{ a.statement|default_if_none:"" }}{{ a.image|default_if_none:"" }}</li>
+        <br/>
+    {% endfor %}
+    </ul>
+    <form action="/question/{{ question_id }}/" method="GET">
+        <input type="submit" value="Следующий вопрос"><br>
+    </form>
 </body>
 </html>

@@ -13,6 +13,7 @@ def test(request, test_id):
     print(dict(request.session))
     try:
         test_instance = Test.objects.get(id=test_id)
+
     except Exception:
         return HttpResponseNotFound('Такого теста не существует')
 
@@ -22,10 +23,9 @@ def test(request, test_id):
 
     # retrieve related questions and put them in session
     prequestions = PreQuestion.objects.filter(test=test_id).order_by('order')
-
     context = {
         'test_title': test_instance.title,
-        'question_id': prequestions[0].id
+        'question_id': prequestions[0].id if True else 0
     }
     return render_to_response('test.html', context)
 
@@ -39,6 +39,6 @@ def question(request, question_id):
 
     context = {
         'question_title': question_instance.title,
-        'answers': Answer.objects.filter(question=int(question_id))
+        'answers': Answer.objects.filter(question=question_id)
     }
     return render_to_response('question.html', context)

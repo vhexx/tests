@@ -9,6 +9,8 @@ class ImageInlineFormset(forms.models.BaseInlineFormSet):
     def save(self, commit=True):
         for f in self.deleted_forms:
             os.remove(f.instance.img.path)
+        for f in self.saved_forms:
+            f.save(commit)
         return super(ImageInlineFormset, self).save(commit)
 
 

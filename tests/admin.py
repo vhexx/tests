@@ -97,12 +97,12 @@ class PostQuestionInline(admin.StackedInline):
 class FailureCriterionForm(forms.ModelForm):
     class Meta:
         model = FailureCriterion
-        fields = ['func', 'question', 'answer']
+        #fields = ['func', 'question', 'answer']
 
     test_id = None
 
-    question = forms.ModelChoiceField(queryset=PreQuestion.objects.none())
-    answer = forms.ModelChoiceField(queryset=Answer.objects.none())
+    #question = forms.ModelChoiceField(queryset=PreQuestion.objects.none())
+    #answer = forms.ModelChoiceField(queryset=Answer.objects.none())
 
     def __init__(self, *args, **kwargs):
         super(FailureCriterionForm, self).__init__(*args, **kwargs)
@@ -119,6 +119,16 @@ class FailureCriterionInline(admin.StackedInline):
     form = FailureCriterionForm
     extra = 0
     template = 'inline_failurecriterion_form.html'
+
+
+class FCFunctionInline(admin.StackedInline):
+    model = FCFunction
+    fk_name = 'test'
+    max_num = 1
+
+    def has_add_permition(self, request):
+        super(FCFunctionInline, self).has_add_permition(request)
+        return False
 
 
 class MultiFileInput(widgets.AdminFileWidget):
@@ -145,7 +155,9 @@ class TestAdmin(admin.ModelAdmin):
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
         self.form = TestForm
-        self.inlines = [PreQuestionInline, PostQuestionInline, ImageInline, ImagePairInline, FailureCriterionInline]
+        self.inlines = [ImageInline, ImagePairInline, 
+                        PreQuestionInline, PostQuestionInline,
+                        FailureCriterionInline, FCFunctionInline]
         questions = Question.objects.filter(test=object_id)
         if questions:
             QuestionForm.last = questions.order_by('-order')[:1].get().order

@@ -46,10 +46,17 @@ class Answer(models.Model):
 
 
 class FailureCriterion(models.Model):
-    func = models.CharField(max_length=100)
     test = models.ForeignKey(Test)
     question = models.ForeignKey(Question)
     answer = models.ForeignKey(Answer)
+
+    def __str__(self):
+        return 'failure criterion'
+
+
+class FCFunction(models.Model):
+    test = models.ForeignKey(Test)
+    func = models.CharField(max_length=100)
 
     def __str__(self):
         return self.func
@@ -70,5 +77,4 @@ class ImagePair(models.Model):
     right = models.ForeignKey(Image, related_name='%(class)s_right')
 
     def __str__(self):
-        #return 'pair(%s,%s)' % str(self.left), str(self.right)
         return 'pair'

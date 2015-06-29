@@ -51,7 +51,7 @@ class FailureCriterion(models.Model):
     answer = models.ForeignKey(Answer)
 
     def __str__(self):
-        return 'failure criterion'
+        return 'Failure criterion'
 
 
 class FCFunction(models.Model):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Test, Question, Answer, PreQuestion, PostQuestion, Image, ImagePair, FailureCriterion
+from .models import Test, Question, Answer, PreQuestion, PostQuestion, Image, ImagePair, FailureCriterion, FCFunction
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse
 import os

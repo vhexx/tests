@@ -48,6 +48,8 @@ class Answer(models.Model):
 class FailureCriterion(models.Model):
     func = models.CharField(max_length=100)
     test = models.ForeignKey(Test)
+    question = models.ForeignKey(Question)
+    answer = models.ForeignKey(Answer)
 
     def __str__(self):
         return self.func

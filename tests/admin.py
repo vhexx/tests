@@ -141,14 +141,13 @@ class MultiFileInput(widgets.AdminFileWidget):
 class TestForm(forms.ModelForm):
     class Meta:
         model = Test
-        fields = ['title', 'seconds', 'images']
+        fields = ['title', 'seconds', 'description', 'images']
 
     images = forms.ImageField(required=False, widget=MultiFileInput)
 
 
 class TestAdmin(admin.ModelAdmin):
     model = Test
-    fields = ('title', 'seconds', 'description')
 
     def add_view(self, request, form_url='', extra_context=None):
         self.inlines = []

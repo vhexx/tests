@@ -148,6 +148,7 @@ class TestForm(forms.ModelForm):
 
 class TestAdmin(admin.ModelAdmin):
     model = Test
+    fields = ('title', 'seconds', 'description')
 
     def add_view(self, request, form_url='', extra_context=None):
         self.inlines = []

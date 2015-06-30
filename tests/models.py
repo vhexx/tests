@@ -4,7 +4,7 @@ from django.db import models
 class Test(models.Model):
     title = models.CharField(max_length=100)
     seconds = models.IntegerField(null=True, blank=True)
-    description = models.TextField()
+    description = models.TextField(blank=True)
 
     def __str__(self):
         return self.title
@@ -76,7 +76,7 @@ class ImagePair(models.Model):
     test = models.ForeignKey(Test)
     left = models.ForeignKey(Image, related_name='%(class)s_left')
     right = models.ForeignKey(Image, related_name='%(class)s_right')
-    repeats = models.IntegerField()
+    repeats = models.IntegerField(default=1)
 
     def __str__(self):
         return 'pair'

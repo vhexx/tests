@@ -67,6 +67,9 @@ class PreQuestionAdmin(admin.ModelAdmin):
     def get_model_perms(self, request):
         return {}
 
+    def response_change(self, request, obj):
+        return HttpResponseRedirect('../../test/%s' % str(obj.test.id))
+
 
 class PreQuestionInline(admin.StackedInline):
     model = PreQuestion
@@ -86,6 +89,9 @@ class PostQuestionAdmin(admin.ModelAdmin):
     def get_model_perms(self, request):
         return {}
 
+    def response_change(self, request, obj):
+        return PreQuestionAdmin.response_change(self, request, obj)
+
 
 class PostQuestionInline(admin.StackedInline):
     model = PostQuestion
@@ -97,12 +103,8 @@ class PostQuestionInline(admin.StackedInline):
 class FailureCriterionForm(forms.ModelForm):
     class Meta:
         model = FailureCriterion
-        #fields = ['func', 'question', 'answer']
 
     test_id = None
-
-    #question = forms.ModelChoiceField(queryset=PreQuestion.objects.none())
-    #answer = forms.ModelChoiceField(queryset=Answer.objects.none())
 
     def __init__(self, *args, **kwargs):
         super(FailureCriterionForm, self).__init__(*args, **kwargs)

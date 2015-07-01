@@ -125,7 +125,6 @@ class FailureCriterionInline(admin.StackedInline):
     form = FailureCriterionForm
     extra = 0
     template = 'inline_failurecriterion_form.html'
-    fields = (('question', 'answer', ), )
 
 
 class FCFunctionInline(admin.StackedInline):

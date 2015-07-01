@@ -76,10 +76,6 @@ class PreQuestionInline(admin.StackedInline):
     template = 'question_form.html'
     form = QuestionForm
     extra = 0
-    fieldsets= ( 
-                 (None, {'fields' : ('title', 'order', 'type'),
-                         'classes' : ('collapse')}), 
-               )
 
 
 class PostQuestionAdmin(admin.ModelAdmin):
@@ -102,7 +98,6 @@ class PostQuestionInline(admin.StackedInline):
     template = 'question_form.html'
     form = QuestionForm
     extra = 0
-    fieldsets = PreQuestionInline.fieldsets
 
 
 class FailureCriterionForm(forms.ModelForm):

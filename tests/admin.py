@@ -99,6 +99,7 @@ class PostQuestionInline(admin.StackedInline):
     template = 'question_form.html'
     form = QuestionForm
     extra = 0
+    fields = PreQuestionInline.fields
 
 
 class FailureCriterionForm(forms.ModelForm):

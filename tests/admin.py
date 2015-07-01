@@ -19,7 +19,6 @@ class ImageInline(admin.StackedInline):
     extra = 0
     template = 'inline_image_form.html'
     formset = ImageInlineFormset
-    readonly_fields = ('img',)
 
 
 class ImagePairInline(admin.StackedInline):

@@ -10,7 +10,7 @@
         {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
           <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="inlinechangelink">{% trans "Change" %}</a>
         {% endif %}
-      <img src="{{ inline_admin_form.original.img.url }}" height="100"></img>
+      <img src="{{ inline_admin_form.original.img.url }}" height="100" onclick="document.location.href='{{ inline_admin_form.original.img.url }}';" ></img>
     {% else %}#{{ forloop.counter }}{% endif %}</span>
       {% if inline_admin_form.show_url %}<a href="{{ inline_admin_form.absolute_url }}">{% trans "View on site" %}</a>{% endif %}
     {% if inline_admin_formset.formset.can_delete and inline_admin_form.original %}<span class="delete">{{ inline_admin_form.deletion_field.field }} {{ inline_admin_form.deletion_field.label_tag }}</span>{% endif %}

@@ -19,12 +19,14 @@ class ImageInline(admin.StackedInline):
     extra = 0
     template = 'inline_image_form.html'
     formset = ImageInlineFormset
+    fields = (('name', 'img', ), )
 
 
 class ImagePairInline(admin.StackedInline):
     model = ImagePair
     fk_name = 'test'
     extra = 0
+    fields = (('left', 'right', 'repeats', ), )
 
     test_id = None
 
@@ -123,6 +125,7 @@ class FailureCriterionInline(admin.StackedInline):
     form = FailureCriterionForm
     extra = 0
     template = 'inline_failurecriterion_form.html'
+    fields = (('question', 'answer', ), )
 
 
 class FCFunctionInline(admin.StackedInline):

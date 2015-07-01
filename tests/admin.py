@@ -56,10 +56,6 @@ class PreQuestionAdmin(admin.ModelAdmin):
     model = PreQuestion
     inlines = [AnswerInline]
     readonly_fields = ('test',)
-    fieldsets= ( 
-                 (None, {'fields' : ('title', 'order', 'type'),
-                         'classes' : ('collapse')}), 
-               )
 
     def delete_model(self, request, obj):
         rel_answers = Answer.objects.filter(question=obj.question_ptr)
@@ -80,6 +76,10 @@ class PreQuestionInline(admin.StackedInline):
     template = 'question_form.html'
     form = QuestionForm
     extra = 0
+    fieldsets= ( 
+                 (None, {'fields' : ('title', 'order', 'type'),
+                         'classes' : ('collapse')}), 
+               )
 
 
 class PostQuestionAdmin(admin.ModelAdmin):
@@ -102,6 +102,7 @@ class PostQuestionInline(admin.StackedInline):
     template = 'question_form.html'
     form = QuestionForm
     extra = 0
+    fieldsets = PreQuestionInline.fieldsets
 
 
 class FailureCriterionForm(forms.ModelForm):

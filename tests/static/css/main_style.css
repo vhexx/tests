@@ -1,0 +1,73 @@
+body {
+	margin : 0;
+	padding : 0;
+	width : 100%;
+}
+#header {
+	display : block;
+	position : relative;
+	width : 100%;
+	height : 50px;
+	background-color : rgb(34, 179, 85);
+	z-index : 2;
+}
+#main_area {
+	display : block;
+	background-color : #ffffff;
+	position : relative;
+	left : 50%;
+	box-shadow: 0px 0px 50px 50px rgb(232, 235, 241);
+	padding : 20px;
+	font-size: 14px;
+	font-family: arial;
+	font-weight: normal;
+	z-index: 1;
+}
+.questions {
+	width : 920px;
+	margin-left : -480px;
+}
+#footer {
+	display: block;
+	position: relative;
+	width : 100%;
+	z-index : 3;
+}
+
+#progress, #main_form, #submit_line {position: relative; display: block; width: 100%;}
+
+#progress {
+	color : rgb(54, 141, 218);
+}
+#progress_line {
+	position: relative;
+	display : block;
+	width : 100%;
+	height : 5px;
+	background-color : rgb(232, 235, 241);
+	margin-top : 5px; margin-bottom: 1.0em;
+}
+#progress_passed {
+	position: absolute;
+	display: block;
+	left : 0; top : 0; bottom: 0; right : 50%;
+	background-color: rgb(54, 141, 218);
+}
+#submit_line {
+	margin-top: 1.0em; text-align: center;
+}
+#prev, #next {
+	position: relative;
+	display : inline;
+	border : none;
+	width : 12.0em;
+	padding : 0.5em;
+	font-weight: bolder;
+	border-radius: 7px;
+	color : #ffffff;
+	margin-left: 6em; margin-right: 6em; margin-top: 0; margin-bottom: 0;
+	cursor: pointer;
+	font-family: arial;
+}
+#prev {background-color: rgb(194, 201, 219);}
+#next {background-color: rgb(34, 179, 85);}

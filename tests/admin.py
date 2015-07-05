@@ -46,7 +46,7 @@ class QuestionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
-        self.fields['type'].initial = QuestionType.objects.get()
+        self.fields['type'].initial = QuestionType.objects[0]
         self.fields['title'].initial = 'question'
 
 

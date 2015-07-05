@@ -83,5 +83,6 @@ class ImagePair(models.Model):
 
 
 class TrainingImagePair(models.Model):
+    text = models.CharField(max_length=300, null=True, blank=True)
     left = models.ImageField(upload_to='img/')
     right = models.ImageField(upload_to='img/')

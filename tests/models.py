@@ -24,7 +24,7 @@ class Question(models.Model):
     type = models.ForeignKey(QuestionType)
 
     class Meta:
-        unique_together = (('test','order'),)
+        unique_together = (('test', 'order'),)
 
     def __str__(self):
         return self.title

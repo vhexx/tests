@@ -1,7 +1,8 @@
+from random import shuffle
 from django.http import HttpResponseNotFound
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
-from tests.models import PreQuestion, Test, Answer, PostQuestion
+from tests.models import PreQuestion, Test, Answer, PostQuestion, ImagePair
 from .const import prequestions_state
 
 
@@ -21,6 +22,10 @@ def test(request, test_id):
     request.session['test_id'] = test_id
     request.session['state'] = prequestions_state
 
+    # retrieve image pairs, shuffle them and put in session
+    image_pair_ids = prepare_images(test_id)
+    request.session['image_pair_ids'] = image_pair_ids
+
     # retrieve related questions and put them in session
     prequestions = PreQuestion.objects.filter(test=test_id).order_by('order')
     context = {
@@ -29,6 +34,15 @@ def test(request, test_id):
     }
     return render_to_response('test.html', context)
 
+
+def prepare_images(test_id):
+    image_pairs = ImagePair.objects.filter(test=test_id)
+    image_pair_ids = []
+    for pair in image_pairs:
+        for i in range(pair.repeats):
+            image_pair_ids.append(pair.id)
+    shuffle(image_pair_ids)
+    return image_pair_ids
 
 def question(request, question_id, model):
     test_id = request.session.get('test_id')
@@ -43,6 +57,7 @@ def question(request, question_id, model):
     prev_id = None
     next_id = None
 
+    #determine next and previous question
     for i in range(0, len(prequestions)):
         if prequestions[i].id == int(question_id):
             question_instance = prequestions[i]

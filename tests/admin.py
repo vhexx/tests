@@ -45,7 +45,7 @@ class QuestionForm(forms.ModelForm):
         model = Question
         fields = ('separator', 'title', 'order', 'type',)
 
-    separator = forms.IntegerField() #forms.ChoiceField(choices=['yes', 'no']);
+    separator = forms.ChoiceField(choices=[('yes', 'yes'), ('no', 'no')]);
     last = None
 
     def __init__(self, *args, **kwargs):

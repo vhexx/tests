@@ -23,9 +23,15 @@ body {
 	font-weight: normal;
 	z-index: 1;
 }
-.questions {
+.questions, .images {
 	width : 920px;
 	margin-left : -480px;
+}
+.qtitle {
+	margin-top : 1em; margin-bottom: 1em;
+}
+input, select, textarea {
+	margin-left: 2em;
 }
 #footer {
 	display: block;
@@ -71,3 +77,23 @@ body {
 }
 #prev {background-color: rgb(194, 201, 219);}
 #next {background-color: rgb(34, 179, 85);}
+
+
+@media all and (min-width: 1300px) {
+	.images {
+		width : 1160px;
+		margin-left: -600px;
+	}
+}
+@media all and (min-width: 1600px) {
+	.images {
+		width : 1460px;
+		margin-left: -700px;
+	}
+}
+@media all and (min-width: 2000px) {
+	.images {
+		width: 1760px;
+		margin-left: -900px;
+	}
+}

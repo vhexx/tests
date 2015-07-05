@@ -112,8 +112,8 @@ def pairs(request):
 
     request.session['image_pair_id_ptr'] = ptr
     image_pair = ImagePair.objects.get(id=image_pair_ids[ptr])
-    left = '/media/' + str(Image.objects.get(id=image_pair.left).img)
-    right = '/media/' + str(Image.objects.get(id=image_pair.right).img)
+    left = '/media/' + str(image_pair.left.img)
+    right = '/media/' + str(image_pair.right.img)
 
     context = {
         'left': left,

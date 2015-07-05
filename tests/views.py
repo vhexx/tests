@@ -44,27 +44,35 @@ def prepare_images(test_id):
     shuffle(image_pair_ids)
     return image_pair_ids
 
-def question(request, question_id, model):
+
+def question(request, question_id):
     test_id = request.session.get('test_id')
     if test_id is None:
         return HttpResponseNotFound('Вопрос недоступен')
 
-    prequestions = model.objects.filter(test=test_id).order_by('order')
+    if PreQuestion.objects.filter(id=question_id).exists():
+        model = PreQuestion
+    elif PostQuestion.objects.filter(id=question_id).exists():
+        model = PostQuestion
+    else:
+        return HttpResponseNotFound('Вопрос недоступен')
 
-    if len(prequestions) == 0:
+    questions = model.objects.filter(test=test_id).order_by('order')
+
+    if len(questions) == 0:
         return HttpResponseNotFound('Вопросов к этому тесту не найдено')
 
     prev_id = None
     next_id = None
 
-    #determine next and previous question
-    for i in range(0, len(prequestions)):
-        if prequestions[i].id == int(question_id):
-            question_instance = prequestions[i]
+    # determine next and previous question
+    for i in range(0, len(questions)):
+        if questions[i].id == int(question_id):
+            question_instance = questions[i]
             if i != 0:
-                prev_id = prequestions[i - 1].id
-            if i != len(prequestions) - 1:
-                next_id = prequestions[i + 1].id
+                prev_id = questions[i - 1].id
+            if i != len(questions) - 1:
+                next_id = questions[i + 1].id
 
             context = {
                 'question_title': question_instance.title,
@@ -75,10 +83,3 @@ def question(request, question_id, model):
             return render_to_response('question.html', context)
 
     return HttpResponseNotFound('Такого вопроса не существует')
-
-
-def prequestion(request, question_id):
-    return question(request, question_id, PreQuestion)
-
-def postquestion(request, question_id):
-    return question(request, question_id, PostQuestion)

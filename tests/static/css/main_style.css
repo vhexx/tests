@@ -23,23 +23,6 @@ body {
 	font-weight: normal;
 	z-index: 1;
 }
-.questions, .images {
-	width : 920px;
-	margin-left : -480px;
-}
-.qtitle {
-	margin-top : 1em; margin-bottom: 1em;
-}
-input, select, textarea {
-	margin-left: 2em;
-}
-#footer {
-	display: block;
-	position: relative;
-	width : 100%;
-	z-index : 3;
-}
-
 #progress, #main_form, #submit_line {position: relative; display: block; width: 100%;}
 
 #progress {
@@ -59,6 +42,47 @@ input, select, textarea {
 	left : 0; top : 0; bottom: 0; right : 50%;
 	background-color: rgb(54, 141, 218);
 }
+.questions, .images {
+	width : 920px;
+	margin-left : -480px;
+}
+.img_choice_area {
+	position: relative;
+	display: block;
+	width: 100%;
+	text-align: center;
+	margin-top: 2em; margin-bottom: 2em;
+}
+.img_choice_area img {
+	display : inline;
+	border : 1px rgb(232, 235, 241) solid;
+	padding  : 1em;
+	margin-left: 1em; margin-right: 1em;
+	vertical-align: top;
+}
+.qtitle {
+	margin-top : 1em; margin-bottom: 1em;
+}
+.separator {
+	display: block;
+	position: relative;
+	height: 1px;
+	width: 100%;
+	background-color: rgb(232, 235, 241);
+	margin-top: 1em;
+}
+input, select, textarea {
+	margin-left: 2em;
+}
+textarea {
+	width : 40em;
+	height : 6em;
+	border : 1px #000000 solid;
+	outline: none;
+	resize : none;
+	box-shadow : inset 3px 3px 5px 0px rgb(194, 201, 219);
+}
+input {margin-top : 0.3em; margin-bottom: 0.3em;}
 #submit_line {
 	margin-top: 1.0em; text-align: center;
 }
@@ -66,6 +90,7 @@ input, select, textarea {
 	position: relative;
 	display : inline;
 	border : none;
+	outline: none;
 	width : 12.0em;
 	padding : 0.5em;
 	font-weight: bolder;
@@ -77,6 +102,12 @@ input, select, textarea {
 }
 #prev {background-color: rgb(194, 201, 219);}
 #next {background-color: rgb(34, 179, 85);}
+#footer {
+	display: block;
+	position: relative;
+	width : 100%;
+	z-index : 3;
+}
 
 
 @media all and (min-width: 1300px) {

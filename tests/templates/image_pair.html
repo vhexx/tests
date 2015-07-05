@@ -4,7 +4,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <style>
+    <!-- style>
     .img_div {
         width:40%;
         border:1px solid;
@@ -15,7 +15,7 @@
     .image {
         width: 100%
     }
-    </style>
+    </style -->
     <link rel="stylesheet" type="text/css" href="../static/css/main_style.css">
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <script src="../static/js/main.js" ></script>
@@ -76,9 +76,9 @@
         {% endif %}
     {% endif %}
     {% if is_training == False or next_training_image_pair != None %}
-        <input type="submit" value="Выбрать"><br>
+        <input type="submit" value="Выбрать" id="next" ><br>
     {% else %}
-        <input type="submit" value="Выбрать и перейти к вопросам"><br>
+        <input type="submit" value="Выбрать и перейти к вопросам" id="next"><br>
     {% endif %}
     </form>
 </div>
@@ -95,9 +95,9 @@
         {% endif %}
     {% endif %}
     {% if is_training == False or next_training_image_pair != None %}
-        <input type="submit" value="Выбрать"><br>
+        <input type="submit" value="Выбрать" id="next"><br>
     {% else %}
-        <input type="submit" value="Выбрать и перейти к вопросам"><br>
+        <input type="submit" value="Выбрать и перейти к вопросам" id="next"><br>
     {% endif %}
     </form>
 </div>

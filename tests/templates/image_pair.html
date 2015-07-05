@@ -21,14 +21,22 @@
 
 <div class='img_div'>
     <img class="image" src="{{left}}" />
+    {% if is_training == True %}
     <form action="/pairs/" method="GET">
+    {% else %}
+    <form action="/training/" method="GET">
+    {% endif %}
         <input type="submit" value="Выбрать"><br>
     </form>
 </div>
 
 <div class='img_div'>
     <img class="image" src="{{right}}" />
+    {% if is_training == True %}
     <form action="/pairs/" method="GET">
+    {% else %}
+    <form action="/training/" method="GET">
+    {% endif %}
         <input type="submit" value="Выбрать"><br>
     </form>
 </div>

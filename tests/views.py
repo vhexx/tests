@@ -1,9 +1,8 @@
 from random import shuffle
 from django.http import HttpResponseNotFound
 from django.shortcuts import render_to_response, redirect
-from django.template import RequestContext
 from tests.models import PreQuestion, Test, Answer, PostQuestion, ImagePair, Image
-from .const import prequestions_state, postquestions_state, pairs_state, initial_state
+from .const import prequestions_state, postquestions_state, pairs_state, initial_state, training_state
 
 
 def index(requst):
@@ -20,7 +19,7 @@ def test(request, test_id):
 
     # put current test id in session
     request.session['test_id'] = test_id
-    request.session['state'] = initial_state
+    request.session['state'] = training_state
 
     # retrieve image pairs, shuffle them and put in session
     image_pair_ids = prepare_images(test_id)
@@ -34,6 +33,10 @@ def test(request, test_id):
         'question_id': prequestions[0].id if len(prequestions) > 0 else 0
     }
     return render_to_response('test.html', context)
+
+
+def training(request):
+    return None
 
 
 def prepare_images(test_id):

@@ -80,3 +80,8 @@ class ImagePair(models.Model):
 
     def __str__(self):
         return 'pair'
+
+
+class TrainingImagePair(models.Model):
+    left = models.ForeignKey(Image, related_name='%(class)s_left')
+    right = models.ForeignKey(Image, related_name='%(class)s_right')

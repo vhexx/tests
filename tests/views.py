@@ -79,15 +79,15 @@ def question(request, question_id):
     # determine next and previous question
     for i in range(0, len(question_ids)):
         if question_ids[i] == question_id:
-            question_instance = question_ids[i]
             if i != 0:
-                prev_id = question_ids[i - 1].id
+                prev_id = question_ids[i - 1]
             if i != len(question_ids) - 1:
-                next_id = question_ids[i + 1].id
+                next_id = question_ids[i + 1]
             else:
                 if model == PreQuestion:
                     go_to_pairs = True
 
+            question_instance = model.objects.get(id=question_id)
             context = {
                 'question_title': question_instance.title,
                 'answers': Answer.objects.filter(question=question_id),

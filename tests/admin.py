@@ -44,6 +44,7 @@ class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
 
+    separator = ChoiceField(choices=['yes', 'no']);
     last = None
 
     def __init__(self, *args, **kwargs):
@@ -78,7 +79,7 @@ class PreQuestionInline(admin.StackedInline):
     template = 'question_form.html'
     form = QuestionForm
     extra = 0
-    fields = (('title', 'order', 'type', ), )
+    fields = (('separator'), ('title', 'order', 'type', ), )
 
 
 class PostQuestionAdmin(admin.ModelAdmin):

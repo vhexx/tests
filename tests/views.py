@@ -63,12 +63,12 @@ def question(request, question_id):
     else:
         return HttpResponseNotFound('Вопрос недоступен')
 
-    questions = model.objects.filter(test=test_id).order_by('order')
+    question_ids = list(map(lambda q: q.id, model.objects.filter(test=test_id).order_by('order')))
 
-    if len(questions) == 0:
+    if len(question_ids) == 0:
         return HttpResponseNotFound('Вопросов к этому тесту не найдено')
 
-    if question_id not in questions:
+    if question_id not in question_ids:
         return HttpResponseNotFound('Вопрос недоступен')
 
     prev_id = None
@@ -76,13 +76,13 @@ def question(request, question_id):
     go_to_pairs = False
 
     # determine next and previous question
-    for i in range(0, len(questions)):
-        if questions[i].id == int(question_id):
-            question_instance = questions[i]
+    for i in range(0, len(question_ids)):
+        if question_ids[i].id == int(question_id):
+            question_instance = question_ids[i]
             if i != 0:
-                prev_id = questions[i - 1].id
-            if i != len(questions) - 1:
-                next_id = questions[i + 1].id
+                prev_id = question_ids[i - 1].id
+            if i != len(question_ids) - 1:
+                next_id = question_ids[i + 1].id
             else:
                 if model == PreQuestion:
                     go_to_pairs = True

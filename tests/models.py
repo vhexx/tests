@@ -22,6 +22,7 @@ class Question(models.Model):
     order = models.IntegerField()
     test = models.ForeignKey(Test)
     type = models.ForeignKey(QuestionType)
+    isSeparator = models.BooleanField(default=False)
 
     class Meta:
         unique_together = (('test', 'order'),)

@@ -54,7 +54,7 @@ def training(request, training_image_pair_id):
     for i in range(0, len(training_image_pairs)):
         if training_image_pairs[i].id == training_image_pair_id:
             if i != len(training_image_pairs) - 1:
-                next_training_image_pair_id = training_image_pair_id[i + 1]
+                next_training_image_pair_id = training_image_pairs[i + 1].id
                 prequestions = []
             else:
                 next_training_image_pair_id = None
@@ -75,7 +75,7 @@ def question(request, question_id):
     question_id = int(question_id)
     state = request.session.get('state')
 
-    if state == initial_state:
+    if state == training_state:
         request.session['state'] = prequestions_state
 
     test_id = request.session.get('test_id')

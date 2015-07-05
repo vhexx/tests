@@ -37,6 +37,7 @@
   var init_display = $('.field-title.field-order.field-type').eq(0).css('display');
   $('#{{ inline_admin_formset.formset.prefix }}-group').on('change', '.field-isSeparator input', function ()
   {
+    alert('!!!');
     if ($(this).attr('checked') == 'checked')
     {
       $(this).closest('fieldset').find('.field-title.field-order.field-type').css({'display' : 'none'});

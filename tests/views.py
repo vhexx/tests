@@ -64,7 +64,7 @@ def training(request, training_image_pair_id):
                 'left': '/media/' + str(training_image_pairs[i].left),
                 'right': '/media/' + str(training_image_pairs[i].right),
                 'next_training_image_pair': next_training_image_pair_id,
-                'question_id': prequestions[0].id if len(prequestions) > 0 else None,
+                'question_id': next((q for q in prequestions if not q.isSeparator), None),
                 'is_training': True
             }
             return render_to_response('image_pair.html', context)

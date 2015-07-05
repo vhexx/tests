@@ -37,8 +37,8 @@
   $(document).on('ready', function() {
     $('.field-isSeparator input[type="checkbox"]:checked').each(function(indx, element)
     {
-      alert(element.css('display'));
-      element.closest('fieldset').find('.field-title.field-type').css({'display' : 'none'});
+      alert($(element).css('display'));
+      $(element).closest('fieldset').find('.field-title.field-type').css({'display' : 'none'});
     });
   });
   $('#{{ inline_admin_formset.formset.prefix }}-group').on('change', '.field-isSeparator input:checkbox', function ()

@@ -44,7 +44,7 @@ class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
 
-    separator = ChoiceField(choices=['yes', 'no']);
+    separator = forms.ChoiceField(choices=['yes', 'no']);
     last = None
 
     def __init__(self, *args, **kwargs):

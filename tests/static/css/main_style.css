@@ -16,22 +16,64 @@ body {
 	background-color : #ffffff;
 	position : relative;
 	left : 50%;
-	box-shadow: 0px 0px 50px 50px rgb(232, 235, 241);
+	box-shadow: 0px 0px 60px 30px rgb(232, 235, 241);
 	padding : 20px;
 	font-size: 14px;
 	font-family: arial;
 	font-weight: normal;
 	z-index: 1;
 }
-#progress, #main_form, #submit_line {position: relative; display: block; width: 100%;}
+#main_form {display: none;}
+#loader {
+	position: relative;
+	left : 50%;
+	margin-left: -20px;
+	width: 0;
+    padding: 20px;
+    background:
+      linear-gradient(rgba(0,0,0,1) 30%, transparent 30%, transparent 70%, rgba(0,0,0,.4) 70%),
+      linear-gradient(to left, rgba(0,0,0,.2) 30%, transparent 30%, transparent 70%, rgba(0,0,0,.8) 70%);
+    background-repeat: no-repeat;
+    background-size: 10% 100%, 100% 10%;
+    background-position: 50% 0%, 0 50%;
+    -webkit-animation: loading .7s infinite steps(8);
+    animation: loading .7s infinite steps(8);
+}
+#loader:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+   linear-gradient(rgba(0,0,0,.1) 30%, transparent 30%, transparent 70%, rgba(0,0,0,.5) 70%),
+   linear-gradient(to left, rgba(0,0,0,.3) 30%, transparent 30%, transparent 70%, rgba(0,0,0,.9) 70%);
+  background-repeat: no-repeat;
+  background-size: 10% 100%, 100% 10%;
+  background-position: 50% 0%, 0 50%;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
 
+@-webkit-keyframes loading {
+  100% {-webkit-transform: rotate(1turn);}
+}
+@keyframes loading {
+  100% {transform: rotate(1turn);}
+}
+
+#progress, #progress_line, #main_form, #submit_line, .separator {position: relative; display: block; width: 100%;}
+.separator {
+	height: 1px;
+	background-color: rgb(232, 235, 241);
+	margin-top: 1em;
+}
 #progress {
 	color : rgb(54, 141, 218);
+	margin-bottom: 2em;
 }
 #progress_line {
-	position: relative;
-	display : block;
-	width : 100%;
 	height : 5px;
 	background-color : rgb(232, 235, 241);
 	margin-top : 5px; margin-bottom: 1.0em;
@@ -51,7 +93,6 @@ body {
 	display: block;
 	width: 100%;
 	text-align: center;
-	margin-top: 2em; margin-bottom: 2em;
 }
 .img_choice_area img {
 	display : inline;
@@ -60,16 +101,9 @@ body {
 	margin-left: 1em; margin-right: 1em;
 	vertical-align: top;
 }
+.img_choice_area input {display: none;}
 .qtitle {
 	margin-top : 1em; margin-bottom: 1em;
-}
-.separator {
-	display: block;
-	position: relative;
-	height: 1px;
-	width: 100%;
-	background-color: rgb(232, 235, 241);
-	margin-top: 1em;
 }
 input, select, textarea {
 	margin-left: 2em;
@@ -77,14 +111,14 @@ input, select, textarea {
 textarea {
 	width : 40em;
 	height : 6em;
-	border : 1px #000000 solid;
+	border : 1px rgb(54, 141, 218) solid;
 	outline: none;
 	resize : none;
-	box-shadow : inset 3px 3px 5px 0px rgb(194, 201, 219);
+	box-shadow : inset 2px 2px 6px 0px rgb(194, 201, 219);
 }
 input {margin-top : 0.3em; margin-bottom: 0.3em;}
 #submit_line {
-	margin-top: 1.0em; text-align: center;
+	margin-top: 2.0em; text-align: center;
 }
 #prev, #next {
 	position: relative;

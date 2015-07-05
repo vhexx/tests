@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Test, Question, Answer, PreQuestion, PostQuestion, Image, ImagePair, FailureCriterion, FCFunction
+from .models import Test, Question, Answer, PreQuestion, PostQuestion, Image, ImagePair, FailureCriterion, FCFunction, QuestionType
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse
 import os
@@ -46,10 +46,8 @@ class QuestionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
-        if QuestionForm.last: # автозаполнения поля order
-            self.fields['order'].initial = QuestionForm.last+1
-        else:
-            self.fields['order'].initial = 1
+        self.fields['type'].initial = QuestionType.objects.get()
+        self.fields['title'].initial = 'question'
 
 
 class PreQuestionAdmin(admin.ModelAdmin):
@@ -76,7 +74,7 @@ class PreQuestionInline(admin.StackedInline):
     template = 'question_form.html'
     form = QuestionForm
     extra = 0
-    fields = (('isSeparator'), ('title', 'order', 'type', ), )
+    fields = (('isSeparator', 'order', ), ('title', 'type', ), )
 
 
 class PostQuestionAdmin(admin.ModelAdmin):

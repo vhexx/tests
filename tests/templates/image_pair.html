@@ -30,13 +30,7 @@
           if (restTime <= 0)
           {
             clearInterval(intervalId);
-            $.ajax({//========здесь аякс по окончании времени
-                     url : '',
-                     type : '',
-                     data : '',
-                     error : function () {alert('ajax failed');}
-                    }
-            );
+            $('.img_div img').css({'display' : 'none'});
           }
         }, 1000);
       });
@@ -76,9 +70,9 @@
         {% endif %}
     {% endif %}
     {% if is_training == False or next_training_image_pair != None %}
-        <input type="submit" value="Выбрать" id="next" ><br>
+        <input type="submit" value="Выбрать" class="img_button" ><br>
     {% else %}
-        <input type="submit" value="Выбрать и перейти к вопросам" id="next"><br>
+        <input type="submit" value="Выбрать и перейти к вопросам" class="img_button"><br>
     {% endif %}
     </form>
 </div>
@@ -95,9 +89,9 @@
         {% endif %}
     {% endif %}
     {% if is_training == False or next_training_image_pair != None %}
-        <input type="submit" value="Выбрать" id="next"><br>
+        <input type="submit" value="Выбрать" class="img_button"><br>
     {% else %}
-        <input type="submit" value="Выбрать и перейти к вопросам" id="next"><br>
+        <input type="submit" value="Выбрать и перейти к вопросам" class="img_button"><br>
     {% endif %}
     </form>
 </div>

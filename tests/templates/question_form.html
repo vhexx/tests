@@ -36,7 +36,7 @@
   });
   $('#{{ inline_admin_formset.formset.prefix }}-group').on('change', '.field-isSeparator input', function ()
   {
-    var other_fields = $(this).closest('fieldset').find('.field-title.field-order.field-type');
+    var other_fields = $(this).closest('fieldset').find('.field-title.field-type');
     if (other_fields.css('display') != 'none')
     {
       other_fields.css({'display' : 'none'});

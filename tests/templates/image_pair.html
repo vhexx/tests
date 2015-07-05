@@ -34,7 +34,7 @@
         <form action="/question/{{ question_id }}/" method="GET">
         {% endif %}
     {% endif %}
-    {% if next_training_image_pair != None %}
+    {% if is_training == False or next_training_image_pair != None %}
         <input type="submit" value="Выбрать"><br>
     {% else %}
         <input type="submit" value="Выбрать и перейти к вопросам"><br>
@@ -53,7 +53,7 @@
         <form action="/question/{{ question_id }}/" method="GET">
         {% endif %}
     {% endif %}
-    {% if next_training_image_pair != None %}
+    {% if is_training == False or next_training_image_pair != None %}
         <input type="submit" value="Выбрать"><br>
     {% else %}
         <input type="submit" value="Выбрать и перейти к вопросам"><br>

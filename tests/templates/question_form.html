@@ -35,7 +35,7 @@
     addText: "{% filter escapejs %}{% blocktrans with verbose_name=inline_admin_formset.opts.verbose_name|capfirst %}Add another {{ verbose_name }}{% endblocktrans %}{% endfilter %}"
   });
   var init_display = $('.field-title.field-order.field-type').eq(0).css('display');
-  $('#{{ inline_admin_formset.formset.prefix }}-group').on('.field-isSeparator input', function ()
+  $('#{{ inline_admin_formset.formset.prefix }}-group').on('change', '.field-isSeparator input', function ()
   {
     if ($(this).attr('checked') == 'checked')
     {

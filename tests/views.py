@@ -106,11 +106,13 @@ def question(request, question_id):
 
     for i in range(0, len(questions)):
         if questions[i].isSeparator:
-            if len(actual_questions) == 0:
+            if not first_found:
                 continue
             else:
                 separator_found = True
         else:
+            if prev_id is None:
+                prev_id = questions[i].id
             if separator_found:
                 next_id = questions[i].id
                 break
@@ -118,13 +120,18 @@ def question(request, question_id):
                 if questions[i].id == question_id:
                     actual_questions.append(questions[i])
                     first_found = True
+                    if questions[i].id == prev_id:
+                        prev_id = None
                 else:
                     if first_found:
                         actual_questions.append(questions[i])
                     else:
-                        prev_id = questions[i].id
+                        if i == 0:
+                            prev_id = questions[i].id
+                        elif questions[i - 1].isSeparator:
+                            prev_id = questions[i].id
 
-    if len(actual_questions) == 0:
+    if not first_found == 1:
         return HttpResponseNotFound('Такого вопроса не существует')
 
     question_titles_and_answers = []

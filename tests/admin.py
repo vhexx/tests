@@ -43,7 +43,7 @@ class AnswerInline(admin.StackedInline):
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = (('separator'), ('title', 'order', 'type', ), )
+        fields = ('separator', 'title', 'order', 'type',)
 
     separator = forms.ChoiceField(choices=['yes', 'no']);
     last = None

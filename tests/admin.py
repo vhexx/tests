@@ -80,7 +80,7 @@ class PreQuestionInline(admin.StackedInline):
     template = 'question_form.html'
     form = QuestionForm
     extra = 0
-    fields = (('separator'), ('title', 'order', 'type', ), )
+    fields = (('title', 'order', 'type', ), )
 
 
 class PostQuestionAdmin(admin.ModelAdmin):

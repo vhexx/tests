@@ -30,7 +30,7 @@ def test(request, test_id):
     training_image_pairs = TrainingImagePair.objects.all().order_by('id')
     context = {
         'test_title': test_instance.title,
-        'training_image_pairs': training_image_pairs[0].id if len(training_image_pairs) > 0 else 0
+        'training_image_pair_id': training_image_pairs[0].id if len(training_image_pairs) > 0 else 0
 
     }
     return render_to_response('test.html', context)
@@ -65,9 +65,9 @@ def training(request, training_image_pair_id):
                 'next_training_image_pair': next_training_image_pair_id,
                 'question_id': prequestions[0].id if len(prequestions) > 0 else None,
                 'is_training': True
-
             }
-    return render_to_response('image_pair.html', context)
+            return render_to_response('image_pair.html', context)
+    return HttpResponseNotFound('Страница недоступна')
 
 
 def question(request, question_id):

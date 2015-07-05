@@ -34,18 +34,17 @@
     deleteText: "{% filter escapejs %}{% trans "Remove" %}{% endfilter %}",
     addText: "{% filter escapejs %}{% blocktrans with verbose_name=inline_admin_formset.opts.verbose_name|capfirst %}Add another {{ verbose_name }}{% endblocktrans %}{% endfilter %}"
   });
-  var init_display = $('.field-title.field-order.field-type').eq(0).css('display');
   $('#{{ inline_admin_formset.formset.prefix }}-group').on('change', '.field-isSeparator input', function ()
   {
     var other_fields = $(this).closest('fieldset').find('.field-title.field-order.field-type');
-    alert(other_fields.css('display')+'  '+init_display);
     if (other_fileds.css('display') != 'none')
     {
+      alert(other_fileds.css('display'));
       other_fileds.css({'display' : 'none'});
     }
     else
     {
-      other_fileds.css({'display' : init_display});
+      other_fileds.css({'display' : 'block'});
     }
   })
 })(django.jQuery);

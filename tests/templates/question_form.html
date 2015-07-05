@@ -34,6 +34,12 @@
     deleteText: "{% filter escapejs %}{% trans "Remove" %}{% endfilter %}",
     addText: "{% filter escapejs %}{% blocktrans with verbose_name=inline_admin_formset.opts.verbose_name|capfirst %}Add another {{ verbose_name }}{% endblocktrans %}{% endfilter %}"
   });
+  $(document).on('ready', function() {
+    $('.field-isSeparator input[type="checkbox"]:checked').each(function(indx, element)
+    {
+      element.closest('fieldset').find('.field-title.field-type').css({'display' : 'none'});
+    });
+  });
   $('#{{ inline_admin_formset.formset.prefix }}-group').on('change', '.field-isSeparator input:checkbox', function ()
   {
     var other_fields = $(this).closest('fieldset').find('.field-title.field-type');

@@ -83,5 +83,5 @@ class ImagePair(models.Model):
 
 
 class TrainingImagePair(models.Model):
-    left = models.ForeignKey(Image, related_name='%(class)s_left')
-    right = models.ForeignKey(Image, related_name='%(class)s_right')
+    left = models.ImageField(upload_to='img/')
+    right = models.ImageField(upload_to='img/')

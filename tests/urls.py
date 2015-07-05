@@ -8,7 +8,7 @@ urlpatterns = patterns('',
     url(r'^test/(?P<test_id>[0-9]*)/$', views.test),
     url(r'^question/(?P<question_id>[0-9]*)/$', views.question),
     url(r'^go_to_pairs/$', views.go_to_pairs),
-    url(r'^training/$', views.training),
+    url(r'^training/(?P<training_image_pair_id>[0-9]*)/$', views.training),
     url(r'^pairs/$', views.pairs),
     url(r'^$', views.index),
 )

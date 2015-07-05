@@ -1,7 +1,7 @@
 from random import shuffle
 from django.http import HttpResponseNotFound
 from django.shortcuts import render_to_response, redirect
-from tests.models import PreQuestion, Test, Answer, PostQuestion, ImagePair, Image
+from tests.models import PreQuestion, Test, Answer, PostQuestion, ImagePair, Image, TrainingImagePair
 from .const import prequestions_state, postquestions_state, pairs_state, initial_state, training_state
 
 
@@ -27,16 +27,13 @@ def test(request, test_id):
     request.session['image_pair_id_ptr'] = -1
 
     # retrieve related questions and put them in session
-    prequestions = PreQuestion.objects.filter(test=test_id).order_by('order')
+    training_image_pairs = TrainingImagePair.objects.all().order_by('id')
     context = {
         'test_title': test_instance.title,
-        'question_id': prequestions[0].id if len(prequestions) > 0 else 0
+        'training_image_pairs': training_image_pairs[0].id if len(training_image_pairs) > 0 else 0
+
     }
     return render_to_response('test.html', context)
-
-
-def training(request):
-    return None
 
 
 def prepare_images(test_id):
@@ -47,6 +44,30 @@ def prepare_images(test_id):
             image_pair_ids.append(pair.id)
     shuffle(image_pair_ids)
     return image_pair_ids
+
+
+def training(request, training_image_pair_id):
+    test_id = request.session.get('test_id')
+    training_image_pairs = TrainingImagePair.objects.all().order_by('id')
+
+    for i in range(0, len(training_image_pairs)):
+        if training_image_pairs[i].id == training_image_pair_id:
+            if i != len(training_image_pairs) - 1:
+                next_training_image_pair_id = training_image_pair_id[i + 1]
+                prequestions = []
+            else:
+                next_training_image_pair_id = None
+                prequestions = PreQuestion.objects.filter(test=test_id).order_by('order')
+            context = {
+                'text': training_image_pairs[i].text,
+                'left': '/media/' + str(training_image_pairs[i].left),
+                'right': '/media/' + str(training_image_pairs[i].right),
+                'next_training_image_pair': next_training_image_pair_id,
+                'question_id': prequestions[0].id if len(prequestions) > 0 else None,
+                'is_training': True
+
+            }
+    return render_to_response('image_pair.html', context)
 
 
 def question(request, question_id):
@@ -120,7 +141,8 @@ def pairs(request):
 
     context = {
         'left': left,
-        'right': right
+        'right': right,
+        'is_training': False
     }
     return render_to_response('image_pair.html', context)
 

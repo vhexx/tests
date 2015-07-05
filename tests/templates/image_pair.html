@@ -19,25 +19,45 @@
 </head>
 <body>
 
+{% if text != None %}
+{{ text }}
+{% endif %}
+
 <div class='img_div'>
     <img class="image" src="{{left}}" />
-    {% if is_training == True %}
+    {% if is_training == False %}
     <form action="/pairs/" method="GET">
     {% else %}
-    <form action="/training/" method="GET">
+        {% if next_training_image_pair != None %}
+        <form action="/training/{{next_training_image_pair}}" method="GET">
+        {% else %}
+        <form action="/question/{{ question_id }}/" method="GET">
+        {% endif %}
     {% endif %}
+    {% if next_training_image_pair != None %}
         <input type="submit" value="Выбрать"><br>
+    {% else %}
+        <input type="submit" value="Выбрать и перейти к вопросам"><br>
+    {% endif %}
     </form>
 </div>
 
 <div class='img_div'>
     <img class="image" src="{{right}}" />
-    {% if is_training == True %}
+    {% if is_training == False %}
     <form action="/pairs/" method="GET">
     {% else %}
-    <form action="/training/" method="GET">
+        {% if next_training_image_pair != None %}
+        <form action="/training/{{next_training_image_pair}}" method="GET">
+        {% else %}
+        <form action="/question/{{ question_id }}/" method="GET">
+        {% endif %}
     {% endif %}
+    {% if next_training_image_pair != None %}
         <input type="submit" value="Выбрать"><br>
+    {% else %}
+        <input type="submit" value="Выбрать и перейти к вопросам"><br>
+    {% endif %}
     </form>
 </div>
 

@@ -16,9 +16,50 @@
         width: 100%
     }
     </style>
+    <link rel="stylesheet" type="text/css" href="../static/css/main_style.css">
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script src="../static/js/main.js" ></script>
+    <script type="text/javascript">
+      var restTime = 0;
+      var intervalId;
+      $(document).on('ready', function() {
+        restTime = 5;//=======время сюда
+        intervalId = setInterval(function () {
+          --restTime;
+          $('#rest_time').text('Оставшееся время: '+restTime);
+          if (restTime <= 0)
+          {
+            clearInterval(intervalId);
+            $.ajax({//========здесь аякс по окончании времени
+                     url : '',
+                     type : '',
+                     data : '',
+                     error : function () {alert('ajax failed');}
+                    }
+            );
+          }
+        }, 1000);
+      });
+    </script>
 </head>
 <body>
-
+    <div id="header"></div>
+    <div id="main_area" class="images" >
+        <div id="progress">
+            Пройдено
+            <div id="progress_line">
+                <div id="progress_passed"></div>
+            </div>
+        </div>
+      <div id="timer">
+        Оставшееся время: <div id="rest_time"></div>
+      </div>
+      <div id="loader"></div>
+      <div id="main_form">
+        <div class="img_choice_area">
+<!--//////////////////////////////////////////////////////////////////////////////////////-->
+<!--//////////////////////////////////////////////////////////////////////////////////////-->
+<!--//////////////////////////////////////////////////////////////////////////////////////-->
 {% if text != None %}
 {{ text }}
 {% endif %}
@@ -60,7 +101,11 @@
     {% endif %}
     </form>
 </div>
-
-
+<!--//////////////////////////////////////////////////////////////////////////////////////-->
+<!--//////////////////////////////////////////////////////////////////////////////////////-->
+<!--//////////////////////////////////////////////////////////////////////////////////////-->
+        </div>
+      </div>
+    </div>
 </body>
 </html>

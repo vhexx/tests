@@ -47,6 +47,7 @@ def prepare_images(test_id):
 
 
 def question(request, question_id):
+    question_id = int(question_id)
     state = request.session.get('state')
 
     if state == initial_state:

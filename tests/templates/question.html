@@ -5,31 +5,36 @@
     <title></title>
 </head>
 <body>
-    {{ question_title }}
 
-    <ul>
-    {% for a in answers %}
-        <li>{{ a.statement|default_if_none:"" }}{{ a.image|default_if_none:"" }}</li>
-        <br/>
+{% for q in qta %}
+
+{{ q[0] }}
+
+<ul>
+    {% for a in q[1] %}
+    <li>{{ a.statement|default_if_none:"" }}</li>
+    <br/>
     {% endfor %}
-    </ul>
+</ul>
+<hr/>
+{% endfor %}
 
-    {% if prev_id != None %}
-    <form action="/question/{{ prev_id }}/" method="GET">
-        <input type="submit" value="Предыдущий вопрос"><br>
-    </form>
-    {% endif %}
+{% if prev_id != None %}
+<form action="/question/{{ prev_id }}/" method="GET">
+    <input type="submit" value="Предыдущий вопрос"><br>
+</form>
+{% endif %}
 
-    {% if next_id != None %}
-    <form action="/question/{{ next_id }}/" method="GET">
-        <input type="submit" value="Следующий вопрос"><br>
-    </form>
-    {% endif %}
+{% if next_id != None %}
+<form action="/question/{{ next_id }}/" method="GET">
+    <input type="submit" value="Следующий вопрос"><br>
+</form>
+{% else %}
+<form action="/go_to_pairs/" method="GET">
+    <input type="submit" value="Перейти к выбору"><br>
+</form>
+{% endif %}
 
-    {% if go_to_pairs == True %}
-    <form action="/go_to_pairs/" method="GET">
-        <input type="submit" value="Перейти к выбору"><br>
-    </form>
-    {% endif %}
 </body>
+
 </html>

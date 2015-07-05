@@ -64,7 +64,7 @@ def training(request, training_image_pair_id):
                 'left': '/media/' + str(training_image_pairs[i].left),
                 'right': '/media/' + str(training_image_pairs[i].right),
                 'next_training_image_pair': next_training_image_pair_id,
-                'question_id': prequestions[0].id if len(prequestions) > 0 else None,
+                'question_id': next((q.id for q in prequestions if not q.isSeparator), None),
                 'is_training': True
             }
             return render_to_response('image_pair.html', context)
@@ -89,40 +89,59 @@ def question(request, question_id):
     else:
         return HttpResponseNotFound('Вопрос недоступен')
 
-    question_ids = list(map(lambda q: q.id, model.objects.filter(test=test_id).order_by('order')))
+    questions = model.objects.filter(test=test_id).order_by('order')
 
-    if len(question_ids) == 0:
+    if len(questions) == 0:
         return HttpResponseNotFound('Вопросов к этому тесту не найдено')
 
-    if question_id not in question_ids:
+    if question_id not in list(map(lambda q: q.id, questions)):
         return HttpResponseNotFound('Вопрос недоступен')
 
+    separator_found = False
+    first_found = False
     prev_id = None
     next_id = None
-    go_to_pairs = False
 
-    # determine next and previous question
-    for i in range(0, len(question_ids)):
-        if question_ids[i] == question_id:
-            if i != 0:
-                prev_id = question_ids[i - 1]
-            if i != len(question_ids) - 1:
-                next_id = question_ids[i + 1]
+    actual_questions = []
+
+    for i in range(0, len(questions)):
+        if questions[i].isSeparator:
+            if len(actual_questions) == 0:
+                continue
             else:
-                if model == PreQuestion:
-                    go_to_pairs = True
+                separator_found = True
+        else:
+            if separator_found:
+                next_id = questions[i].id
+                break
+            else:
+                if questions[i].id == question_id:
+                    actual_questions.append(questions[i])
+                    first_found = True
+                else:
+                    if first_found:
+                        actual_questions.append(questions[i])
+                    else:
+                        prev_id = questions[i].id
 
-            question_instance = model.objects.get(id=question_id)
-            context = {
-                'question_title': question_instance.title,
-                'answers': Answer.objects.filter(question=question_id),
-                'prev_id': prev_id,
-                'next_id': next_id,
-                'go_to_pairs': go_to_pairs
-            }
-            return render_to_response('question.html', context)
+    if len(actual_questions) == 0:
+        return HttpResponseNotFound('Такого вопроса не существует')
 
-    return HttpResponseNotFound('Такого вопроса не существует')
+    question_titles_and_answers = []
+
+    for q in actual_questions:
+        question_titles_and_answers.append((q.title, Answer.objects.filter(question=q.id)))
+
+    question_instance = model.objects.get(id=question_id)
+    context = {
+        'titles': question_instance.title,
+        'qta': question_titles_and_answers,
+        'prev_id': prev_id,
+        'next_id': next_id
+    }
+    return render_to_response('question.html', context)
+
+
 
 
 def pairs(request):

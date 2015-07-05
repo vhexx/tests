@@ -78,7 +78,7 @@ def question(request, question_id):
 
     # determine next and previous question
     for i in range(0, len(question_ids)):
-        if question_ids[i].id == int(question_id):
+        if question_ids[i] == question_id:
             question_instance = question_ids[i]
             if i != 0:
                 prev_id = question_ids[i - 1].id

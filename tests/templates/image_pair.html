@@ -5,25 +5,29 @@
     <meta charset="UTF-8">
     <title></title>
     <style>
-    #img_div {
+    .img_div {
         width:40%;
         border:1px solid;
         margin-right:10px;
         float:left;
     }
+
+    .image {
+        width: 100%
+    }
     </style>
 </head>
 <body>
 
-<div id='img_div'>
-    <img style="height:725px;max-width:500px" src="{{left}}" />
+<div class='img_div'>
+    <img class="image" src="{{left}}" />
     <form action="/pairs/" method="GET">
         <input type="submit" value="Выбрать"><br>
     </form>
 </div>
 
-<div id='img_div'>
-    <img style="height:725px;max-width:500px" src="{{right}}" />
+<div class='img_div'>
+    <img class="image" src="{{right}}" />
     <form action="/pairs/" method="GET">
         <input type="submit" value="Выбрать"><br>
     </form>

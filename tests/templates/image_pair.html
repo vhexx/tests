@@ -16,16 +16,19 @@
 <body>
 
 <div id='img_div'>
-{{left_image}}
+    <img src="{{left}}" />
+    <form action="/pairs/" method="GET">
+        <input type="submit" value="Выбрать"><br>
+    </form>
 </div>
 
 <div id='img_div'>
-{{right_image}}
+    <img src="{{right}}" />
+    <form action="/pairs/" method="GET">
+        <input type="submit" value="Выбрать"><br>
+    </form>
 </div>
 
-<form action="/prequestion/{{ image_pair_id }}/" method="GET">
-    <input type="submit" value="Перейти к вопросам"><br>
-</form>
 
 </body>
 </html>

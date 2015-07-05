@@ -25,5 +25,11 @@
         <input type="submit" value="Следующий вопрос"><br>
     </form>
     {% endif %}
+
+    {% if go_to_pairs is True %}
+    <form action="/go_to_pairs/" method="GET">
+        <input type="submit" value="Перейти к выбору"><br>
+    </form>
+    {% endif %}
 </body>
 </html>

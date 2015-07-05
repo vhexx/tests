@@ -38,7 +38,7 @@
   $('#{{ inline_admin_formset.formset.prefix }}-group').on('change', '.field-isSeparator input', function ()
   {
     var other_fields = $(this).closest('fieldset').find('.field-title.field-order.field-type');
-    alert(other_fileds.css('display'));
+    alert(other_fields.css('display')+'  '+init_display);
     if (other_fileds.css('display') != 'none')
     {
       other_fileds.css({'display' : 'none'});

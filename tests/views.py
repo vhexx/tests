@@ -47,6 +47,7 @@ def prepare_images(test_id):
 
 
 def training(request, training_image_pair_id):
+    training_image_pair_id = int(training_image_pair_id)
     test_id = request.session.get('test_id')
     training_image_pairs = TrainingImagePair.objects.all().order_by('id')
 

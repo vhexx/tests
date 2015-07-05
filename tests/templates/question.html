@@ -8,10 +8,10 @@
 
 {% for q in qta %}
 
-{{ q[0] }}
+{{ q.0 }}
 
 <ul>
-    {% for a in q[1] %}
+    {% for a in q.1 %}
     <li>{{ a.statement|default_if_none:"" }}</li>
     <br/>
     {% endfor %}

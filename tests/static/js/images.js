@@ -6,7 +6,9 @@ $(window).load(function () {
   var button_pressed = false;
   function btnClick(btn)
   {
-    btn.closest('.img_div').find('img').css({'box-shadow' : '0px 0px 6px 3px rgb(54, 141, 218)'});
+    var img = btn.closest('.img_div').find('img');
+    img.css({'box-shadow' : '0px 0px 6px 3px rgb(54, 141, 218)'});
+    setTimeout(function() {img.css({'opacity' : '0.00'}); }, 100);
     setTimeout(function() {btn[0].click();}, 100);
   }
   $(document).keydown(function (event) {

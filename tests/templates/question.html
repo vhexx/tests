@@ -21,13 +21,13 @@
 
 {% if prev_id != None %}
 <form action="/question/{{ prev_id }}/" method="GET">
-    <input type="submit" value="Предыдущий вопрос"><br>
+    <input type="submit" value="Назад"><br>
 </form>
 {% endif %}
 
 {% if next_id != None %}
 <form action="/question/{{ next_id }}/" method="GET">
-    <input type="submit" value="Следующий вопрос"><br>
+    <input type="submit" value="Далее"><br>
 </form>
 {% else %}
 <form action="/go_to_pairs/" method="GET">

@@ -10,7 +10,7 @@ $(document).on('ready', function () {
   var right_button = $('#right');
   function btnClick(btn)
   {
-    btn.closest('.img_div').css({'box-shadow' : '0px 0px 6px 3px rgb(54, 141, 218)'});
+    btn.closest('.img_div').find('img').css({'box-shadow' : '0px 0px 6px 3px rgb(54, 141, 218)'});
     setInterval(function() {btn[0].click();}, 100);
   }
   $(document).keydown(function (event) {
@@ -22,12 +22,12 @@ $(document).on('ready', function () {
         btnClick(right_button);
     }
   });
-  $('.img_div img').on('click', function() {
+  /*$('.img_div img').on('click', function() {
     if ($(this).closest('.img_div').find('#left').length > 0) {
       btnClick(left_button);
     }
     else {
       btnClick(right_button);
     }
-  });
+  });*/
 });

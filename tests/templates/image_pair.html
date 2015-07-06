@@ -12,6 +12,7 @@
       var intervalId;
       $(document).on('ready', function() {
         restTime = 5;//=======время сюда
+        $('#rest_time').text(restTime);
         intervalId = setInterval(function () {
           --restTime;
           $('#rest_time').text(restTime);
@@ -19,6 +20,7 @@
           {
             clearInterval(intervalId);
             $('.img_div img').css({'display' : 'none'});
+            $('.img_button').css({'display' : 'block'});
           }
         }, 1000);
       });

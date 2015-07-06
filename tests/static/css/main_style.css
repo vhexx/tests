@@ -107,13 +107,14 @@ body {
 	vertical-align: bottom;
 }
 .img_button {
+	position: relative;
 	display: none;
 }
 .img_div img {
 	position: relative;
 	border : 1px rgb(232, 235, 241) solid;
 	padding  : 1em;
-	max-width: 400px;
+	max-width: 300px;
 	cursor: pointer;
 }
 .qtitle {

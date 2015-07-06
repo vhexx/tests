@@ -13,10 +13,10 @@ def check_results(request):
                 return False
         for a in questions[q]:
             # TODO check question type and answer
+            id = UserQuestionResults.objects.latest('id').id + 1 if UserQuestionResults.objects.count() > 0 else 1
             if a.isdigit():
                 uqr = UserQuestionResults(
-                    UserQuestionResults.objects.latest(
-                        'id').id + 1 if UserQuestionResults.objects.count() > 0 else 1,
+                    id,
                     session_key,
                     int(q),
                     int(a),
@@ -24,7 +24,7 @@ def check_results(request):
                 )
             else:
                 uqr = UserQuestionResults(
-                    UserQuestionResults.objects.latest('id').id + 1,
+                    id,
                     session_key,
                     int(q),
                     None,

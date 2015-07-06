@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="../static/css/main_style.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main_style.css">
 </head>
 <body>
     <div id="header"></div>
@@ -23,23 +23,23 @@
 
 <div class="qtitle">{{ q.0.title }}</div>
 
-    {% if q.0.type == 1 %}
+    {% if q.0.type_id == 1 %}
       {% for a in q.1 %}
         <input type="checkbox" name="{{ q.0.id }}" value="{{ a.id }}" >{{ a.statement|default_if_none:"" }}<br/>
       {% endfor %}
     {% endif %}
 
-    {% if q.0.type == 2 %}
+    {% if q.0.type_id == 2 %}
       {% for a in q.1 %}
         <input type="radio" name="{{ q.0.id }}" value="{{ a.id }}" >{{ a.statement|default_if_none:"" }}<br/>
       {% endfor %}
     {% endif %}
 
-    {% if q.0.type == 3 %}
+    {% if q.0.type_id == 3 %}
       <textarea name="{{ q.0.id }}" ></textarea>
     {% endif %}
 
-    {% if q.0.type == 4 %}
+    {% if q.0.type_id == 4 %}
       <select name="{{ q.0.id }}">
       {% for a in q.1 %}
         <option value="{{ a.id }}" >{{ a.statement|default_if_none:"" }}</option>

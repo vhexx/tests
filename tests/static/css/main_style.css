@@ -107,11 +107,11 @@ body {
 	display: block;
 	width: 100%;
 	text-align: center;
+	vertical-align: center;
 }
 .img_div {
 	position: relative;
 	display: inline-block;
-	vertical-align: center;
 }
 .img_button {
 	display: none;

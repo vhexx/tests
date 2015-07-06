@@ -72,19 +72,11 @@
 
 
 <div id="submit_line">
-    <input type="submit" value="Продолжить" id="next">
   {% if prev_id != None %}
     <input type="button" value="Назад" id="prev" onclick="window.location.href='/question/{{ prev_id }}/';" >
   {% endif %}
+    <input type="submit" value="Продолжить" id="next">
 </form>
-<!--
-{% if prev_id != None %}
-    <form action="/question/{{ prev_id }}/" method="GET" class="submit_form">
-        <input type="submit" value="Назад" id="prev" >
-    </form>
-{% endif %}
--->
-
 
 
 </div>

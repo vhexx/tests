@@ -13,12 +13,12 @@ $(document).on('ready', function () {
       case 37:
         img_blocks.eq(0).css({'box-shadow' : '0px 0px 6px 3px rgb(54, 141, 218)'});
         setTimeout(function() {
-          img_blocks.eq(0).submit();
+          img_blocks.eq(0).find('form').eq(0).submit();
         }, 100);
       case 39:
         img_blocks.eq(1).css({'box-shadow' : '0px 0px 6px 3px rgb(54, 141, 218)'});
         setTimeout(function() {
-          img_blocks.eq(1).submit();
+          img_blocks.eq(1).find('form').eq(0).submit();
         }, 100);
     }
   });

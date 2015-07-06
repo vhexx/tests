@@ -59,19 +59,19 @@
 <div class='img_div'>
     <img class="image" src="{{left}}"></img>
     {% if is_training == False %}
-    <form action="/pairs/" method="GET">
+        {% if next_training_image_pair != None %}
+        <form action="/pairs/" method="GET">
+        {% else %}
+        <form action="/question/{{ question_id }}/" method="GET">
+        {% endif %}
     {% else %}
         {% if next_training_image_pair != None %}
         <form action="/training/{{next_training_image_pair}}" method="GET">
         {% else %}
-        <form action="/question/{{ question_id }}/" method="GET">
+        <form action="/after_training/" method="GET">
         {% endif %}
     {% endif %}
-    {% if is_training == False or next_training_image_pair != None %}
         <input type="submit" value="Выбрать" class="img_button" id="left">
-    {% else %}
-        <input type="submit" value="Выбрать и перейти к вопросам" class="img_button" id="left">
-    {% endif %}
     </form>
 </div>
 
@@ -83,14 +83,10 @@
         {% if next_training_image_pair != None %}
         <form action="/training/{{next_training_image_pair}}" method="GET">
         {% else %}
-        <form action="/question/{{ question_id }}/" method="GET">
+        <form action="/after_training/" method="GET">
         {% endif %}
     {% endif %}
-    {% if is_training == False or next_training_image_pair != None %}
         <input type="submit" value="Выбрать" class="img_button" id="right">
-    {% else %}
-        <input type="submit" value="Выбрать и перейти к вопросам" class="img_button" id="right">
-    {% endif %}
     </form>
 </div>
 <!--//////////////////////////////////////////////////////////////////////////////////////-->

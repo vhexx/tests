@@ -63,9 +63,13 @@
     <input type="submit" value="Далее" id="next" ><br>
 </form>
 {% else %}
-<form action="/go_to_pairs/" method="GET">
-    <input type="submit" value="Перейти к выбору" id="next" ><br>
-</form>
+    {% if is_postquestion == True %}
+    <form action="/final/" method="GET">
+    {% else %}
+    <form action="/before_training/" method="GET">
+    {% endif %}
+        <input type="submit" value="Далее" id="next" ><br>
+    </form>
 {% endif %}
 
 </div>

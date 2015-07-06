@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-{% load staticfiles%}
-
 <html>
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script src="../../static/js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/main_style.css">
 </head>
 <body>
 	<div id="header"></div>
@@ -13,10 +13,12 @@
 <!--//////////////////////////////////////////////////////////////////////////////////////-->
 <!--//////////////////////////////////////////////////////////////////////////////////////-->
 <!--//////////////////////////////////////////////////////////////////////////////////////-->
-{{ test_title }}
+<div class="title">{{ test_title }}</div>
 <form action="/question/{{ question_id }}/" method="GET">
 <!--<form action="/training/{{ training_image_pair_id }}/" method="GET">-->
-    <input type="submit" value="Перейти к вопросам"><br>
+    <div id="submit_line">
+        <input type="submit" value="Перейти к вопросам" id="next">
+    </div>
 </form>
 <!--//////////////////////////////////////////////////////////////////////////////////////-->
 <!--//////////////////////////////////////////////////////////////////////////////////////-->

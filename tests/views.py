@@ -1,7 +1,6 @@
 from random import shuffle
 from django.http import HttpResponseNotFound
 from django.shortcuts import render_to_response, redirect
-from requests import Session
 from tests.models import PreQuestion, Test, Answer, PostQuestion, ImagePair, TrainingImagePair, Question
 from .const import prequestions_state, postquestions_state, pairs_state, training_state, initial_state
 

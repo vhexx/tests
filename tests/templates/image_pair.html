@@ -55,11 +55,7 @@
 <div class='img_div'>
     <img class="image" src="{{left}}"></img>
     {% if is_training == False %}
-        {% if next_training_image_pair != None %}
         <form action="/pairs/" method="GET">
-        {% else %}
-        <form action="/question/{{ question_id }}/" method="GET">
-        {% endif %}
     {% else %}
         {% if next_training_image_pair != None %}
         <form action="/training/{{next_training_image_pair}}" method="GET">
@@ -74,11 +70,7 @@
 <div class='img_div'>
     <img class="image" src="{{right}}"></img>
     {% if is_training == False %}
-        {% if next_training_image_pair != None %}
         <form action="/pairs/" method="GET">
-        {% else %}
-        <form action="/question/{{ question_id }}/" method="GET">
-        {% endif %}
     {% else %}
         {% if next_training_image_pair != None %}
         <form action="/training/{{next_training_image_pair}}" method="GET">

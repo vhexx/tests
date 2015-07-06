@@ -151,7 +151,7 @@ def training(request, training_image_pair_id):
     return HttpResponseNotFound('Страница недоступна')
 
 
-def after_training():
+def after_training(request):
     return render_to_response('after_training.html')
 
 

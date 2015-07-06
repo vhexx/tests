@@ -1,13 +1,18 @@
 <!DOCTYPE html>
+{% load staticfiles%}
 <html>
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
 </head>
 <body>
-Текст перед обучалкой
-<form action="/training/{{ training_image_pair_id }}/" method="GET">
-    <input type="submit" value="Перейти к тренингу"><br>
-</form>
+	<div id="header"></div>
+	<div id="main_area" class="questions">
+        Текст перед обучалкой
+        <form action="/training/{{ training_image_pair_id }}/" method="GET">
+             <input type="submit" value="Перейти к тренингу" id="next"><br>
+        </form>
+    </div>
+    <div id="footer"></div>
 </body>
 </html>

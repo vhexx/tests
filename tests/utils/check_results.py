@@ -8,8 +8,8 @@ def check_results(request):
     for q in questions:
         if q not in cached_questions:
             if q.isdigit():
-                cached_questions[q] = Question.objects.get(id=q_id)
                 q_id = int(q)
+                cached_questions[q] = Question.objects.get(id=q_id)
                 UserQuestionResults.objects.filter(session_key=session_key, question=q_id).delete()
             else:
                 return False

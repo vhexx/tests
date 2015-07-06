@@ -3,38 +3,79 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <link rel="stylesheet" type="text/css" href="../static/css/main_style.css">
 </head>
 <body>
-
+    <div id="header"></div>
+    <div id="main_area" class="images" >
+        <div id="progress">
+            Пройдено
+            <div id="progress_line">
+                <div id="progress_passed"></div>
+            </div>
+        </div>
+      <div id="main_form">
+        <div class="img_choice_area">
+<!--//////////////////////////////////////////////////////////////////////////////////////-->
+<!--//////////////////////////////////////////////////////////////////////////////////////-->
+<!--//////////////////////////////////////////////////////////////////////////////////////-->
 {% for q in qa %}
 
-{{ q.0.title }}
+<div class="qtitle">{{ q.0.title }}</div>
 
-<ul>
-    {% for a in q.1 %}
-    <li>{{ a.statement|default_if_none:"" }}</li>
-    <br/>
-    {% endfor %}
-</ul>
-<hr/>
+    {% if q.0.type == 1 %}
+      {% for a in q.1 %}
+        <input type="checkbox" name="{{ q.0.id }}" value="{{ a.id }}" >{{ a.statement|default_if_none:"" }}<br/>
+      {% endfor %}
+    {% endif %}
+
+    {% if q.0.type == 2 %}
+      {% for a in q.1 %}
+        <input type="radio" name="{{ q.0.id }}" value="{{ a.id }}" >{{ a.statement|default_if_none:"" }}<br/>
+      {% endfor %}
+    {% endif %}
+
+    {% if q.0.type == 3 %}
+      <textarea name="{{ q.0.id }}" ></textarea>
+    {% endif %}
+
+    {% if q.0.type == 4 %}
+      <select name="{{ q.0.id }}">
+      {% for a in q.1 %}
+        <option value="{{ a.id }}" >{{ a.statement|default_if_none:"" }}</option>
+      {% endfor %}
+      </select>
+    {% endif %}
+
+<div class="separator"></div>
+
 {% endfor %}
+
+<div id="submit_line">
 
 {% if prev_id != None %}
 <form action="/question/{{ prev_id }}/" method="GET">
-    <input type="submit" value="Назад"><br>
+    <input type="submit" value="Назад" id="prev" ><br>
 </form>
 {% endif %}
 
 {% if next_id != None %}
 <form action="/question/{{ next_id }}/" method="GET">
-    <input type="submit" value="Далее"><br>
+    <input type="submit" value="Далее" id="next" ><br>
 </form>
 {% else %}
 <form action="/go_to_pairs/" method="GET">
-    <input type="submit" value="Перейти к выбору"><br>
+    <input type="submit" value="Перейти к выбору" id="next" ><br>
 </form>
 {% endif %}
 
+</div>
+<!--//////////////////////////////////////////////////////////////////////////////////////-->
+<!--//////////////////////////////////////////////////////////////////////////////////////-->
+<!--//////////////////////////////////////////////////////////////////////////////////////-->
+        </div>
+      </div>
+    </div>
 </body>
 
 </html>

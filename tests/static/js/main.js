@@ -1,8 +1,6 @@
 $(window).load(function () {
   $('#loader').remove();
   $('#main_form div').css({'opacity' : '1.0'});
-});
-$(document).on('ready', function () {
   var left_button = $('#left');
   var right_button = $('#right');
   function btnClick(btn)

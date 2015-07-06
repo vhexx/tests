@@ -18,7 +18,7 @@
 <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 <script type="text/javascript">
   $(document).on('ready', function () {
-    var isSeparator = ($('#id_isSeparator:selected').length > 0);
+    var isSeparator = ($('#id_isSeparator:checked').length > 0);
     var isText = ($('#id_type').find('option:selected').attr('value') == 3);
     var answers = $('#answer_set-group');
     function switch_answers()
@@ -36,7 +36,7 @@
         switch_answers();
     });
     $('#id_isSeparator').on('change', function () {
-        isSeparator = ($('#id_isSeparator:selected').length > 0);
+        isSeparator = ($('#id_isSeparator:checked').length > 0);
         switch_answers();
     })
   });

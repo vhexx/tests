@@ -111,8 +111,6 @@ def question(request, question_id):
             else:
                 separator_found = True
         else:
-            if prev_id is None:
-                prev_id = questions[i].id
             if separator_found:
                 next_id = questions[i].id
                 break

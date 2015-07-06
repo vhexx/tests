@@ -9,7 +9,7 @@ $(window).load(function () {
     var img = btn.closest('.img_div').find('img');
     img.css({'box-shadow' : '0px 0px 6px 3px rgb(54, 141, 218)'});
     setTimeout(function() {img.css({'opacity' : '0.00'}); }, 100);
-    setTimeout(function() {btn[0].click();}, 200);
+    setTimeout(function() {btn[0].click(); }, 200 );
   }
   $(document).keydown(function (event) {
     if (! button_pressed) {

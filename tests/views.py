@@ -175,6 +175,7 @@ def pairs(request):
         return HttpResponseNotFound('Страница недоступна')
 
     test_id = request.session.get('test_id')
+    seconds = Test.objects.get(id=test_id).seconds if not None else -1
     image_pair_ids = request.session.get('image_pair_ids')
 
     ptr = request.session.get('image_pair_id_ptr') + 1
@@ -191,6 +192,7 @@ def pairs(request):
     context = {
         'left': left,
         'right': right,
+        'seconds': seconds,
         'is_training': False
     }
     return render_to_response('image_pair.html', context)

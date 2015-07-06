@@ -1,4 +1,5 @@
 $(window).load(function () {
+  $('#main_form div').css({'opacity' : '0.5'});
   $("img").load(function() {
     $('#loader').remove();
     $('#main_form div').css({'opacity' : '1.0'});

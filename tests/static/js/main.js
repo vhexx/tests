@@ -17,5 +17,6 @@ $(document).on('ready', function () {
       case 39:
         right_button.closest('.img_div').css({'box-shadow' : '0px 0px 6px 3px rgb(54, 141, 218)'});
         right_button[0].click();
+    }
   });
 });

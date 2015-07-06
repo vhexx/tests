@@ -137,7 +137,10 @@ def before_training(request):
 
 def training(request, training_image_pair_id):
     training_image_pair_id = int(training_image_pair_id)
+
     test_id = request.session.get('test_id')
+    seconds = Test.objects.get(id=test_id).seconds if not None else -1
+
     training_image_pairs = TrainingImagePair.objects.all().order_by('id')
 
     for i in range(0, len(training_image_pairs)):
@@ -152,6 +155,7 @@ def training(request, training_image_pair_id):
                 'left': '/media/' + str(training_image_pairs[i].left),
                 'right': '/media/' + str(training_image_pairs[i].right),
                 'next_training_image_pair': next_training_image_pair_id,
+                'seconds': seconds,
                 'is_training': True
             }
             return render_to_response('image_pair.html', context)

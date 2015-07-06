@@ -49,12 +49,12 @@
 <div class='img_div'>
     <img class="image" src="{{left}}" />
     {% if is_training == False %}
-    <form action="/pairs/" method="GET">
+    <form action="/pairs/" method="GET"  id="left_form">
     {% else %}
         {% if next_training_image_pair != None %}
-        <form action="/training/{{next_training_image_pair}}" method="GET">
+        <form action="/training/{{next_training_image_pair}}" method="GET" id="left_form">
         {% else %}
-        <form action="/question/{{ question_id }}/" method="GET">
+        <form action="/question/{{ question_id }}/" method="GET"  id="left_form">
         {% endif %}
     {% endif %}
     {% if is_training == False or next_training_image_pair != None %}
@@ -68,12 +68,12 @@
 <div class='img_div'>
     <img class="image" src="{{right}}" />
     {% if is_training == False %}
-    <form action="/pairs/" method="GET">
+    <form action="/pairs/" method="GET" id="right_form">
     {% else %}
         {% if next_training_image_pair != None %}
-        <form action="/training/{{next_training_image_pair}}" method="GET">
+        <form action="/training/{{next_training_image_pair}}" method="GET" id="right_form">
         {% else %}
-        <form action="/question/{{ question_id }}/" method="GET">
+        <form action="/question/{{ question_id }}/" method="GET" id="right_form">
         {% endif %}
     {% endif %}
     {% if is_training == False or next_training_image_pair != None %}

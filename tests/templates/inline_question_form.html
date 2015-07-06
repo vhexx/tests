@@ -5,8 +5,16 @@
 {{ inline_admin_formset.formset.non_form_errors }}
 
 {% for inline_admin_form in inline_admin_formset %}<div class="inline-related{% if inline_admin_form.original or inline_admin_form.show_url %} has_original{% endif %}{% if forloop.last %} empty-form last-related{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
-  <h3><b>{{ inline_admin_formset.opts.verbose_name|capfirst }}:</b>&nbsp;<span class="inline_label">{% if inline_admin_form.original %}{{ inline_admin_form.original }}{% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %} <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="inlinechangelink">{% trans "Change" %}</a>{% endif %}
-{% else %}#{{ forloop.counter }}{% endif %}</span>
+  <h3><b>{{ inline_admin_formset.opts.verbose_name|capfirst }}:</b>&nbsp;<span class="inline_label">
+  {% if inline_admin_form.original %}
+    {{ inline_admin_form.original }}
+    {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
+      <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="inlinechangelink">{% trans "Change" %}</a>
+    {% endif %}
+  {% else %}#{{ forloop.counter }}{% endif %}</span>
+{% if inline_admin_form.original.pk %}
+<a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" >edit question</a>
+{% endif %}
       {% if inline_admin_form.show_url %}<a href="{{ inline_admin_form.absolute_url }}">{% trans "View on site" %}</a>{% endif %}
     {% if inline_admin_formset.formset.can_delete and inline_admin_form.original %}<span class="delete">{{ inline_admin_form.deletion_field.field }} {{ inline_admin_form.deletion_field.label_tag }}</span>{% endif %}
   </h3>
@@ -26,42 +34,23 @@
     deleteText: "{% filter escapejs %}{% trans "Remove" %}{% endfilter %}",
     addText: "{% filter escapejs %}{% blocktrans with verbose_name=inline_admin_formset.opts.verbose_name|capfirst %}Add another {{ verbose_name }}{% endblocktrans %}{% endfilter %}"
   });
-})(django.jQuery);
-</script>
-
-<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-<script type="text/javascript">
-$(document).ready(function () {
-  $('#{{ inline_admin_formset.formset.prefix }}-group').on('change', '.field-question select',
-    function ()
+  $(document).on('ready', function() {
+    $('.field-isSeparator input[type="checkbox"]:checked').each(function(indx, element)
     {
-      var quest_id = $(this).find('option:selected').attr('value');
-      if (quest_id == '')
-      {
-        return;
-      }
-      var answers_select = $(this).closest('fieldset').find('.field-answer select');
-      $.ajax({
-        url: '',
-        type: 'GET',
-        data: {fc_filter : quest_id},
-        success: function (data)
-        {
-          var i = 0;
-          var data_split = data.split(' ');
-          answers_select.find('option').css({'display' : 'none'});
-          while (cur = data_split[i], cur != '')
-          {
-            answers_select.find('option[value='+cur+']').css({'display' : 'block'});
-            i++;
-          }
-        },
-        error: function ()
-        {
-          alert('ajax failed');
-        }
-      });
+      $(element).closest('fieldset').find('.field-title.field-type').css({'display' : 'none'});
+    });
+  });
+  $('#{{ inline_admin_formset.formset.prefix }}-group').on('change', '.field-isSeparator input:checkbox', function ()
+  {
+    var other_fields = $(this).closest('fieldset').find('.field-title.field-type');
+    if (other_fields.css('display') != 'none')
+    {
+      other_fields.css({'display' : 'none'});
     }
-  );
-});
+    else
+    {
+      other_fields.css({'display' : 'block'});
+    }
+  });
+})(django.jQuery);
 </script>

@@ -54,6 +54,7 @@ class PreQuestionAdmin(admin.ModelAdmin):
     model = PreQuestion
     inlines = [AnswerInline]
     readonly_fields = ('test',)
+    change_form_template = 'question_admin.html'
 
     def delete_model(self, request, obj):
         rel_answers = Answer.objects.filter(question=obj.question_ptr)
@@ -71,7 +72,7 @@ class PreQuestionAdmin(admin.ModelAdmin):
 
 class PreQuestionInline(admin.StackedInline):
     model = PreQuestion
-    template = 'question_form.html'
+    template = 'inline_question_form.html'
     form = QuestionForm
     extra = 0
     fields = (('isSeparator', 'order', ), ('title', 'type', ), )
@@ -81,6 +82,7 @@ class PostQuestionAdmin(admin.ModelAdmin):
     model = PostQuestion
     inlines = [AnswerInline]
     readonly_fields = ('test',)
+    change_form_template = PreQuestionAdmin.change_form_template
 
     def delete_model(self, request, obj):
         PreQuestionAdmin.delete_model(self, request, obj)
@@ -94,7 +96,7 @@ class PostQuestionAdmin(admin.ModelAdmin):
 
 class PostQuestionInline(admin.StackedInline):
     model = PostQuestion
-    template = 'question_form.html'
+    template = PreQuestionInline.template
     form = QuestionForm
     extra = 0
     fields = PreQuestionInline.fields

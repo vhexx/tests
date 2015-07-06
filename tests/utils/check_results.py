@@ -15,17 +15,19 @@ def check_results(request):
             # TODO check question type and answer
             if a.isdigit():
                 uqr = UserQuestionResults(
-                    id=UserQuestionResults.objects.latest(
+                    UserQuestionResults.objects.latest(
                         'id').id + 1 if UserQuestionResults.objects.count() > 0 else 1,
-                    session_key=session_key,
-                    question=int(q),
-                    answer=int(a)
+                    session_key,
+                    int(q),
+                    int(a),
+                    None
                 )
             else:
                 uqr = UserQuestionResults(
-                    id=UserQuestionResults.objects.latest('id').id + 1,
-                    session_key=session_key,
-                    question=int(q),
-                    input_text=a
+                    UserQuestionResults.objects.latest('id').id + 1,
+                    session_key,
+                    int(q),
+                    None,
+                    a
                 )
             uqr.save()

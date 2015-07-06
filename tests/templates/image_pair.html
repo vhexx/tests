@@ -14,7 +14,7 @@
         restTime = 5;//=======время сюда
         intervalId = setInterval(function () {
           --restTime;
-          $('#rest_time').text('Оставшееся время: '+restTime);
+          $('#rest_time').text(restTime);
           if (restTime <= 0)
           {
             clearInterval(intervalId);

@@ -8,15 +8,26 @@ $(document).on('ready', function () {
   });
   var left_button = $('#left');
   var right_button = $('#right');
+  function btnClick(btn)
+  {
+    btn.closest('.img_div').css({'box-shadow' : '0px 0px 6px 3px rgb(54, 141, 218)'});
+    setInterval(function() {btn[0].click();}, 100);
+  }
   $(document).keydown(function (event) {
     switch(event.which)
     {
       case 37:
-        left_button.closest('.img_div').css({'box-shadow' : '0px 0px 6px 3px rgb(54, 141, 218)'});
-        left_button[0].click();
+        btnClick(left_button);
       case 39:
-        right_button.closest('.img_div').css({'box-shadow' : '0px 0px 6px 3px rgb(54, 141, 218)'});
-        right_button[0].click();
+        btnClick(right_button);
+    }
+  });
+  $('.img_div img').on('click', function() {
+    if ($(this).closest('.img_div').find('#left').length > 0) {
+      btnClick(left_button);
+    }
+    else {
+      btnClick(right_button);
     }
   });
 });

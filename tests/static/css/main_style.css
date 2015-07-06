@@ -103,15 +103,14 @@ body {
 }
 .img_div {
 	position: relative;
-	display: inline;
+	display: inline-block;
 	vertical-align: bottom;
+	width: 50%;
 }
 .img_button {
-	position: relative;
 	display: none;
 }
 .img_div img {
-	position: relative;
 	border : 1px rgb(232, 235, 241) solid;
 	padding  : 1em;
 	max-width: 300px;

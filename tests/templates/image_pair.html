@@ -4,9 +4,14 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="../static/css/main_style.css">
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    {% if is_training == False %}
+    <link rel="stylesheet" type="text/css" href="../static/css/main_style.css">
     <script src="../static/js/main.js" ></script>
+    <style>
+      #main_form div {opacity: 0.0;}
+    </style>
+    {% endif %}
     <script type="text/javascript">
       var restTime = 0;
       var intervalId;
@@ -60,9 +65,9 @@
         {% endif %}
     {% endif %}
     {% if is_training == False or next_training_image_pair != None %}
-        <input type="submit" value="Выбрать" class="img_button" id="left"><br>
+        <input type="submit" value="Выбрать" class="img_button" id="left">
     {% else %}
-        <input type="submit" value="Выбрать и перейти к вопросам" class="img_button" id="left"><br>
+        <input type="submit" value="Выбрать и перейти к вопросам" class="img_button" id="left">
     {% endif %}
     </form>
 </div>
@@ -79,9 +84,9 @@
         {% endif %}
     {% endif %}
     {% if is_training == False or next_training_image_pair != None %}
-        <input type="submit" value="Выбрать" class="img_button" id="right"><br>
+        <input type="submit" value="Выбрать" class="img_button" id="right">
     {% else %}
-        <input type="submit" value="Выбрать и перейти к вопросам" class="img_button" id="right"><br>
+        <input type="submit" value="Выбрать и перейти к вопросам" class="img_button" id="right">
     {% endif %}
     </form>
 </div>

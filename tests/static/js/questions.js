@@ -6,11 +6,11 @@ function checkboxes_valid(element)
 		name = checkboxes.eq(i).attr('name');
 		if (!(name in checkbox_names)) {
 			checked_count = checkboxes.find('input[name='+cur_name+']:checked').length;
+			alert('checkbox, name: '+name+'checked: '+checked_count);
 			if (checked_count > 0) {
 				checkbox_names[cur_name] = checked_count;
 			}
 			else {
-				alert('checkbox, name: '+name);
 				return false;
 			}
 		}

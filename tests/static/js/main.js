@@ -6,8 +6,8 @@ $(document).on('ready', function () {
   $('.img_choice_area img').on('click', function () {
     $(this).css({'box-shadow' : '0px 0px 6px 3px rgb(54, 141, 218)'});
   });
-  var left_button = $('#left_button');
-  var right_button = $('#right_button');
+  var left_button = $('#left');
+  var right_button = $('#right');
   $(document).keydown(function (event) {
     switch(event.which)
     {

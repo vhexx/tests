@@ -1,4 +1,4 @@
-$(window).on('load', function () {
+$(window).load(function () {
   $('#loader').remove();
   $('#main_form div').css({'opacity' : '1.0'});
 });
@@ -15,16 +15,17 @@ $(document).on('ready', function () {
     {
       case 37:
         btnClick(left_button);
+        break;
       case 39:
         btnClick(right_button);
     }
   });
-  /*$('.img_div img').on('click', function() {
+  $('.img_div img').on('click', function() {
     if ($(this).closest('.img_div').find('#left').length > 0) {
       btnClick(left_button);
     }
     else {
       btnClick(right_button);
     }
-  });*/
+  });
 });

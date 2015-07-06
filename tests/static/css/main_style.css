@@ -23,7 +23,6 @@ body {
 	font-weight: normal;
 	z-index: 1;
 }
-#main_form div {opacity : 0.0;}
 #loader {
 	position: relative;
 	left : 50%;
@@ -105,7 +104,6 @@ body {
 	position: relative;
 	display: inline-block;
 	vertical-align: bottom;
-	width: 50%;
 }
 .img_button {
 	display: none;
@@ -113,7 +111,6 @@ body {
 .img_div img {
 	border : 1px rgb(232, 235, 241) solid;
 	padding  : 1em;
-	max-width: 300px;
 	cursor: pointer;
 }
 .qtitle {

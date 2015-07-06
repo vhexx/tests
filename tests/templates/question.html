@@ -62,21 +62,21 @@
 
 {% if prev_id != None %}
 <form action="/question/{{ prev_id }}/" method="GET" class="submit_form">
-    <input type="submit" value="Назад" id="prev" ><br>
+    <input type="submit" value="Назад" id="prev" >
 </form>
 {% endif %}
 
 {% if next_id != None %}
 <form action="/question/{{ next_id }}/" method="GET" class="submit_form">
-    <input type="submit" value="Далее" id="next" ><br>
+    <input type="submit" value="Далее" id="next" >
 </form>
 {% else %}
     {% if is_postquestion == True %}
-    <form action="/final/" method="GET">
+    <form action="/final/" method="GET" class="submit_form">
     {% else %}
-    <form action="/before_training/" method="GET">
+    <form action="/before_training/" method="GET" class="submit_form">
     {% endif %}
-        <input type="submit" value="Далее" id="next" ><br>
+        <input type="submit" value="Далее" id="next" >
     </form>
 {% endif %}
 

@@ -20,15 +20,20 @@ $(window).load(function () {
       case 39:
         btnClick(right_button);
         button_pressed = true;
+        break;
       }
     }
   });
   $('.img_div img').on('click', function() {
-    if ($(this).closest('.img_div').find('#left').length > 0) {
-      btnClick(left_button);
-    }
-    else {
-      btnClick(right_button);
+    if (! button_pressed)
+    {
+      if ($(this).closest('.img_div').find('#left').length > 0) {
+        btnClick(left_button);
+      }
+      else {
+        btnClick(right_button);
+      }
+      button_pressed = true;
     }
   });
 });

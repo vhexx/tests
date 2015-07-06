@@ -131,8 +131,11 @@ input {margin-top : 0.3em; margin-bottom: 0.3em;}
 #submit_line {
 	margin-top: 2.0em; text-align: center;
 }
+.submit_form {
+	display: inline-block;
+}
 #prev, #next {
-	display : inline-block;
+	display : block;
 	border : none;
 	outline: none;
 	width : 12.0em;

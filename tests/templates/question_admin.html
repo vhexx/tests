@@ -15,6 +15,12 @@
 {% if not is_popup %}
 {% block breadcrumbs %}
 <div class="breadcrumbs">
+<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+<script type="text/javascript">
+  $(document).on('ready', function () {
+    $('.breadcrumbs').hide();
+  });
+</script>
 <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
 &rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
 &rsaquo; {% if has_change_permission %}<a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>{% else %}{{ opts.verbose_name_plural|capfirst }}{% endif %}
@@ -83,9 +89,3 @@
 </div>
 </form></div>
 {% endblock %}
-<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-<script type="text/javascript">
-  $(document).on('ready', function () {
-    $('.breadcrumbs').hide();
-  });
-</script>

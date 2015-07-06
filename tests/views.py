@@ -132,21 +132,19 @@ def question(request, question_id):
     if not first_found == 1:
         return HttpResponseNotFound('Такого вопроса не существует')
 
-    question_titles_and_answers = []
+    questions_and_answers = []
 
     for q in actual_questions:
-        question_titles_and_answers.append((q.title, Answer.objects.filter(question=q.id)))
+        questions_and_answers.append((q, Answer.objects.filter(question=q.id)))
 
     question_instance = model.objects.get(id=question_id)
     context = {
         'titles': question_instance.title,
-        'qta': question_titles_and_answers,
+        'qa': questions_and_answers,
         'prev_id': prev_id,
         'next_id': next_id
     }
     return render_to_response('question.html', context)
-
-
 
 
 def pairs(request):

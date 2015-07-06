@@ -94,7 +94,7 @@ class UserQuestionResults(models.Model):
     session_key = models.ForeignKey(Session)
     question = models.ForeignKey(Question)
     answer = models.ForeignKey(Answer, null=True, blank=True)
-    input_text = models.CharField(null=True, blank=True)
+    input_text = models.CharField(max_length=300, null=True, blank=True)
 
 
 class UserImagePairResults(models.Model):

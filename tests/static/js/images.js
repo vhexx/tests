@@ -1,6 +1,8 @@
 $(window).load(function () {
-  $('#loader').remove();
-  $('#main_form div').css({'opacity' : '1.0'});
+  $("img").load(function() {
+    $('#loader').remove();
+    $('#main_form div').css({'opacity' : '1.0'});
+  });
   var left_button = $('#left');
   var right_button = $('#right');
   var button_pressed = false;

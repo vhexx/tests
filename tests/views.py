@@ -11,8 +11,6 @@ def index(requst):
 
 
 def test(request, test_id):
-
-    print(dict(request.session))
     try:
         test_instance = Test.objects.get(id=test_id)
 

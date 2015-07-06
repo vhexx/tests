@@ -28,12 +28,12 @@
 <!--//////////////////////////////////////////////////////////////////////////////////////-->
 
 {% if next_id != None %}
-<form action="/question/{{ next_id }}/" method="GET" class="submit_form">
+<form action="/question/{{ next_id }}/" method="GET">
 {% else %}
     {% if is_postquestion == True %}
-<form action="/final/" method="GET" class="submit_form">
+<form action="/final/" method="GET">
     {% else %}
-<form action="/before_training/" method="GET" class="submit_form">
+<form action="/before_training/" method="GET">
     {% endif %}
 {% endif %}
 
@@ -72,15 +72,18 @@
 
 
 <div id="submit_line">
-
-    {% if prev_id != None %}
+    <input type="submit" value="Продолжить" id="next">
+  {% if prev_id != None %}
+    <input type="button" value="Назад" id="prev" onclick="window.location.href='/action/question/{{ prev_id }}/';" >
+  {% endif %}
+</form>
+<!--
+{% if prev_id != None %}
     <form action="/question/{{ prev_id }}/" method="GET" class="submit_form">
         <input type="submit" value="Назад" id="prev" >
     </form>
-    {% endif %}
-
-    <input type="submit" value="Далее" id="next" >
-</form>
+{% endif %}
+-->
 
 
 

@@ -111,7 +111,7 @@ body {
 .img_div {
 	position: relative;
 	display: inline-block;
-	vertical-align: bottom;
+	vertical-align: center;
 }
 .img_button {
 	display: none;
@@ -143,7 +143,7 @@ input {margin-top : 0.3em; margin-bottom: 0.3em;}
 	display: inline-block;
 }
 #prev, #next {
-	display : block;
+	display : inline-block;
 	position: relative;
 	border : none;
 	outline: none;

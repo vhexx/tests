@@ -1,3 +1,4 @@
+from django.contrib.sessions.models import Session
 from django.db import models
 
 
@@ -87,3 +88,17 @@ class TrainingImagePair(models.Model):
     text = models.CharField(max_length=300, null=True, blank=True)
     left = models.ImageField(upload_to='img/')
     right = models.ImageField(upload_to='img/')
+
+
+class UserQuestionResults(models.Model):
+    session_key = models.ForeignKey(Session)
+    question = models.ForeignKey(Question)
+    answer = models.ForeignKey(Answer, null=True, blank=True)
+    input_text = models.CharField(null=True, blank=True)
+
+
+class UserImagePairResults(models.Model):
+    session_key = models.ForeignKey(Session)
+    pair = models.ForeignKey(ImagePair)
+    choice = models.BooleanField()
+

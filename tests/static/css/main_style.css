@@ -62,7 +62,7 @@ body {
   100% {transform: rotate(1turn);}
 }
 
-#progress, #progress_line, #main_form, #submit_line, .separator, #timer {position: relative; display: block; width: 100%;}
+#progress, #progress_line, #main_form, #submit_line, .separator, #timer, .img_text, .title {position: relative; display: block; width: 100%;}
 #timer {
 	text-align: center;
 	margin-bottom: 2em;
@@ -93,6 +93,13 @@ body {
 .questions, .images {
 	width : 920px;
 	margin-left : -480px;
+}
+.img_text {
+	text-align: left;
+}
+.title {
+	font-size: 1.1em;
+	font-weight: bolder;
 }
 .img_choice_area {
 	position: relative;
@@ -131,8 +138,11 @@ input {margin-top : 0.3em; margin-bottom: 0.3em;}
 #submit_line {
 	margin-top: 2.0em; text-align: center;
 }
+.submit_form {
+	display: inline-block;
+}
 #prev, #next {
-	display : inline-block;
+	display : block;
 	border : none;
 	outline: none;
 	width : 12.0em;
@@ -152,8 +162,11 @@ input {margin-top : 0.3em; margin-bottom: 0.3em;}
 	width : 100%;
 	z-index : 3;
 }
-
-
+@media all and (max-device-width: 960px) {
+	#main_area {
+		display: none;
+	}
+}
 @media all and (min-width: 1300px) {
 	.images {
 		width : 1160px;
@@ -171,6 +184,9 @@ input {margin-top : 0.3em; margin-bottom: 0.3em;}
 	.img_div img {
 		max-width: 700px;
 	}
+	#main_area {
+		font-size: 15px;
+	}
 }
 @media all and (min-width: 2000px) {
 	.images {
@@ -179,5 +195,8 @@ input {margin-top : 0.3em; margin-bottom: 0.3em;}
 	}
 	.img_div img {
 		max-width: 800px;
+	}
+	#main_area {
+		font-size: 16px;
 	}
 }

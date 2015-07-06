@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" type="text/css" href="../../static/css/main_style.css">
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script src="../../static/main.js"></script>
+    <script src="../../static/questions.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#progress_passed').css({'width' : '100%'});//======сюда вместо 100 проценты от общего числа вопросов
+      });
+    </script>
 </head>
 <body>
     <div id="header"></div>
@@ -53,13 +61,13 @@
 <div id="submit_line">
 
 {% if prev_id != None %}
-<form action="/question/{{ prev_id }}/" method="GET">
+<form action="/question/{{ prev_id }}/" method="GET" class="submit_form">
     <input type="submit" value="Назад" id="prev" ><br>
 </form>
 {% endif %}
 
 {% if next_id != None %}
-<form action="/question/{{ next_id }}/" method="GET">
+<form action="/question/{{ next_id }}/" method="GET" class="submit_form">
     <input type="submit" value="Далее" id="next" ><br>
 </form>
 {% else %}

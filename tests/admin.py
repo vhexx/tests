@@ -188,6 +188,7 @@ class TestAdmin(admin.ModelAdmin):
                     last_ord = Question.objects.filter(test=object_id).latest('order').order
                     q1.update(order=last_ord+1)
                     q2.update(order=ord1)
+                    q1 = Question.objects.filter(test=object_id, order=last_ord+1)
                     q1.update(order=ord2)
                     return HttpResponse('success'+str(ord1)+' '+str(ord2))
             return HttpResponse('error'+str(ord1)+' '+str(ord2))

@@ -35,7 +35,7 @@
                 {% for r in time_res %}
                   {% for test,results in r.1.items %}
                     <tr class="result_row">
-                      <td class="session_key">{{ r.0.0 }} <br/> {{ r.0.1 }}</td>
+                      <td class="session_key">{{ r.0.0 }} <br/><br/> {{ r.0.1 }}</td>
                       <td class="test">{{ test }}</td>
                       <td class="questions_answers">
                         {% for qa in results.0 %}
@@ -44,7 +44,7 @@
                       </td>
                       <td class="pairs_choices">
                           {% for pc in results.1 %}
-                            {{ pc.0.0 }} {{ pc.0.1 }} {{ pc.1.0 }} {{ pc.1.1 }} {{ pc.2 }}<br>
+                            {{ pc }} {{ pc.0.1 }}}
                           {% endfor %}
                       </td>
 

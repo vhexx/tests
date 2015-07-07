@@ -278,8 +278,17 @@ def results(request):
             right = uip.pair.right
             if uip_test not in keys_times[key_time]:
                 keys_times[key_time][uip_test] = ([], [])
-            keys_times[key_time][uip_test][1].append(((left.img, left.name), (right.img, right.name),
-                                                      2 if uip.choice else 1))
+
+            keys_times[key_time][uip_test][1].append(
+                '<a {0} href="{1}">{2}</a><br/><a {3} href="{4}">{5}</a><br/><br/>'.format(
+                    '' if uip.choice else '"font-weight: bold;"',
+                    '/media/' + left.img,
+                    left.name,
+                    '"font-weight: bold;"' if uip.choice else '',
+                    '/media/' + right.img,
+                    right.name
+                )
+            )
         key_time = cursor.fetchone()
 
     time_res = list(keys_times.items())

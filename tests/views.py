@@ -118,6 +118,8 @@ def question(request, question_id):
                     from tests_userquestionresults
                     group by question_id, session_key_id) as q''')
     question_passed = cursor.fetchone()[0]
+    print('question_passed', question_passed)
+    print('question_count', int(request.session.get('question_count')))
 
     question_instance = model.objects.get(id=question_id)
     context = {
@@ -125,7 +127,7 @@ def question(request, question_id):
         'qa': questions_and_answers,
         'prev_id': prev_id,
         'next_id': next_id,
-        'question_ration': question_passed/request.session.get('question_count'),
+        'question_ration': question_passed / int(request.session.get('question_count')),
         'is_postquestion': True if model == PostQuestion else False
     }
     return render_to_response('question.html', context)

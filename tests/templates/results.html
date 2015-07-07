@@ -28,6 +28,7 @@
                 <tr class="header_row">
                     <td class="session_key">Ключ сессии</td>
                     <td class="start_time">Время начала прохождения теста</td>
+                    <td class="test">Тест</td>
                     <td class="questions_answers">Ответы</td>
                     <td class="pairs_choices">Выборы изображений из пар</td>
                 </tr>
@@ -64,18 +65,24 @@
                 -->
 
                 {% for k,v in keys_times %}
-                <tr class="result_row">
-                    <td class="session_key">  </td>
-                    <td class="start_time">  </td>
-                    <td class="questions_answers">
-                        question : answer<br>
-                    </td>
-                    <td class="pairs_choices">
-                        <a href="">left image</a><br>
-                        <a href="">right image</a><br>
-                        choice : 
-                    </td>
-                </tr>
+                  {% for test,results in v %}
+                    <tr class="result_row">
+                      <td class="session_key">{{ k[0] }}</td>
+                      <td class="start_time">{{ k[1] }}</td>
+                      <td class="test">{{ test }}</td>
+                      <td class="questions_answers">
+                        {% for qa in results[0] %}
+                          {{ qa[0] }} : {{ qa[1] }}<br>
+                        {% endfor %}
+                      </td>
+                      <td class="pairs_choices">
+                          {% for pc in results[1] %}
+                            {{ pc[0] }} : {{ pc[1] }}<br>
+                          {% endfor %}
+                      </td>
+                    
+                    </tr>
+                  {% endfor %}
                 {% endfor %}
                 <!--====================================== -->
             </table>

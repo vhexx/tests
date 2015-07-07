@@ -125,7 +125,7 @@ body {
 	padding  : 1em;
 	cursor: pointer;
 	max-width : 400px;
-	max-height: 450px;
+	max-height: 400px;
 }
 .qtitle {
 	margin-top : 1em; margin-bottom: 1em;
@@ -190,36 +190,46 @@ input {margin-top : 0.3em; margin-bottom: 0.3em;}
 		display: none;
 	}
 }
-@media all and (min-width: 1300px) {
+@media all and (min-width: 1200px) {
 	.images {
 		width : 1160px;
 		margin-left: -600px;
 	}
 	.img_div img {
 		max-width: 500px;
-		max-height: 500px;
+		max-height: 450px;
 	}
 }
-@media all and (min-width: 1600px) {
+@media all and (min-width: 1280px) {
+	.images {
+		width: 1240px;
+		margin-left: -640px;
+	}
+	.img_div img {
+		max-width: 500px;
+		max-height: 450px;
+	}
+}
+@media all and (min-width: 1480px) {
 	.images {
 		width : 1460px;
 		margin-left: -700px;
 	}
 	.img_div img {
-		max-width: 700px;
-		max-height: 550px;
+		max-width: 600px;
+		max-height: 500px;
 	}
 	#main_area {
 		font-size: 15px;
 	}
 }
-@media all and (min-width: 2000px) {
+@media all and (min-width: 1800px) {
 	.images {
 		width: 1760px;
 		margin-left: -900px;
 	}
 	.img_div img {
-		max-width: 800px;
+		max-width: 750px;
 		max-height: 600px;
 	}
 	#main_area {

@@ -28,7 +28,7 @@
 <div>
   <input type="text" class="swap1" />
   <input type="text" class="swap2" />
-  <input type="button" class="swap_btn" />
+  <input type="button" class="swap_btn" value="swap orders" />
 </div>
 </div>
 
@@ -69,7 +69,7 @@
             data : {swap_order1 : order1, swap_order2 : order2 },
             success : function(data) {
               if (data == 'success') {
-                $('input[name="_continue"]').click();
+                location.reload();
               }
               else {
                 alert('Incorrect orders!');

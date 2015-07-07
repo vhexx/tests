@@ -2,10 +2,11 @@ from random import shuffle
 from django.http import HttpResponseNotFound
 from django.shortcuts import render_to_response, redirect
 from django.db import connection
+import time
 from tests.models import PreQuestion, Test, Answer, PostQuestion, ImagePair, TrainingImagePair, Question
 from .const import prequestions_state, postquestions_state, pairs_state, training_state, initial_state
 from tests.utils.check_results import check_question_results, check_image_pair_results
-from time import time
+
 
 
 def index(requst):

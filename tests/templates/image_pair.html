@@ -62,7 +62,9 @@
         <form action="/after_training/" method="GET">
         {% endif %}
     {% endif %}
+        {% if is_training == False %}
         <input type="hidden" name="pair" value="{{ image_pair_id }}">
+        {% endif %}
         <input type="hidden" name="choice" value="0">
 
         <input type="submit" value="Выбрать" class="img_button" id="left">
@@ -80,7 +82,9 @@
         <form action="/after_training/" method="GET">
         {% endif %}
     {% endif %}
-        <input type="hidden" name="par" value="{{ image_pair_id }}">
+        {% if is_training == False %}
+        <input type="hidden" name="pair" value="{{ image_pair_id }}">
+        {% endif %}
         <input type="hidden" name="choice" value="1">
 
         <input type="submit" value="Выбрать" class="img_button" id="right">

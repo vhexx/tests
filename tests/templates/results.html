@@ -17,6 +17,9 @@
         border: 1px rgb(194, 201, 219) solid;
         padding: 5px;
      }
+     .inline_div {
+
+     }
     </style>
     <title></title>
 </head>
@@ -38,7 +41,7 @@
                       <td class="test">{{ test }}</td>
                       <td class="questions_answers">
                         {% for qa in results.0 %}
-                          <div class="inline_div">{{ qa.0.title }} : {{ qa.1 }}</div>
+                          <div class="inline_div"><b>{{ qa.0.title }}</b> : {{ qa.1 }}</div>
                         {% endfor %}
                       </td>
                       <td class="pairs_choices">

@@ -252,7 +252,13 @@ def results(request):
         for uqr in uqrs:
             uqr_question = uqr.question
             uqr_test = uqr.question.test
-            uqr_answer = uqr.input_text if not None else uqr.answer.statement
+
+            if uqr.input_text is not None:
+                uqr_answer = uqr.input_text
+            else:
+                print('debug:'+str(uqr.answer.statement))
+                uqr_answer = uqr.answer.statement
+
             if uqr_test not in keys_times[key_time]:
                 keys_times[key_time][uqr_test] = ([], [])
             keys_times[key_time][uqr_test][0].append((uqr_question, uqr_answer))
@@ -264,24 +270,22 @@ def results(request):
     while key_time is not None:
         if key_time not in keys_times:
             keys_times[key_time] = {}
-            print('debug:' + str(keys_times.get(key_time)))
         uips = UserImagePairResults.objects.filter(session_key=key_time[0],
                                                    start_time=key_time[1]).order_by('id')
         for uip in uips:
             uip_test = uip.pair.test
             left = uip.pair.left
             right = uip.pair.right
-            print('debug:' + str(keys_times.get(key_time)))
             if uip_test not in keys_times[key_time]:
                 keys_times[key_time][uip_test] = ([], [])
             keys_times[key_time][uip_test][1].append(((left.img, left.name), (right.img, right.name),
                                                       2 if uip.choice else 1))
         key_time = cursor.fetchone()
 
-        context = {
-            'keys_times': keys_times
-        }
+    context = {
+        'keys_times': keys_times
+    }
 
-        return render_to_response('results.html', context)
+    return render_to_response('results.html', context)
 
 

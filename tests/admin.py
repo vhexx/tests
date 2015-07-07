@@ -189,8 +189,8 @@ class TestAdmin(admin.ModelAdmin):
                     q1.get().order = last_ord+1
                     q2.get().order = ord1
                     q1.get().order = ord2
-                    return HttpResponse('success')
-            return HttpResponse('error')
+                    return HttpResponse('success'+str(ord1)+' '+str(ord2))
+            return HttpResponse('error'+str(ord1)+' '+str(ord2))
         #for ajax filtration
         if (request.method == 'GET') and ('fc_filter' in request.GET):
             quest_id = int(request.GET.get('fc_filter', None))

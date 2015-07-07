@@ -51,7 +51,7 @@ def check_image_pair_results(request):
     if not pair.isdigit() or not choice.isdigit():
         return False
 
-    id = UserImagePairResults.objects.latest('id').id + 1 if UserQuestionResults.objects.count() > 0 else 1
+    id = UserImagePairResults.objects.latest('id').id + 1 if UserImagePairResults.objects.count() > 0 else 1
     uipr = UserImagePairResults(
         id,
         session_key,

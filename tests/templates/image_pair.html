@@ -28,7 +28,7 @@
           {
             clearInterval(intervalId);
             $('.img_div img').attr({'src' : '/static/img/timeout_image.jpg'});
-            $('#timer').innerHTML = 'Время вышло, но Вы ещё можете сделать выбор';
+            $('#timer')[0].innerHTML = 'Время вышло, но Вы ещё можете сделать выбор';
           }
         }, 1000);
       });

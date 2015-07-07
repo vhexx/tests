@@ -245,7 +245,7 @@ def results(request):
                 uqr_test = uqr.question.test
                 if uqr_test not in keys_times[key_time]:
                     keys_times[key_time][uqr_test] = ([], [])
-                keys_times[key_time][uqr_test][0].add((uqr_question, uqr.answer))
+                keys_times[key_time][uqr_test][0].append((uqr_question, uqr.answer))
 
             key_time = cursor.fetchone()
 
@@ -259,7 +259,7 @@ def results(request):
                 uip_test = uip.pair.test
                 if uip_test not in keys_times[key_time]:
                     keys_times[key_time][uip_test] = ([], [])
-                keys_times[key_time][uip_test][1].add((uip.pair, uip.choice))
+                keys_times[key_time][uip_test][1].append((uip.pair, uip.choice))
 
             key_time = cursor.fetchone()
 

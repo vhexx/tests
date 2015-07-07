@@ -38,8 +38,8 @@ def check_question_results(request):
 def check_image_pair_results(request):
     session_key = request.session.session_key
     params = dict(request.GET)
-    pair = params.get('pair')
-    choice = params.get('choice')
+    pair = params.get('pair')[0]
+    choice = params.get('choice')[0]
     if pair is None or choice is None:
         return False
     if not pair.isdigit() or not choice.isdigit():

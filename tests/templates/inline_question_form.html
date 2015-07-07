@@ -60,7 +60,7 @@
   $('#{{ inline_admin_formset.formset.prefix }}-group').on('click', '.swap_btn', function() {
     var order1 = $(this).closest('div').find('.swap1').val();
     var order2 = $(this).closest('div').find('.swap2').val();
-    if ( (parseInt(order1) == NaN) || (parseInt(order2) == NaN) ) {
+    if ( (parseInt(order1, 10) == NaN) || (parseInt(order2, 10) == NaN) ) {
       alert('Введите числа');
       return;
     }

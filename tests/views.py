@@ -254,7 +254,7 @@ def results(request):
         for uqr in uqrs:
             uqr_question = uqr.question
             uqr_test = uqr.question.test
-            uqr_answer = uqr.input_text if uqr.input_text is not None else 'aaa'
+            uqr_answer = uqr.input_text if uqr.input_text is not None else uqr.answer.statement
 
             if uqr_test not in keys_times[key_time]:
                 keys_times[key_time][uqr_test] = ([], [])

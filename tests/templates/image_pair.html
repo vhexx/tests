@@ -14,7 +14,10 @@
       var restTime = 0;
       var intervalId;
       $(document).on('ready', function() {
-        restTime = {{ seconds }};//=======время сюда
+        restTime = {{ seconds }};
+        if (restTime <= 0) {
+          return;
+        }
         $('#rest_time').text(restTime);
         intervalId = setInterval(function () {
           --restTime;

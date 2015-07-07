@@ -163,12 +163,16 @@ input {margin-top : 0.3em; margin-bottom: 0.3em;}
 }
 #prev {
 	background-color: rgb(194, 201, 219);
+}
+.left_arrow {
 	background-image: url("/static/img/left_arrow.svg");
     background-repeat: no-repeat;
     background-position: left center;
 }
 #next {
 	background-color: rgb(34, 179, 85);
+}
+.right_arrow {
 	background-image: url("/static/img/right_arrow.svg");
     background-repeat: no-repeat;
     background-position: right center;

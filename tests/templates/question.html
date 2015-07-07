@@ -73,9 +73,9 @@
 
 <div id="submit_line">
   {% if prev_id != None %}
-    <input type="button" value="Назад" id="prev" onclick="window.location.href='/question/{{ prev_id }}/';" >
+    <input type="button" value="Назад" id="prev" onclick="window.location.href='/question/{{ prev_id }}/';" class="left_arrow" >
   {% endif %}
-    <input type="submit" value="Продолжить" id="next">
+    <input type="submit" value="Продолжить" id="next" class="right_arrow" >
 </form>
 
 

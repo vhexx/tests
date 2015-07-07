@@ -283,8 +283,9 @@ def results(request):
         key_time = cursor.fetchone()
 
     time_res = list(keys_times.items())
+    time_res.sort(key=lambda i: i[0][1], reverse=True)
     time_res = list(map(lambda i: (i[0][1], i[1]), time_res))
-    time_res.sort(key=lambda i: i[0], reverse=True)
+
     print('debug:'+str(time_res))
     context = {
         'time_res': time_res

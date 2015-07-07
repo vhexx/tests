@@ -1,4 +1,4 @@
-from tests.models import UserQuestionResults, Question
+from tests.models import UserQuestionResults, Question, UserImagePairResults
 
 
 def check_question_results(request):
@@ -36,4 +36,19 @@ def check_question_results(request):
 
 
 def check_image_pair_results(request):
-    pass
+    session_key = request.session.session_key
+    params = dict(request.GET)
+    pair = params.get('pair')
+    choice = params.get('choice')
+    if pair is None or choice is None:
+        return False
+    if not pair.isdigit() or not choice.isdigit():
+        return False
+    id = UserImagePairResults.objects.latest('id').id + 1 if UserQuestionResults.objects.count() > 0 else 1
+    uipr = UserImagePairResults(
+        id,
+        session_key,
+        int(pair),
+        int(choice)
+    )
+    uipr.save()

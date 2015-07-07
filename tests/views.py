@@ -112,13 +112,7 @@ def question(request, question_id):
     for q in actual_questions:
         questions_and_answers.append((q, Answer.objects.filter(question=q.id)))
 
-    cursor = connection.cursor()
-    cursor.execute(
-        '''select count(*)
-            from (select question_id
-                    from tests_userquestionresults
-                    group by question_id, session_key_id) as q''')
-    question_passed = cursor.fetchone()[0]
+    question_passed = 1
 
     question_instance = model.objects.get(id=question_id)
     context = {

@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^go_to_pairs/$', views.go_to_pairs),
     url(r'^pairs/$', views.pairs),
     url(r'^final/$', views.final),
+    url(r'^results/$', views.results),
     url(r'^$', views.index),
 )
 if settings.DEBUG:

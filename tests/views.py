@@ -263,12 +263,14 @@ def results(request):
         while key_time is not None:
             if key_time not in keys_times:
                 keys_times[key_time] = {}
+                print('debug:'+keys_times.get(key_time))
             uips = UserImagePairResults.objects.filter(session_key=key_time[0],
                                                        start_time=key_time[1]).order_by('id')
             for uip in uips:
                 uip_test = uip.pair.test
                 left = uip.pair.left
                 right = uip.pair.right
+                print('debug:'+keys_times.get(key_time))
                 if uip_test not in keys_times[key_time]:
                     keys_times[key_time][uip_test] = ([], [])
                 keys_times[key_time][uip_test][1].append(((left.img, left.name),(right.img, right.name),

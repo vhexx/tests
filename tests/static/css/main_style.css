@@ -10,6 +10,9 @@ body {
 	height : 50px;
 	background-color : rgb(34, 179, 85);
 	z-index : 2;
+	background-image: url("/static/img/logo.svg");
+    background-repeat: no-repeat;
+    background-position: right center;
 }
 #main_area {
 	display : block;
@@ -156,8 +159,18 @@ input {margin-top : 0.3em; margin-bottom: 0.3em;}
 	cursor: pointer;
 	font-family: arial;
 }
-#prev {background-color: rgb(194, 201, 219);}
-#next {background-color: rgb(34, 179, 85);}
+#prev {
+	background-color: rgb(194, 201, 219);
+	background-image: url("/static/img/left_arrow.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+#next {
+	background-color: rgb(34, 179, 85);
+	background-image: url("/static/img/right_arrow.svg");
+    background-repeat: no-repeat;
+    background-position: right center;
+}
 #footer {
 	display: block;
 	position: relative;

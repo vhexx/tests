@@ -256,6 +256,7 @@ def results(request):
             if uqr.input_text is not None:
                 uqr_answer = uqr.input_text
             else:
+                print('debug_0:'+str(uqr.id))
                 print('debug:'+str(uqr.answer.statement))
                 uqr_answer = uqr.answer.statement
 

@@ -224,7 +224,10 @@ def pairs(request):
 def final(request):
     check_question_results(request)
     request.session.modified = True
-    return render_to_response('final.html')
+    test_id = request.session.get('test_id')
+    test_ending = Test.objects.get(id=test_id).ending
+    context = { 'test_ending' : test_ending }
+    return render_to_response('final.html', context)
 
 
 def failed(request):

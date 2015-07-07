@@ -10,7 +10,11 @@
 <body>
 	<div id="header"></div>
 	    <div id="main_area" class="questions">
-            Спасибо за участие!
+            {% if test_ending == "None" %}
+              Спасибо за участие!
+            {% else %}
+              {{ test_ending }}
+            {% endif %}
         </div>
     </div>
     <div id="footer"></div>

@@ -11,7 +11,6 @@
      }
      table {
         position: relative;
-        width: 100%;
         border: 1px rgb(194, 201, 219) solid;
      }
      td {
@@ -39,12 +38,12 @@
                       <td class="test">{{ test }}</td>
                       <td class="questions_answers">
                         {% for qa in results.0 %}
-                          {{ qa.0.title }} : {{ qa.1 }}<br>
+                          <td class="inline_td qa">{{ qa.0.title }} : {{ qa.1 }}<br></td>
                         {% endfor %}
                       </td>
                       <td class="pairs_choices">
                           {% for pc in results.1 %}
-                            {{ pc|safe  }}
+                            <td class="inline_td pc">{{ pc|safe  }}</td>
                           {% endfor %}
                       </td>
 

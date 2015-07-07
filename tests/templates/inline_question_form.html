@@ -25,9 +25,11 @@
   {% if inline_admin_form.needs_explicit_pk_field %}{{ inline_admin_form.pk_field.field }}{% endif %}
   {{ inline_admin_form.fk_field.field }}
 </div>{% endfor %}
-<input type="text" id="swap1" />
-<input type="text" id="swap2" />
-<input type="button" id="swap_btn" />
+<div>
+  <input type="text" class="swap1" />
+  <input type="text" class="swap2" />
+  <input type="button" class="swap_btn" />
+</div>
 </div>
 
 <script type="text/javascript">
@@ -55,9 +57,9 @@
       other_fields.css({'display' : 'block'});
     }
   });
-  $(document).on('click', '#swap_btn', function() {
-    var order1 = $('#swap1').val();
-    var order2 = $('#swap2').val();
+  $(document).on('click', '.swap_btn', function() {
+    var order1 = $(this).closest('div').find('.swap1').val();
+    var order2 = $(this).closest('div').find('.swap2').val();
     if ( (parseInt(order1) == NaN) || (parseInt(order2) == NaN) ) {
       alert('Введите числа');
       return;

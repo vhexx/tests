@@ -252,13 +252,7 @@ def results(request):
         for uqr in uqrs:
             uqr_question = uqr.question
             uqr_test = uqr.question.test
-
-            if uqr.input_text is not None:
-                uqr_answer = uqr.input_text
-            else:
-                print('debug_0:'+str(uqr.id))
-                print('debug:'+str(uqr.answer.statement))
-                uqr_answer = uqr.answer.statement
+            uqr_answer = uqr.input_text if not None else uqr.answer.statement
 
             if uqr_test not in keys_times[key_time]:
                 keys_times[key_time][uqr_test] = ([], [])

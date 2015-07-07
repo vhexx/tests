@@ -145,9 +145,18 @@ class MultiFileInput(widgets.AdminFileWidget):
 class TestForm(forms.ModelForm):
     class Meta:
         model = Test
-        fields = ['title', 'seconds', 'description', 'images']
+        fields = ['title', 'seconds', 'description', 'images', 'link']
 
     images = forms.ImageField(required=False, widget=MultiFileInput)
+    link = forms.CharField()#URLField();
+
+    test_obj_id = None
+
+    def __init__(self, *args, **kwargs):
+        super(TestForm, self).__init__(args, kwargs)
+        if self.test_obj_id:
+            self.fields['link'].initial = '../../../../test/%s' % self.test_obj_id
+        self.fields['link'].widget.attrs['readonly'] = True
 
 
 class TestAdmin(admin.ModelAdmin):
@@ -167,6 +176,7 @@ class TestAdmin(admin.ModelAdmin):
             QuestionForm.last = questions.order_by('-order')[:1].get().order
         ImagePairInline.test_id = object_id
         FailureCriterionForm.test_id = object_id
+        self.form.test_obj_id = object_id
         #for ajax filtration
         if (request.method == 'GET') and ('fc_filter' in request.GET):
             quest_id = int(request.GET.get('fc_filter', None))

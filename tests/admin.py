@@ -50,12 +50,12 @@ class QuestionForm(forms.ModelForm):
         super(QuestionForm, self).__init__(*args, **kwargs)
         self.fields['type'].initial = QuestionType.objects.latest('id')
         self.fields['title'].initial = 'question'
-        if last:
+        if QuestionForm.last:
             self.fields['order'].initial = QuestionForm.last+1
-            last += 1
+            QuestionForm.last += 1
         else:
             self.fields['order'].initial = 1
-            last = 1
+            QuestionForm.last = 1
 
 
 class PreQuestionAdmin(admin.ModelAdmin):

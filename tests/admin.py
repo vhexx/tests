@@ -155,7 +155,7 @@ class TestForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(TestForm, self).__init__(*args, **kwargs)
         if self.test_url:
-            self.fields['link'].initial = test_url
+            self.fields['link'].initial = self.test_url
         self.fields['link'].widget.attrs['readonly'] = True
 
 

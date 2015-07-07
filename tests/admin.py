@@ -58,7 +58,10 @@ class PreQuestionAdmin(admin.ModelAdmin):
 
     def delete_model(self, request, obj):
         rel_answers = Answer.objects.filter(question=obj.question_ptr)
+        for a in rel_answers:
+            UserQuestionResults.objects.filter(answer=a.id).delete()
         rel_answers.delete()
+        UserQuestionResults.objects.filter(question=obj.question_ptr).delete()
         par = Question.objects.get(id=obj.question_ptr)
         obj.delete()
         par.delete()

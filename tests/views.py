@@ -242,7 +242,9 @@ def results(request):
     keys_times = {}
 
     cursor = connection.cursor()
-    cursor.execute('''select distinct session_key_id, start_time from tests_userquestionresults''')
+    cursor.execute('''select distinct session_key_id, start_time
+                        from tests_userquestionresults
+                        order by start_time desc''')
     key_time = cursor.fetchone()
     while key_time is not None:
         if key_time not in keys_times:
@@ -252,7 +254,7 @@ def results(request):
         for uqr in uqrs:
             uqr_question = uqr.question
             uqr_test = uqr.question.test
-            uqr_answer = uqr.input_text if not None else uqr.answer.statement
+            uqr_answer = uqr.input_text if uqr.input_text is not None else uqr.answer.statement
 
             if uqr_test not in keys_times[key_time]:
                 keys_times[key_time][uqr_test] = ([], [])
@@ -260,7 +262,9 @@ def results(request):
 
         key_time = cursor.fetchone()
 
-    cursor.execute('''select distinct session_key_id, start_time from tests_userimagepairresults''')
+    cursor.execute('''select distinct session_key_id, start_time
+                        from tests_userimagepairresults
+                        order by start_time desc''')
     key_time = cursor.fetchone()
     while key_time is not None:
         if key_time not in keys_times:

@@ -195,6 +195,7 @@ def pairs(request):
     right = '/media/' + str(image_pair.right.img)
 
     context = {
+        'image_pair_id': image_pair.id,
         'left': left,
         'right': right,
         'seconds': seconds,

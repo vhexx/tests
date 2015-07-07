@@ -33,11 +33,10 @@
                     <td class="pairs_choices">Выборы изображений из пар</td>
                 </tr>
 
-                {% for k,v in keys_times %}
-                  {% for test,results in v.items %}
+                {% for r in time_res %}
+                  {% for test,results in r.1 %}
                     <tr class="result_row">
-                      <td class="session_key">{{ k.0 }}</td>
-                      <td class="start_time">{{ k.1 }}</td>
+                      <td class="start_time">{{ r.0 }}</td>
                       <td class="test">{{ test }}</td>
                       <td class="questions_answers">
                         {% for qa in results.0 %}

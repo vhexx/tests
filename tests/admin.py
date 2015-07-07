@@ -148,14 +148,14 @@ class TestForm(forms.ModelForm):
         fields = ['title', 'seconds', 'description', 'images',] #'link']
 
     images = forms.ImageField(required=False, widget=MultiFileInput)
-    link = forms.URLField(widget=widgets.URLInput);
+    link = forms.URLField(widget=forms.widgets.URLInput);
 
-    test_obj_id = None
+    test_url = None
 
     def __init__(self, *args, **kwargs):
         super(TestForm, self).__init__(*args, **kwargs)
-        if self.test_obj_id:
-            self.fields['link'].initial = '../../../../test/%s' % self.test_obj_id
+        if self.test_url:
+            self.fields['link'].initial = self.test_url
         self.fields['link'].widget.attrs['readonly'] = True
 
 
@@ -176,7 +176,7 @@ class TestAdmin(admin.ModelAdmin):
             QuestionForm.last = questions.order_by('-order')[:1].get().order
         ImagePairInline.test_id = object_id
         FailureCriterionForm.test_id = object_id
-        self.form.test_obj_id = object_id
+        self.form.test_url = str(request.get_host())+'/test/'+str(object_id)
         #for ajax filtration
         if (request.method == 'GET') and ('fc_filter' in request.GET):
             quest_id = int(request.GET.get('fc_filter', None))

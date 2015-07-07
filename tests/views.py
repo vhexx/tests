@@ -228,5 +228,7 @@ def failed(request):
 
 
 def results(request):
-    return render_to_response('results.html')
+    if request.user.is_superuser:
+        return render_to_response('results.html')
+    return redirect('/admin')
 

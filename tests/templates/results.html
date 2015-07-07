@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/static/css/main_style.css" >
+    <style>
+     .header_row {
+        background-color: rgb(54, 141, 218);
+        color: #ffffff;
+        font-weight: bolder;
+     }
+     table {
+        position: relative;
+        width: 100%;
+        border: 1px rgb(194, 201, 219) solid;
+     }
+     td {
+        border: 1px rgb(194, 201, 219) solid;
+        padding: 5px;
+     }
+    </style>
+    <title></title>
+</head>
+<body>
+	<div id="header"></div>
+	    <div id="main_area" class="images">
+          {% if request.user.is_superuser %}
+            <table>
+                <tr class="header_row">
+                    <td class="session_key">Ключ сессии</td>
+                    <td class="start_time">Время начала прохождения теста</td>
+                    <td class="questions_answers">Ответы</td>
+                    <td class="pairs_choices">Выборы изображений из пар</td>
+                </tr>
+                <!--===так для каждой пары ключа-времени===-->
+                <tr class="result_row">
+                    <td class="session_key">  </td>
+                    <td class="start_time">  </td>
+                    <td class="questions_answers">
+                        question : answer<br>
+                    </td>
+                    <td class="pairs_choices">
+                        <a href="">left image</a><br>
+                        <a href="">right image</a><br>
+                        choice : 
+                    </td>
+                </tr>
+                <!--====================================== -->
+            </table>
+          {% else %}
+            Недостаточно прав для просмотра этой страницы
+          {% endif %}
+        </div>
+    </div>
+</body>
+</html>

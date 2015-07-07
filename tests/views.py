@@ -1,3 +1,4 @@
+import collections
 from random import shuffle
 from django.http import HttpResponseNotFound
 from django.shortcuts import render_to_response, redirect
@@ -281,8 +282,10 @@ def results(request):
                                                       2 if uip.choice else 1))
         key_time = cursor.fetchone()
 
+    keys_times_list = list(keys_times.items())
+    keys_times_list.sort(key=lambda i: i[0][1], reverse=True)
     context = {
-        'keys_times': keys_times
+        'keys_times': keys_times_list
     }
 
     return render_to_response('results.html', context)

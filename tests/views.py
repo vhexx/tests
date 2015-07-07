@@ -205,6 +205,7 @@ def pairs(request):
 
 
 def final(request):
+    request.session.modified = True
     check_question_results(request)
     return render_to_response('final.html')
 

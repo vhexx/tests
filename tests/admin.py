@@ -148,7 +148,7 @@ class TestForm(forms.ModelForm):
         fields = ['title', 'seconds', 'description', 'images',] #'link']
 
     images = forms.ImageField(required=False, widget=MultiFileInput)
-    link = forms.URLField();
+    link = forms.URLField(widget=URLInput);
 
     test_obj_id = None
 

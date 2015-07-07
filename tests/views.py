@@ -282,10 +282,11 @@ def results(request):
                                                       2 if uip.choice else 1))
         key_time = cursor.fetchone()
 
-    keys_times_list = list(keys_times.items())
-    keys_times_list.sort(key=lambda i: i[0][1], reverse=True)
+    time_res = list(keys_times.items())
+    time_res = list(map(lambda i: (i[0][1], i[1]), time_res))
+    time_res.sort(key=lambda i: i[0], reverse=True)
     context = {
-        'keys_times': keys_times_list
+        'time_res': time_res
     }
 
     return render_to_response('results.html', context)

@@ -32,7 +32,6 @@
                     <td class="questions_answers">Ответы</td>
                     <td class="pairs_choices">Выборы изображений из пар</td>
                 </tr>
-                <!--===так для каждой пары ключа-времени===-->
                 <!--
                 Структура keys_times такая:
                 keys_times: {
@@ -63,21 +62,6 @@
                 Если что не получается, смотри функцию results в views.py
 
                 -->
-                
-
-
-                {% for k,v in keys_times %}
-                    <tr class="result_row">
-                      <td class="session_key">{{ k.0 }}</td>
-                      <td class="start_time">{{ k.1 }}</td>
-                      <td class="test"></td>
-                      <td class="questions_answers"></td>
-                      <td class="pairs_choices"></td>
-                    </tr>
-                {% endfor %}
-
-
-
                 {% for k,v in keys_times %}
                   {% for test,results in v %}
                     <tr class="result_row">
@@ -98,7 +82,6 @@
                     </tr>
                   {% endfor %}
                 {% endfor %}
-                <!--====================================== -->
             </table>
         </div>
     </div>

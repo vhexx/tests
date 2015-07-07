@@ -38,7 +38,7 @@
                       <td class="test">{{ test }}</td>
                       <td class="questions_answers">
                         {% for qa in results.0 %}
-                          <td class="inline_td qa">{{ qa.0.title }} : {{ qa.1 }}<br></td>
+                          <div>{{ qa.0.title }} : {{ qa.1 }}</div>
                         {% endfor %}
                       </td>
                       <td class="pairs_choices">

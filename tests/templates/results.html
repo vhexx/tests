@@ -18,7 +18,10 @@
         padding: 5px;
      }
      .inline_div {
-
+        border: 1px rgb(194, 201, 219) solid;
+     }
+     .ver {
+      display: inline;
      }
     </style>
     <title></title>
@@ -41,12 +44,12 @@
                       <td class="test">{{ test }}</td>
                       <td class="questions_answers">
                         {% for qa in results.0 %}
-                          <div class="inline_div"><b>{{ qa.0.title }}</b> : {{ qa.1 }}</div>
+                          <div class="inline_div hor"><b>{{ qa.0.title }}</b> : {{ qa.1 }}</div>
                         {% endfor %}
                       </td>
                       <td class="pairs_choices">
                           {% for pc in results.1 %}
-                            <td class="inline_td pc">{{ pc|safe  }}</td>
+                            <div class="inline_div ver">{{ pc|safe  }}</div>
                           {% endfor %}
                       </td>
 

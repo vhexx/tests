@@ -3,6 +3,7 @@ from tests.models import UserQuestionResults, Question, UserImagePairResults
 
 def check_question_results(request):
     session_key = request.session.session_key
+    start_time = request.session.get('start_time')
     questions = dict(request.GET)
     cached_questions = {}
     for q in questions:
@@ -10,7 +11,8 @@ def check_question_results(request):
             if q.isdigit():
                 q_id = int(q)
                 cached_questions[q] = Question.objects.get(id=q_id)
-                UserQuestionResults.objects.filter(session_key=session_key, question=q_id).delete()
+                UserQuestionResults.objects.filter(session_key=session_key, question=q_id,
+                                                   start_time=start_time).delete()
             else:
                 return False
         for a in questions[q]:
@@ -20,6 +22,7 @@ def check_question_results(request):
                 uqr = UserQuestionResults(
                     id,
                     session_key,
+                    start_time,
                     int(q),
                     int(a),
                     None
@@ -28,6 +31,7 @@ def check_question_results(request):
                 uqr = UserQuestionResults(
                     id,
                     session_key,
+                    start_time,
                     int(q),
                     None,
                     a
@@ -37,6 +41,7 @@ def check_question_results(request):
 
 def check_image_pair_results(request):
     session_key = request.session.session_key
+    start_time = request.session.get('start_time')
     params = dict(request.GET)
     pair = params.get('pair')
     choice = params.get('choice')
@@ -55,6 +60,7 @@ def check_image_pair_results(request):
     uipr = UserImagePairResults(
         id,
         session_key,
+        start_time,
         int(pair),
         int(choice)
     )

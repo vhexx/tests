@@ -225,7 +225,11 @@ def pairs(request):
 def final(request):
     check_question_results(request)
     test_id = request.session.get('test_id')
-    test_ending = Test.objects.get(id=test_id).ending
+    test = Test.objects.get(id=test_id)
+    if test is not None:
+        test_ending = test.ending
+    else:
+        test_ending = ''
     context = {'test_ending': test_ending}
 
     request.session['test_id'] = None

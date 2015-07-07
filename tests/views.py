@@ -1,6 +1,7 @@
 from random import shuffle
 from django.http import HttpResponseNotFound
 from django.shortcuts import render_to_response, redirect
+from django.db import connection
 from tests.models import PreQuestion, Test, Answer, PostQuestion, ImagePair, TrainingImagePair, Question
 from .const import prequestions_state, postquestions_state, pairs_state, training_state, initial_state
 from tests.utils.check_results import check_question_results, check_image_pair_results
@@ -26,7 +27,6 @@ def test(request, test_id):
     request.session['image_pair_ids'] = image_pair_ids
     request.session['image_pair_id_ptr'] = -1
     request.session['question_count'] = Question.objects.filter(test=test_id).count()
-    request.session['question_passed'] = 0
 
     # retrieve related questions and put them in session
     prequestions = PreQuestion.objects.filter(test=test_id).order_by('order')
@@ -111,7 +111,13 @@ def question(request, question_id):
     for q in actual_questions:
         questions_and_answers.append((q, Answer.objects.filter(question=q.id)))
 
-    request.session['question_passed'] = request.session.get('question_passed') + len(actual_questions)
+    cursor = connection.cursor()
+    cursor.execute(
+        '''select count(*)
+            from (select question_id
+                    from tests_userquestionresults
+                    group by question_id, session_key_id) as q''')
+    question_passed = cursor.fetchone()[0]
 
     question_instance = model.objects.get(id=question_id)
     context = {
@@ -119,7 +125,7 @@ def question(request, question_id):
         'qa': questions_and_answers,
         'prev_id': prev_id,
         'next_id': next_id,
-        'question_ration': 0,
+        'question_ration': question_passed/request.session.get('question_count'),
         'is_postquestion': True if model == PostQuestion else False
     }
     return render_to_response('question.html', context)

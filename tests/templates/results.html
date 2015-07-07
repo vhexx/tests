@@ -62,8 +62,26 @@
                 Если что не получается, смотри функцию results в views.py
 
                 -->
-                {{ keys_times }}
+                {% for k,v in keys_times.items %}
+                  {% for test,results in v.items %}
+                    <tr class="result_row">
+                      <td class="session_key">{{ k.0 }}</td>
+                      <td class="start_time">{{ k.1 }}</td>
+                      <td class="test">{{ test }}</td>
+                      <td class="questions_answers">
+                        {% for qa in results.0 %}
+                          {{ qa.0 }} : {{ qa.1 }}<br>
+                        {% endfor %}
+                      </td>
+                      <td class="pairs_choices">
+                          {% for pc in results.1 %}
+                            {{ pc.0 }} : {{ pc.1 }}<br>
+                          {% endfor %}
+                      </td>
 
+                    </tr>
+                  {% endfor %}
+                {% endfor %}
             </table>
         </div>
     </div>

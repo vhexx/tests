@@ -1,5 +1,3 @@
-import collections
-from random import shuffle
 from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render_to_response, redirect
 from django.db import connection
@@ -8,7 +6,7 @@ from tests.models import PreQuestion, Test, Answer, PostQuestion, ImagePair, Tra
     UserQuestionResults, UserImagePairResults
 from .const import prequestions_state, postquestions_state, pairs_state, training_state, initial_state
 from tests.utils.check_results import check_question_results, check_image_pair_results
-
+from tests.utils.prepare_images import prepare_images
 
 
 def index(requst):
@@ -16,11 +14,19 @@ def index(requst):
 
 
 def test(request, test_id):
+
+    if test_id is None:
+        test_id = request.session.get('test_id')
+        if test_id is not None:
+            return redirect('/test/'+str(test_id))
+        else:
+            return HttpResponseNotFound('Страница недоступна')
+
     try:
         test_instance = Test.objects.get(id=test_id)
 
     except Exception:
-        raise Http404
+        return HttpResponseNotFound('Запрашиваемый тест не найден')
 
     # put current test id in session
     request.session['start_time'] = int(time.time())
@@ -43,16 +49,6 @@ def test(request, test_id):
     return render_to_response('test.html', context)
 
 
-def prepare_images(test_id):
-    image_pairs = ImagePair.objects.filter(test=test_id)
-    image_pair_ids = []
-    for pair in image_pairs:
-        for i in range(pair.repeats):
-            image_pair_ids.append(pair.id)
-    shuffle(image_pair_ids)
-    return image_pair_ids
-
-
 def question(request, question_id):
     if check_question_results(request):
         return failed(request)
@@ -60,22 +56,22 @@ def question(request, question_id):
 
     test_id = request.session.get('test_id')
     if test_id is None:
-        raise Http404
+        return HttpResponseNotFound('Страница недоступна')
 
     if request.session.get('state') == prequestions_state:
         model = PreQuestion
     elif request.session.get('state') == postquestions_state:
         model = PostQuestion
     else:
-        raise Http404
+        return HttpResponseNotFound('Страница недоступна')
 
     questions = model.objects.filter(test=test_id).order_by('order')
 
     if len(questions) == 0:
-        raise Http404
+        return HttpResponseNotFound('Страница недоступна')
 
     if question_id not in list(map(lambda q: q.id, questions)):
-        raise Http404
+        return HttpResponseNotFound('Страница недоступна')
 
     separator_found = False
     first_found = False
@@ -152,6 +148,9 @@ def before_training(request):
 
 
 def training(request, training_image_pair_id):
+    if request.session.get('state') != training_state:
+        return before_training(request)
+
     training_image_pair_id = int(training_image_pair_id)
 
     test_id = request.session.get('test_id')
@@ -175,7 +174,7 @@ def training(request, training_image_pair_id):
                 'is_training': True
             }
             return render_to_response('image_pair.html', context)
-    raise Http404
+    return after_training(request)
 
 
 def after_training(request):
@@ -196,7 +195,7 @@ def go_to_pairs(request):
 def pairs(request):
     check_image_pair_results(request)
     if request.session.get('state') != pairs_state:
-        raise Http404
+        return after_training(request)
 
     test_id = request.session.get('test_id')
     seconds = Test.objects.get(id=test_id).seconds if not None else -1
@@ -225,15 +224,21 @@ def pairs(request):
 
 def final(request):
     check_question_results(request)
-    request.session.modified = True
     test_id = request.session.get('test_id')
     test_ending = Test.objects.get(id=test_id).ending
     context = {'test_ending': test_ending}
+
+    request.session['test_id'] = None
+    request.session['state'] = initial_state
+    request.session.modified = True
+
     return render_to_response('final.html', context)
 
 
 def failed(request):
+    request.session['test_id'] = None
     request.session.modified = True
+
     return render_to_response('final.html')
 
 

@@ -186,12 +186,9 @@ class TestAdmin(admin.ModelAdmin):
                 q2 = Question.objects.filter(test=object_id, order=ord2)
                 if q1 and q2:
                     last_ord = Question.objects.filter(test=object_id).latest('order').order
-                    q1.get().order = last_ord+1
-                    q1.get().save()
-                    q2.get().order = ord1
-                    q2.get().save()
-                    q1.get().order = ord2
-                    q1.get().save()
+                    q1.update(order=last_ord+1)
+                    q2.update(order=ord1)
+                    q1.update(order=ord2)
                     return HttpResponse('success'+str(ord1)+' '+str(ord2))
             return HttpResponse('error'+str(ord1)+' '+str(ord2))
         #for ajax filtration

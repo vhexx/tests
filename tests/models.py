@@ -92,7 +92,7 @@ class TrainingImagePair(models.Model):
 
 class UserQuestionResults(models.Model):
     session_key = models.ForeignKey(Session)
-    start_time = models.IntegerField(null=True, blank=True)
+    start_time = models.IntegerField(default=0)
     question = models.ForeignKey(Question)
     answer = models.ForeignKey(Answer, null=True, blank=True)
     input_text = models.CharField(max_length=300, null=True, blank=True)
@@ -100,7 +100,7 @@ class UserQuestionResults(models.Model):
 
 class UserImagePairResults(models.Model):
     session_key = models.ForeignKey(Session)
-    start_time = models.IntegerField(null=True, blank=True)
+    start_time = models.IntegerField(default=0)
     pair = models.ForeignKey(ImagePair)
     choice = models.BooleanField()  # 0 - left img, 1 - right img
 

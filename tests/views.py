@@ -5,6 +5,7 @@ from django.db import connection
 from tests.models import PreQuestion, Test, Answer, PostQuestion, ImagePair, TrainingImagePair, Question
 from .const import prequestions_state, postquestions_state, pairs_state, training_state, initial_state
 from tests.utils.check_results import check_question_results, check_image_pair_results
+from time import time
 
 
 def index(requst):
@@ -19,6 +20,7 @@ def test(request, test_id):
         return HttpResponseNotFound('Такого теста не существует')
 
     # put current test id in session
+    request.session['start_time'] = int(time.time())
     request.session['test_id'] = test_id
     request.session['state'] = prequestions_state
 
@@ -125,7 +127,7 @@ def question(request, question_id):
         'prev_id': prev_id,
         'next_id': next_id,
         'question_ration':
-            100*float(question_passed) / Question.objects.filter(test=test_id).count() if not 0 else 1,
+            100 * float(question_passed) / Question.objects.filter(test=test_id).count() if not 0 else 1,
         'is_postquestion': True if model == PostQuestion else False
     }
     return render_to_response('question.html', context)

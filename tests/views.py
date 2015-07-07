@@ -35,7 +35,8 @@ def test(request, test_id):
 
     context = {
         'test_title': test_instance.title,
-        'question_id': next((q.id for q in prequestions if not q.isSeparator), None)
+        'question_id': next((q.id for q in prequestions if not q.isSeparator), None),
+        'test_description' : test_instance.description
     }
     return render_to_response('test.html', context)
 
@@ -176,7 +177,10 @@ def training(request, training_image_pair_id):
 
 
 def after_training(request):
-    return render_to_response('after_training.html')
+    test_id = request.session.get('test_id')
+    seconds = Test.objects.get(id=test_id).seconds if not None else -1
+    context = {'test_seconds' : seconds}
+    return render_to_response('after_training.html', context)
 
 
 def go_to_pairs(request):

@@ -56,15 +56,15 @@ class PreQuestionAdmin(admin.ModelAdmin):
     readonly_fields = ('test',)
     change_form_template = 'question_admin.html'
 
-    def delete_model(self, request, obj):
-        rel_answers = Answer.objects.filter(question=obj.question_ptr)
-        for a in rel_answers:
-            UserQuestionResults.objects.filter(answer=a.id).delete()
-        rel_answers.delete()
-        UserQuestionResults.objects.filter(question=obj.question_ptr).delete()
-        par = Question.objects.get(id=obj.question_ptr)
-        obj.delete()
-        par.delete()
+    #def delete_model(self, request, obj):
+        #rel_answers = Answer.objects.filter(question=obj.question_ptr)
+        #for a in rel_answers:
+        #    UserQuestionResults.objects.filter(answer=a.id).delete()
+        #rel_answers.delete()
+        #UserQuestionResults.objects.filter(question=obj.question_ptr).delete()
+        #par = Question.objects.get(id=obj.question_ptr)
+        ##obj.delete()
+        #par.delete()
 
     def get_model_perms(self, request):
         return {}
@@ -79,7 +79,6 @@ class PreQuestionInline(admin.StackedInline):
     form = QuestionForm
     extra = 0
     fields = (('isSeparator', 'order', ), ('title', 'type', ), )
-    #readonly_fields = ('order',)
 
 
 class PostQuestionAdmin(admin.ModelAdmin):

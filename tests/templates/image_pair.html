@@ -14,7 +14,7 @@
       var None = -1;
       var restTime = 0;
       var intervalId;
-      $(document).on('ready', function() {
+      $(window).load(function() {
         restTime = {{ seconds }};
         if (restTime <= 0) {
           $('#timer').css({'display' : 'none'});

@@ -226,3 +226,7 @@ def failed(request):
     request.session.modified = True
     return render_to_response('final.html')
 
+
+def results(request):
+    return render_to_response('results.html')
+

@@ -282,11 +282,11 @@ def results(request):
             keys_times[key_time][uip_test][1].append(
                 '<a {0} href="{1}">{2}</a><br/><a {3} href="{4}">{5}</a><br/><br/>'.format(
                     '' if uip.choice else '"font-weight: bold;"',
-                    '/media/' + left.img,
-                    left.name,
+                    '/media/' + str(left.img),
+                    str(left.name),
                     '"font-weight: bold;"' if uip.choice else '',
-                    '/media/' + right.img,
-                    right.name
+                    '/media/' + str(right.img),
+                    str(right.name)
                 )
             )
         key_time = cursor.fetchone()

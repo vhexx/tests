@@ -1,6 +1,6 @@
 import collections
 from random import shuffle
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render_to_response, redirect
 from django.db import connection
 import time
@@ -8,6 +8,7 @@ from tests.models import PreQuestion, Test, Answer, PostQuestion, ImagePair, Tra
     UserQuestionResults, UserImagePairResults
 from .const import prequestions_state, postquestions_state, pairs_state, training_state, initial_state
 from tests.utils.check_results import check_question_results, check_image_pair_results
+
 
 
 def index(requst):
@@ -19,7 +20,7 @@ def test(request, test_id):
         test_instance = Test.objects.get(id=test_id)
 
     except Exception:
-        return HttpResponseNotFound('Такого теста не существует')
+        raise Http404
 
     # put current test id in session
     request.session['start_time'] = int(time.time())
@@ -59,22 +60,22 @@ def question(request, question_id):
 
     test_id = request.session.get('test_id')
     if test_id is None:
-        return HttpResponseNotFound('Вопрос недоступен')
+        raise Http404
 
     if request.session.get('state') == prequestions_state:
         model = PreQuestion
     elif request.session.get('state') == postquestions_state:
         model = PostQuestion
     else:
-        return HttpResponseNotFound('Вопрос недоступен')
+        raise Http404
 
     questions = model.objects.filter(test=test_id).order_by('order')
 
     if len(questions) == 0:
-        return HttpResponseNotFound('Вопросов к этому тесту не найдено')
+        raise Http404
 
     if question_id not in list(map(lambda q: q.id, questions)):
-        return HttpResponseNotFound('Вопрос недоступен')
+        raise Http404
 
     separator_found = False
     first_found = False
@@ -109,7 +110,7 @@ def question(request, question_id):
                             prev_id = questions[i].id
 
     if not first_found == 1:
-        return HttpResponseNotFound('Такого вопроса не существует')
+        raise Http404
 
     questions_and_answers = []
 
@@ -174,7 +175,7 @@ def training(request, training_image_pair_id):
                 'is_training': True
             }
             return render_to_response('image_pair.html', context)
-    return HttpResponseNotFound('Страница недоступна')
+    raise Http404
 
 
 def after_training(request):
@@ -189,13 +190,13 @@ def go_to_pairs(request):
         request.session['state'] = pairs_state
         return redirect('/pairs')
     else:
-        return HttpResponseNotFound('Страница недоступна')
+        return after_training(request)
 
 
 def pairs(request):
     check_image_pair_results(request)
     if request.session.get('state') != pairs_state:
-        return HttpResponseNotFound('Страница недоступна')
+        raise Http404
 
     test_id = request.session.get('test_id')
     seconds = Test.objects.get(id=test_id).seconds if not None else -1

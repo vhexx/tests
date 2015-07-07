@@ -34,7 +34,7 @@
                 </tr>
 
                 {% for r in time_res %}
-                  {% for test,results in r.1 %}
+                  {% for test,results in r.1.items %}
                     <tr class="result_row">
                       <td class="session_key"></td>
                       <td class="start_time">{{ r.0 }}</td>

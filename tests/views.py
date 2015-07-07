@@ -269,8 +269,8 @@ def results(request):
                 right = uip.pair.right
                 if uip_test not in keys_times[key_time]:
                     keys_times[key_time][uip_test] = ([], [])
-                keys_times[key_time][uip_test][1].append((left.img, left.name),(right.img, right.name),
-                                                         2 if uip.choice else 1)
+                keys_times[key_time][uip_test][1].append(((left.img, left.name),(right.img, right.name),
+                                                         2 if uip.choice else 1))
 
                 key_time = cursor.fetchone()
 

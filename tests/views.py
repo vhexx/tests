@@ -244,7 +244,8 @@ def results(request):
         cursor.execute('''select distinct session_key_id, start_time from tests_userquestionresults''')
         key_time = cursor.fetchone()
         while key_time is not None:
-            keys_times[key_time] = {}
+            if key_time not in keys_times:
+                keys_times[key_time] = {}
             uqrs = UserQuestionResults.objects.filter(session_key=key_time[0],
                                                       start_time=key_time[1]).order_by('id')
             for uqr in uqrs:
@@ -260,7 +261,8 @@ def results(request):
         cursor.execute('''select distinct session_key_id, start_time from tests_userimagepairresults''')
         key_time = cursor.fetchone()
         while key_time is not None:
-            keys_times[key_time] = {}
+            if key_time not in keys_times:
+                keys_times[key_time] = {}
             uips = UserImagePairResults.objects.filter(session_key=key_time[0],
                                                        start_time=key_time[1]).order_by('id')
             for uip in uips:

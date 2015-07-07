@@ -284,9 +284,9 @@ def results(request):
 
     time_res = list(keys_times.items())
     time_res.sort(key=lambda i: i[0][1], reverse=True)
-    time_res = list(map(lambda i: (time.strftime("%b %d %Y %H:%M", time.gmtime(i[0][1])), i[1]), time_res))
+    time_res = list(map(lambda i: ((i[0][0], time.strftime("%b %d %Y %H:%M", time.gmtime(i[0][1]))), i[1]), time_res))
 
-    print('debug:'+str(time_res))
+    print('debug:' + str(time_res))
     context = {
         'time_res': time_res
     }

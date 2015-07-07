@@ -125,7 +125,7 @@ def question(request, question_id):
         'prev_id': prev_id,
         'next_id': next_id,
         'question_ration':
-            float(question_passed) / Question.objects.filter(test=test_id).count() if not 0 else 1,
+            100*float(question_passed) / Question.objects.filter(test=test_id).count() if not 0 else 1,
         'is_postquestion': True if model == PostQuestion else False
     }
     return render_to_response('question.html', context)

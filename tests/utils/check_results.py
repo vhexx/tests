@@ -1,7 +1,7 @@
 from tests.models import UserQuestionResults, Question
 
 
-def check_results(request):
+def check_question_results(request):
     session_key = request.session.session_key
     questions = dict(request.GET)
     cached_questions = {}
@@ -33,3 +33,7 @@ def check_results(request):
                     a
                 )
             uqr.save()
+
+
+def check_image_pair_results(request):
+    pass

@@ -3,7 +3,7 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import render_to_response, redirect
 from tests.models import PreQuestion, Test, Answer, PostQuestion, ImagePair, TrainingImagePair, Question
 from .const import prequestions_state, postquestions_state, pairs_state, training_state, initial_state
-from tests.utils.check_results import check_results
+from tests.utils.check_results import check_question_results, check_image_pair_results
 
 
 def index(requst):
@@ -49,7 +49,7 @@ def prepare_images(test_id):
 
 
 def question(request, question_id):
-    check_results(request)
+    check_question_results(request)
     question_id = int(question_id)
 
     test_id = request.session.get('test_id')
@@ -126,7 +126,7 @@ def question(request, question_id):
 
 
 def before_training(request):
-    check_results(request)
+    check_question_results(request)
     request.session['state'] = training_state
     training_image_pairs = TrainingImagePair.objects.all().order_by('id')
     context = {
@@ -175,6 +175,7 @@ def go_to_pairs(request):
 
 
 def pairs(request):
+    check_image_pair_results(request)
     if request.session.get('state') != pairs_state:
         return HttpResponseNotFound('Страница недоступна')
 
@@ -203,6 +204,6 @@ def pairs(request):
 
 
 def final(request):
-    check_results(request)
+    check_question_results(request)
     return render_to_response('final.html')
 

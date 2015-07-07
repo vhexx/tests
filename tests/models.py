@@ -100,5 +100,5 @@ class UserQuestionResults(models.Model):
 class UserImagePairResults(models.Model):
     session_key = models.ForeignKey(Session)
     pair = models.ForeignKey(ImagePair)
-    choice = models.BooleanField()
+    choice = models.BooleanField()  # 0 - left img, 1 - right img
 

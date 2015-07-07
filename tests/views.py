@@ -247,9 +247,10 @@ def results(request):
             for uqr in uqrs:
                 uqr_question = uqr.question
                 uqr_test = uqr.question.test
+                uqr_answer = uqr.answer if not None else uqr.input_text
                 if uqr_test not in keys_times[key_time]:
                     keys_times[key_time][uqr_test] = ([], [])
-                keys_times[key_time][uqr_test][0].append((uqr_question, uqr.answer if not None else uqr.input_text))
+                keys_times[key_time][uqr_test][0].append((uqr_question, uqr_answer))
 
             key_time = cursor.fetchone()
 

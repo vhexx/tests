@@ -226,7 +226,7 @@ def final(request):
     request.session.modified = True
     test_id = request.session.get('test_id')
     test_ending = Test.objects.get(id=test_id).ending
-    context = { 'test_ending' : test_ending }
+    context = {'test_ending': test_ending}
     return render_to_response('final.html', context)
 
 
@@ -236,52 +236,52 @@ def failed(request):
 
 
 def results(request):
-    if request.user.is_superuser:
-
-        keys_times = {}
-
-        cursor = connection.cursor()
-        cursor.execute('''select distinct session_key_id, start_time from tests_userquestionresults''')
-        key_time = cursor.fetchone()
-        while key_time is not None:
-            if key_time not in keys_times:
-                keys_times[key_time] = {}
-            uqrs = UserQuestionResults.objects.filter(session_key=key_time[0],
-                                                      start_time=key_time[1]).order_by('id')
-            for uqr in uqrs:
-                uqr_question = uqr.question
-                uqr_test = uqr.question.test
-                uqr_answer = uqr.input_text if not None else uqr.answer.statement
-                if uqr_test not in keys_times[key_time]:
-                    keys_times[key_time][uqr_test] = ([], [])
-                keys_times[key_time][uqr_test][0].append((uqr_question, uqr_answer))
-
-            key_time = cursor.fetchone()
-
-        cursor.execute('''select distinct session_key_id, start_time from tests_userimagepairresults''')
-        key_time = cursor.fetchone()
-        while key_time is not None:
-            if key_time not in keys_times:
-                keys_times[key_time] = {}
-                print('debug:'+str(keys_times.get(key_time)))
-            uips = UserImagePairResults.objects.filter(session_key=key_time[0],
-                                                       start_time=key_time[1]).order_by('id')
-            for uip in uips:
-                uip_test = uip.pair.test
-                left = uip.pair.left
-                right = uip.pair.right
-                print('debug:'+str(keys_times.get(key_time)))
-                if uip_test not in keys_times[key_time]:
-                    keys_times[key_time][uip_test] = ([], [])
-                keys_times[key_time][uip_test][1].append(((left.img, left.name),(right.img, right.name),
-                                                         2 if uip.choice else 1))
-
-                key_time = cursor.fetchone()
-
-            context = {
-                'keys_times': keys_times
-            }
-
-            return render_to_response('results.html', context)
+    if not request.user.is_superuser:
         return redirect('/admin')
+
+    keys_times = {}
+
+    cursor = connection.cursor()
+    cursor.execute('''select distinct session_key_id, start_time from tests_userquestionresults''')
+    key_time = cursor.fetchone()
+    while key_time is not None:
+        if key_time not in keys_times:
+            keys_times[key_time] = {}
+        uqrs = UserQuestionResults.objects.filter(session_key=key_time[0],
+                                                  start_time=key_time[1]).order_by('id')
+        for uqr in uqrs:
+            uqr_question = uqr.question
+            uqr_test = uqr.question.test
+            uqr_answer = uqr.input_text if not None else uqr.answer.statement
+            if uqr_test not in keys_times[key_time]:
+                keys_times[key_time][uqr_test] = ([], [])
+            keys_times[key_time][uqr_test][0].append((uqr_question, uqr_answer))
+
+        key_time = cursor.fetchone()
+
+    cursor.execute('''select distinct session_key_id, start_time from tests_userimagepairresults''')
+    key_time = cursor.fetchone()
+    while key_time is not None:
+        if key_time not in keys_times:
+            keys_times[key_time] = {}
+            print('debug:' + str(keys_times.get(key_time)))
+        uips = UserImagePairResults.objects.filter(session_key=key_time[0],
+                                                   start_time=key_time[1]).order_by('id')
+        for uip in uips:
+            uip_test = uip.pair.test
+            left = uip.pair.left
+            right = uip.pair.right
+            print('debug:' + str(keys_times.get(key_time)))
+            if uip_test not in keys_times[key_time]:
+                keys_times[key_time][uip_test] = ([], [])
+            keys_times[key_time][uip_test][1].append(((left.img, left.name), (right.img, right.name),
+                                                      2 if uip.choice else 1))
+        key_time = cursor.fetchone()
+
+        context = {
+            'keys_times': keys_times
+        }
+
+        return render_to_response('results.html', context)
+
 

@@ -36,7 +36,7 @@ def test(request, test_id):
     context = {
         'test_title': test_instance.title,
         'question_id': next((q.id for q in prequestions if not q.isSeparator), None),
-        'test_description' : test_instance.description
+        'test_description': test_instance.description
     }
     return render_to_response('test.html', context)
 
@@ -179,7 +179,7 @@ def training(request, training_image_pair_id):
 def after_training(request):
     test_id = request.session.get('test_id')
     seconds = Test.objects.get(id=test_id).seconds if not None else -1
-    context = {'test_seconds' : seconds}
+    context = {'test_seconds': seconds}
     return render_to_response('after_training.html', context)
 
 
@@ -247,7 +247,7 @@ def results(request):
             for uqr in uqrs:
                 uqr_question = uqr.question
                 uqr_test = uqr.question.test
-                uqr_answer = uqr.input_text if not None else uqr.answer
+                uqr_answer = uqr.input_text if not None else uqr.answer.statement
                 if uqr_test not in keys_times[key_time]:
                     keys_times[key_time][uqr_test] = ([], [])
                 keys_times[key_time][uqr_test][0].append((uqr_question, uqr_answer))
@@ -262,16 +262,19 @@ def results(request):
                                                        start_time=key_time[1]).order_by('id')
             for uip in uips:
                 uip_test = uip.pair.test
+                left = uip.pair.left
+                right = uip.pair.right
                 if uip_test not in keys_times[key_time]:
                     keys_times[key_time][uip_test] = ([], [])
-                keys_times[key_time][uip_test][1].append((uip.pair, uip.choice))
+                keys_times[key_time][uip_test][1].append((left.img, left.name),(right.img, right.name),
+                                                         2 if uip.choice else 1)
 
-            key_time = cursor.fetchone()
+                key_time = cursor.fetchone()
 
-        context = {
-            'keys_times': keys_times
-        }
+            context = {
+                'keys_times': keys_times
+            }
 
-        return render_to_response('results.html', context)
-    return redirect('/admin')
+            return render_to_response('results.html', context)
+        return redirect('/admin')
 

@@ -153,7 +153,7 @@ class TestForm(forms.ModelForm):
     obj_id = None
 
     def __init__(self, *args, **kwargs):
-        super(self, TestForm).__init__(args, kwargs)
+        super(TestForm, self).__init__(args, kwargs)
         if self.obj_id:
             self.fields['link'].initial = '../../../../test/%s' % self.obj_id
         self.fields['link'].widget.attrs['readonly'] = True

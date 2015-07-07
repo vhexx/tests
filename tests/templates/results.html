@@ -26,8 +26,7 @@
 	    <div id="main_area" class="images">
             <table>
                 <tr class="header_row">
-                    <td class="session_key">Ключ сессии</td>
-                    <td class="start_time">Время начала прохождения теста</td>
+                    <td class="session_key">Ключ сессии и время начала прохождения теста</td>
                     <td class="test">Тест</td>
                     <td class="questions_answers">Ответы</td>
                     <td class="pairs_choices">Выборы изображений из пар</td>
@@ -36,8 +35,7 @@
                 {% for r in time_res %}
                   {% for test,results in r.1.items %}
                     <tr class="result_row">
-                      <td class="session_key">{{ r.0.0 }}</td>
-                      <td class="start_time">{{ r.0.1 }}</td>
+                      <td class="session_key">{{ r.0.0 }} <br/> {{ r.0.1 }}</td>
                       <td class="test">{{ test }}</td>
                       <td class="questions_answers">
                         {% for qa in results.0 %}

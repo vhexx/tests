@@ -25,6 +25,9 @@
   {% if inline_admin_form.needs_explicit_pk_field %}{{ inline_admin_form.pk_field.field }}{% endif %}
   {{ inline_admin_form.fk_field.field }}
 </div>{% endfor %}
+<input type="text" id="swap1" />
+<input type="text" id="swap2" />
+<input type="button" id="swap_btn" />
 </div>
 
 <script type="text/javascript">
@@ -51,6 +54,24 @@
     {
       other_fields.css({'display' : 'block'});
     }
+  });
+  $(document).on('click', '#swap_btn', function() {
+    var order1 = $('#swap1').val();
+    var order2 = $('#swap2').val();
+    if ( (parseInt(order1) == NaN) || (parseInt(order2) == NaN) ) {
+      alert('Введите числа');
+      return;
+    }
+    $.ajax({url : '',
+            type : 'GET',
+            data : {swap_order1 : order1, swap_order2 : order2 },
+            success : function(data) {
+              alert(data);
+            },
+            error : function () {
+              alert('ajax failed');
+            }
+          });
   });
 })(django.jQuery);
 </script>

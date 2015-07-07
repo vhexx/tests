@@ -177,6 +177,20 @@ class TestAdmin(admin.ModelAdmin):
         ImagePairInline.test_id = object_id
         FailureCriterionForm.test_id = object_id
         self.form.test_url = str(request.get_host())+'/test/'+str(object_id)
+        #for swapping orders
+        if (request.method == 'GET') and ('swap_order1' in request.GET) and ('swap_order2' in request.GET):
+            ord1 = int(request.GET.get('swap_order1'))
+            ord2 = int(request.GET.get('swap_order2'))
+            if ord1 and ord2:
+                q1 = Question.objects.filter(test=object_id, order=ord1)
+                q2 = Question.objects.filter(test=object_id, order=ord2)
+                if q1 and q2:
+                    last_ord = Question.objects.filter(test=object_id).latest('order').order
+                    q1.get().order = last_ord+1
+                    q2.get().order = ord1
+                    q1.get().order = ord2
+                    return HttpResponse('success')
+            return HttpResponse('error')
         #for ajax filtration
         if (request.method == 'GET') and ('fc_filter' in request.GET):
             quest_id = int(request.GET.get('fc_filter', None))

@@ -145,10 +145,10 @@ class MultiFileInput(widgets.AdminFileWidget):
 class TestForm(forms.ModelForm):
     class Meta:
         model = Test
-        fields = ['title', 'seconds', 'description', 'images', 'link']
+        fields = ['title', 'seconds', 'description', 'images',] #'link']
 
     images = forms.ImageField(required=False, widget=MultiFileInput)
-    link = forms.URLField();
+    #link = forms.URLField();
 
     #test_obj_id = None
 

@@ -8,7 +8,6 @@ from .const import prequestions_state, postquestions_state, pairs_state, trainin
 from tests.utils.check_results import check_question_results, check_image_pair_results
 
 
-
 def index(requst):
     return redirect('/admin')
 
@@ -216,7 +215,12 @@ def pairs(request):
 
 
 def final(request):
-    request.session.modified = True
     check_question_results(request)
+    request.session.modified = True
+    return render_to_response('final.html')
+
+
+def failed(request):
+    request.session.modified = True
     return render_to_response('final.html')
 

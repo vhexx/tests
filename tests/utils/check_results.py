@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from tests.const import prequestions_state
 from tests.models import UserQuestionResults, Question, UserImagePairResults, FCFunction, FailureCriterion
-from tests.views import final
+from tests.views import failed
 
 
 def check_question_results(request):
@@ -64,7 +64,7 @@ def check_question_results(request):
             pass
 
         if result == 1:
-            return final(request)
+            return failed(request)
 
 
 def check_image_pair_results(request):

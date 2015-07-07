@@ -3,7 +3,8 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import render_to_response, redirect
 from django.db import connection
 import time
-from tests.models import PreQuestion, Test, Answer, PostQuestion, ImagePair, TrainingImagePair, Question
+from tests.models import PreQuestion, Test, Answer, PostQuestion, ImagePair, TrainingImagePair, Question, \
+    UserQuestionResults, UserImagePairResults
 from .const import prequestions_state, postquestions_state, pairs_state, training_state, initial_state
 from tests.utils.check_results import check_question_results, check_image_pair_results
 
@@ -229,6 +230,43 @@ def failed(request):
 
 def results(request):
     if request.user.is_superuser:
-        return render_to_response('results.html')
+
+        keys_times = {}
+
+        cursor = connection.cursor()
+        cursor.execute('''select distinct session_key_id, start_time from tests_userquestionresults''')
+        key_time = cursor.fetchone()
+        while key_time is not None:
+            keys_times[key_time] = {}
+            uqrs = UserQuestionResults.objects.filter(session_key=key_time[0],
+                                                      start_time=key_time[0]).order_by('id')
+            for uqr in uqrs:
+                uqr_question = uqr.question
+                uqr_test = uqr.question.test
+                if uqr_test not in keys_times[key_time]:
+                    keys_times[key_time][uqr_test] = ([], [])
+                keys_times[key_time][uqr_test][0].add((uqr_question, uqr.answer))
+
+            key_time = cursor.fetchone()
+
+        cursor.execute('''select distinct session_key_id, start_time from tests_userimagepairresults''')
+        key_time = cursor.fetchone()
+        while key_time is not None:
+            keys_times[key_time] = {}
+            uips = UserImagePairResults.objects.filter(session_key=key_time[0],
+                                                       start_time=key_time[0]).order_by('id')
+            for uip in uips:
+                uip_test = uip.pair.test
+                if uip_test not in keys_times[key_time]:
+                    keys_times[key_time][uip_test] = ([], [])
+                keys_times[key_time][uip_test][1].add((uip.pair, uip.choice))
+
+            key_time = cursor.fetchone()
+
+        context = {
+            'keys_times': keys_times
+        }
+
+        return render_to_response('results.html', context)
     return redirect('/admin')
 

@@ -44,18 +44,10 @@ class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
 
-    last = None
-
     def __init__(self, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
         self.fields['type'].initial = QuestionType.objects.latest('id')
         self.fields['title'].initial = 'question'
-        if QuestionForm.last:
-            self.fields['order'].initial = QuestionForm.last+1
-            QuestionForm.last += 1
-        else:
-            self.fields['order'].initial = 1
-            QuestionForm.last = 1
 
 
 class PreQuestionAdmin(admin.ModelAdmin):
@@ -180,9 +172,6 @@ class TestAdmin(admin.ModelAdmin):
         self.inlines = [ImageInline, ImagePairInline, 
                         PreQuestionInline, PostQuestionInline,
                         FailureCriterionInline, FCFunctionInline]
-        questions = Question.objects.filter(test=object_id)
-        if questions:
-            QuestionForm.last = questions.order_by('-order')[:1].get().order
         ImagePairInline.test_id = object_id
         FailureCriterionForm.test_id = object_id
         self.form.test_url = str(request.get_host())+'/test/'+str(object_id)

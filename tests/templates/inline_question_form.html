@@ -68,7 +68,12 @@
             type : 'GET',
             data : {swap_order1 : order1, swap_order2 : order2 },
             success : function(data) {
-              alert(data);
+              if (data == 'success') {
+                $('input[name="_continue"]').click();
+              }
+              else {
+                alert('Incorrect orders!');
+              }
             },
             error : function () {
               alert('ajax failed');

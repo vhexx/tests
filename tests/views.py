@@ -115,7 +115,7 @@ def question(request, question_id):
 
     cursor = connection.cursor()
     cursor.execute('''select count(*) from (select question_id from tests_userquestionresults group by question_id, session_key_id, start_time having session_key_id=%s and start_time=%s) as q''', [request.session.session_key, int(request.session.get('start_time'))])
-    question_passed = 1
+    question_passed = cursor.fetchone()[0]
 
     question_instance = model.objects.get(id=question_id)
     context = {

@@ -44,10 +44,18 @@ class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
 
+    last = None
+
     def __init__(self, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
         self.fields['type'].initial = QuestionType.objects.latest('id')
         self.fields['title'].initial = 'question'
+        if last:
+            self.fields['order'].initial = QuestionForm.last+1
+            last += 1
+        else:
+            self.fields['order'].initial = 1
+            last = 1
 
 
 class PreQuestionAdmin(admin.ModelAdmin):
@@ -76,6 +84,7 @@ class PreQuestionInline(admin.StackedInline):
     form = QuestionForm
     extra = 0
     fields = (('isSeparator', 'order', ), ('title', 'type', ), )
+    readonly_fields = ('order',)
 
 
 class PostQuestionAdmin(admin.ModelAdmin):
@@ -190,8 +199,8 @@ class TestAdmin(admin.ModelAdmin):
                     q2.update(order=ord1)
                     q1 = Question.objects.filter(test=object_id, order=last_ord+1)
                     q1.update(order=ord2)
-                    return HttpResponse('success'+str(ord1)+' '+str(ord2))
-            return HttpResponse('error'+str(ord1)+' '+str(ord2))
+                    return HttpResponse('success')
+            return HttpResponse('error')
         #for ajax filtration
         if (request.method == 'GET') and ('fc_filter' in request.GET):
             quest_id = int(request.GET.get('fc_filter', None))

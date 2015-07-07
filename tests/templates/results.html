@@ -10,19 +10,28 @@
         font-weight: bolder;
      }
      table {
-        position: relative;
+        position: absolute;
         border: 1px rgb(194, 201, 219) solid;
      }
      td {
         border: 1px rgb(194, 201, 219) solid;
         padding: 5px;
      }
+     .inline_div {
+        border: 1px rgb(194, 201, 219) solid;
+     }
+     .ver {
+      display: inline-block;
+      width: 8em;
+     }
+     .pairs_choices {
+      width: auto;
+     }
     </style>
     <title></title>
 </head>
 <body>
-	<div id="header"></div>
-	    <div id="main_area" class="images">
+	          <div id="header"></div>
             <table>
                 <tr class="header_row">
                     <td class="session_key">Ключ сессии и время начала прохождения теста</td>
@@ -38,12 +47,12 @@
                       <td class="test">{{ test }}</td>
                       <td class="questions_answers">
                         {% for qa in results.0 %}
-                          <td class="inline_td qa">{{ qa.0.title }} : {{ qa.1 }}<br></td>
+                          <div class="inline_div hor"><b>{{ qa.0.title }}</b> : {{ qa.1 }}</div>
                         {% endfor %}
                       </td>
                       <td class="pairs_choices">
                           {% for pc in results.1 %}
-                            <td class="inline_td pc">{{ pc|safe  }}</td>
+                            <div class="inline_div ver">{{ pc|safe  }}</div>
                           {% endfor %}
                       </td>
 
@@ -51,7 +60,5 @@
                   {% endfor %}
                 {% endfor %}
             </table>
-        </div>
-    </div>
 </body>
 </html>

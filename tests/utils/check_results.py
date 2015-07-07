@@ -1,4 +1,7 @@
-from tests.models import UserQuestionResults, Question, UserImagePairResults
+from django.shortcuts import redirect
+from tests.const import prequestions_state
+from tests.models import UserQuestionResults, Question, UserImagePairResults, FCFunction, FailureCriterion
+from tests.views import final
 
 
 def check_question_results(request):
@@ -11,8 +14,8 @@ def check_question_results(request):
             if q.isdigit():
                 q_id = int(q)
                 cached_questions[q] = Question.objects.get(id=q_id)
-                UserQuestionResults.objects.filter(session_key=session_key, question=q_id,
-                                                   start_time=start_time).delete()
+                UserQuestionResults.objects.filter(session_key=session_key, start_time=start_time,
+                                                   question=q_id).delete()
             else:
                 return False
         for a in questions[q]:
@@ -37,6 +40,31 @@ def check_question_results(request):
                     a
                 )
             uqr.save()
+
+    # check criterion
+    if request.session.get('state') == prequestions_state:
+        test_id = request.session.get('test_id')
+        fc_function = FCFunction.objects.filter(test=test_id)
+        if len(fc_function) == 0:
+            return
+        fc_function = fc_function[0].func
+        fcs = FailureCriterion.objects.filter(test=test_id).order_by('id')
+        index = 0
+        for fc in fcs:
+            index += 1
+            value = 1 if len(UserQuestionResults.objects.filter(session_key=session_key, start_time=start_time,
+                                                                question=fc.question.id,
+                                                                answer=fc.answer.id)) > 0 else 0
+            fc_function = fc_function.replace('{' + str(index) + '}', str(value))
+
+        result = 0
+        try:
+            result = eval(fc_function)
+        except Exception:
+            pass
+
+        if result == 1:
+            return final(request)
 
 
 def check_image_pair_results(request):

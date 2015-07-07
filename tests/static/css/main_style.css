@@ -124,6 +124,8 @@ body {
 	border : 1px rgb(232, 235, 241) solid;
 	padding  : 1em;
 	cursor: pointer;
+	max-width : 400px;
+	max-height: 450px;
 }
 .qtitle {
 	margin-top : 1em; margin-bottom: 1em;
@@ -195,6 +197,7 @@ input {margin-top : 0.3em; margin-bottom: 0.3em;}
 	}
 	.img_div img {
 		max-width: 500px;
+		max-height: 500px;
 	}
 }
 @media all and (min-width: 1600px) {
@@ -204,6 +207,7 @@ input {margin-top : 0.3em; margin-bottom: 0.3em;}
 	}
 	.img_div img {
 		max-width: 700px;
+		max-height: 550px;
 	}
 	#main_area {
 		font-size: 15px;
@@ -216,6 +220,7 @@ input {margin-top : 0.3em; margin-bottom: 0.3em;}
 	}
 	.img_div img {
 		max-width: 800px;
+		max-height: 600px;
 	}
 	#main_area {
 		font-size: 16px;

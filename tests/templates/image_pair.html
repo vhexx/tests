@@ -27,8 +27,8 @@
           if (restTime <= 0)
           {
             clearInterval(intervalId);
-            $('.img_div img').css({'display' : 'none'});
-            $('.img_button').css({'display' : 'block'});
+            $('.img_div img').attr({'src' : '/static/img/timeout_image.jpg'});
+            $('#timer').innerHTML = 'Время вышло, но Вы ещё можете сделать выбор';
           }
         }, 1000);
       });

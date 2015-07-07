@@ -63,6 +63,20 @@
                 Если что не получается, смотри функцию results в views.py
 
                 -->
+                
+
+
+                {% for k,v in keys_times %}
+                    <tr class="result_row">
+                      <td class="session_key">{{ k.0 }}</td>
+                      <td class="start_time">{{ k.1 }}</td>
+                      <td class="test"></td>
+                      <td class="questions_answers"></td>
+                      <td class="pairs_choices"></td>
+                    </tr>
+                {% endfor %}
+
+
 
                 {% for k,v in keys_times %}
                   {% for test,results in v %}

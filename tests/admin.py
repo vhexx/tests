@@ -145,15 +145,15 @@ class MultiFileInput(widgets.AdminFileWidget):
 class TestForm(forms.ModelForm):
     class Meta:
         model = Test
-        fields = ['title', 'seconds', 'description', 'images', 'link']
+        fields = ['title', 'seconds', 'description', 'images',] #'link']
 
     images = forms.ImageField(required=False, widget=MultiFileInput)
-    link = forms.CharField()#URLField();
+    link = forms.URLField();
 
     test_obj_id = None
 
     def __init__(self, *args, **kwargs):
-        super(TestForm, self).__init__(args, kwargs)
+        super(TestForm, self).__init__(*args, **kwargs)
         if self.test_obj_id:
             self.fields['link'].initial = '../../../../test/%s' % self.test_obj_id
         self.fields['link'].widget.attrs['readonly'] = True

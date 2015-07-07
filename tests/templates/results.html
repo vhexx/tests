@@ -44,7 +44,7 @@
                       </td>
                       <td class="pairs_choices">
                           {% for pc in results.1 %}
-                            {{ pc }} {{ pc.0.1 }}}
+                            {{ pc|safe  }}
                           {% endfor %}
                       </td>
 

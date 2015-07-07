@@ -239,7 +239,7 @@ def results(request):
         while key_time is not None:
             keys_times[key_time] = {}
             uqrs = UserQuestionResults.objects.filter(session_key=key_time[0],
-                                                      start_time=key_time[0]).order_by('id')
+                                                      start_time=key_time[1]).order_by('id')
             for uqr in uqrs:
                 uqr_question = uqr.question
                 uqr_test = uqr.question.test
@@ -254,7 +254,7 @@ def results(request):
         while key_time is not None:
             keys_times[key_time] = {}
             uips = UserImagePairResults.objects.filter(session_key=key_time[0],
-                                                       start_time=key_time[0]).order_by('id')
+                                                       start_time=key_time[1]).order_by('id')
             for uip in uips:
                 uip_test = uip.pair.test
                 if uip_test not in keys_times[key_time]:

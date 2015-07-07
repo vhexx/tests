@@ -84,7 +84,7 @@ class PreQuestionInline(admin.StackedInline):
     form = QuestionForm
     extra = 0
     fields = (('isSeparator', 'order', ), ('title', 'type', ), )
-    readonly_fields = ('order',)
+    #readonly_fields = ('order',)
 
 
 class PostQuestionAdmin(admin.ModelAdmin):

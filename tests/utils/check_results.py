@@ -1,7 +1,6 @@
 from django.shortcuts import redirect
 from tests.const import prequestions_state
 from tests.models import UserQuestionResults, Question, UserImagePairResults, FCFunction, FailureCriterion
-from tests.views import failed
 
 
 def check_question_results(request):
@@ -46,7 +45,7 @@ def check_question_results(request):
         test_id = request.session.get('test_id')
         fc_function = FCFunction.objects.filter(test=test_id)
         if len(fc_function) == 0:
-            return
+            return None
         fc_function = fc_function[0].func
         fcs = FailureCriterion.objects.filter(test=test_id).order_by('id')
         index = 0
@@ -64,7 +63,7 @@ def check_question_results(request):
             pass
 
         if result == 1:
-            return failed(request)
+            return True
 
 
 def check_image_pair_results(request):

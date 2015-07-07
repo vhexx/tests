@@ -50,7 +50,8 @@ def prepare_images(test_id):
 
 
 def question(request, question_id):
-    check_question_results(request)
+    if check_question_results(request):
+        return failed(request)
     question_id = int(question_id)
 
     test_id = request.session.get('test_id')
@@ -136,7 +137,8 @@ def question(request, question_id):
 
 
 def before_training(request):
-    check_question_results(request)
+    if check_question_results(request):
+        return failed(request)
     request.session['state'] = training_state
     training_image_pairs = TrainingImagePair.objects.all().order_by('id')
     context = {

@@ -16,6 +16,7 @@
       $(document).on('ready', function() {
         restTime = {{ seconds }};
         if (restTime <= 0) {
+          $('#timer').remove();
           return;
         }
         $('#rest_time').text(restTime);

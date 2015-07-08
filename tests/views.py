@@ -191,7 +191,10 @@ def training(request, training_image_pair_id):
 
 def after_training(request):
     test_id = request.session.get('test_id')
-    seconds = Test.objects.get(id=test_id).seconds if not None else -1
+    try:
+        seconds = Test.objects.get(id=test_id).seconds
+    except Exception:
+        seconds = ''  
     context = {'test_seconds': seconds}
     return render_to_response('after_training.html', context)
 

@@ -244,14 +244,12 @@ def final(request):
 
     request.session['test_id'] = None
     request.session['state'] = initial_state
-    request.session.modified = True
 
     return render_to_response('final.html', context)
 
 
 def failed(request):
     request.session['test_id'] = None
-    request.session.modified = True
 
     return render_to_response('final.html')
 

@@ -215,8 +215,9 @@ def pairs(request):
 
     test_id = request.session.get('test_id')
     seconds = Test.objects.get(id=test_id).seconds if not None else -1
-    image_pair_ids = deserialize_image_pair_ids(request.session.get('image_pair_ids'))
-    print(str(request.session['image_pair_ids']))
+    image_pair_ids_string = str(request.session.get('image_pair_ids'))
+    print('string:'+image_pair_ids_string)
+    image_pair_ids = deserialize_image_pair_ids(image_pair_ids_string)
     print(image_pair_ids)
 
     ptr = int(request.session.get('image_pair_id_ptr')) + 1

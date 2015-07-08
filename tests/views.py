@@ -32,6 +32,10 @@ def test(request, test_id):
     request.session['start_time'] = int(time.time())
     request.session['test_id'] = test_id
     request.session['state'] = prequestions_state
+    print('expire in:'+str(request.session.get_expiry_age()))
+    #set expiration time - one month
+    request.session.set_expiry(2592000)
+    print('expire in:'+str(request.session.get_expiry_age()))
 
     # retrieve image pairs, shuffle them and put in session
     image_pair_ids = prepare_images(test_id)

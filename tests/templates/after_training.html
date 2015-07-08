@@ -10,18 +10,21 @@
 <body>
   <div id="header"></div>
 	<div id="main_area" class="questions">
+    <div class="center">
       Текст перед картинками
       {% if test_seconds == "None" %}
       <br>
       {% else %}
       Время ожидания : {{ test_seconds }} секунд<br>
       {% endif %}
-      <form action="/go_to_pairs/" method="GET">
-      	<div id="submit_line">
-            <input type="submit" value="Начать" id="next" >
-        </div>
-      </form>
     </div>
+    <form action="/go_to_pairs/" method="GET">
+      	<div id="submit_line">
+          <input type="submit" value="Начать" id="next" >
+        </div>
+    </form>
+  </div>  
+  
   <div id="footer"></div>
 </body>
 </html>

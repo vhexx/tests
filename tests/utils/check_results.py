@@ -12,7 +12,10 @@ def check_question_results(request):
         if q not in cached_questions:
             if q.isdigit():
                 q_id = int(q)
-                cached_questions[q] = Question.objects.get(id=q_id)
+                try:
+                    cached_questions[q] = Question.objects.get(id=q_id)
+                except Exception:
+                    pass
                 UserQuestionResults.objects.filter(session_key=session_key, start_time=start_time,
                                                    question=q_id).delete()
             else:

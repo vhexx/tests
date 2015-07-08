@@ -7,6 +7,7 @@ from tests.models import PreQuestion, Test, Answer, PostQuestion, ImagePair, Tra
 from .const import prequestions_state, postquestions_state, pairs_state, training_state, initial_state
 from tests.utils.check_results import check_question_results, check_image_pair_results
 from tests.utils.prepare_images import prepare_images
+from tests.utils.serialize import serialize_image_pair_ids, deserialize_image_pair_ids
 
 
 def index(requst):
@@ -39,7 +40,7 @@ def test(request, test_id):
 
     # retrieve image pairs, shuffle them and put in session
     image_pair_ids = prepare_images(test_id)
-    request.session['image_pair_ids'] = image_pair_ids
+    request.session['image_pair_ids'] = serialize_image_pair_ids(image_pair_ids)
     request.session['image_pair_id_ptr'] = -1
 
     # retrieve related questions and put them in session
@@ -214,7 +215,7 @@ def pairs(request):
 
     test_id = request.session.get('test_id')
     seconds = Test.objects.get(id=test_id).seconds if not None else -1
-    image_pair_ids = request.session.get('image_pair_ids')
+    image_pair_ids = deserialize_image_pair_ids(request.session.get('image_pair_ids'))
 
     ptr = int(request.session.get('image_pair_id_ptr')) + 1
     if ptr > len(image_pair_ids) - 1:
@@ -227,6 +228,7 @@ def pairs(request):
         image_pair = ImagePair.objects.get(id=int(image_pair_ids[ptr]))
     except Exception:
         return HttpResponseNotFound('Произошла ошибка')
+
     left = '/media/' + str(image_pair.left.img)
     right = '/media/' + str(image_pair.right.img)
 

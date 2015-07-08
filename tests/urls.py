@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     url(r'^pairs/$', views.pairs),
     url(r'^final/', views.final),
     url(r'^results/$', views.results),
-    url(r'^/.*$', views.index),
+    url(r'^$', views.index),
 )
 if settings.DEBUG:
     urlpatterns += patterns('',

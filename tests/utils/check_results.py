@@ -20,7 +20,7 @@ def check_question_results(request):
                 UserQuestionResults.objects.filter(session_key=session_key, start_time=start_time,
                                                    question=q_id).delete()
             else:
-                raise Http404('Некорректный запрос')
+                return False
 
         if cached_questions.get(q).type.type == 'Text Input':
             is_text_input = True

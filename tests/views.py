@@ -253,7 +253,7 @@ def final(request):
 
 
 def failed(request):
-     test_id = request.session.get('test_id')
+    test_id = request.session.get('test_id')
     try:
         test_ending = Test.objects.get(id=test_id).ending
     except Exception:

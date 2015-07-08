@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import redirect
 from tests.const import prequestions_state
 from tests.models import UserQuestionResults, Question, UserImagePairResults, FCFunction, FailureCriterion
@@ -15,15 +16,20 @@ def check_question_results(request):
                 try:
                     cached_questions[q] = Question.objects.get(id=q_id)
                 except Exception:
-                    pass
+                    continue
                 UserQuestionResults.objects.filter(session_key=session_key, start_time=start_time,
                                                    question=q_id).delete()
             else:
-                return False
+                raise Http404('Некорректный запрос')
+
+        if cached_questions.get(q).type.type == 'Text Input':
+            is_text_input = True
+        else:
+            is_text_input = False
         for a in questions[q]:
-            # TODO check question type and answer
+            # TODO check answer
             id = UserQuestionResults.objects.latest('id').id + 1 if UserQuestionResults.objects.count() > 0 else 1
-            if a.isdigit():
+            if not is_text_input:
                 uqr = UserQuestionResults(
                     id,
                     session_key,
@@ -39,7 +45,7 @@ def check_question_results(request):
                     start_time,
                     int(q),
                     None,
-                    a
+                    str(a)
                 )
             uqr.save()
 

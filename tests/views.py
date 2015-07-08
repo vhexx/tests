@@ -33,14 +33,14 @@ def test(request, test_id):
     request.session['start_time'] = int(time.time())
     request.session['test_id'] = test_id
     request.session['state'] = prequestions_state
-    print('expire in:'+str(request.session.get_expiry_age()))
+
     #set expiration time - one month
     request.session.set_expiry(2592000)
-    print('expire in:'+str(request.session.get_expiry_age()))
 
     # retrieve image pairs, shuffle them and put in session
     image_pair_ids = prepare_images(test_id)
     request.session['image_pair_ids'] = serialize_image_pair_ids(image_pair_ids)
+    print(str(request.session['image_pair_ids']))
     request.session['image_pair_id_ptr'] = -1
 
     # retrieve related questions and put them in session
@@ -216,6 +216,8 @@ def pairs(request):
     test_id = request.session.get('test_id')
     seconds = Test.objects.get(id=test_id).seconds if not None else -1
     image_pair_ids = deserialize_image_pair_ids(request.session.get('image_pair_ids'))
+    print(str(request.session['image_pair_ids']))
+    print(image_pair_ids)
 
     ptr = int(request.session.get('image_pair_id_ptr')) + 1
     if ptr > len(image_pair_ids) - 1:
@@ -332,7 +334,6 @@ def results(request):
     time_res.sort(key=lambda i: i[0][1], reverse=True)
     time_res = list(map(lambda i: ((i[0][0], time.strftime("%b %d %Y %H:%M", time.gmtime(i[0][1]))), i[1]), time_res))
 
-    print('debug:' + str(time_res))
     context = {
         'time_res': time_res
     }

@@ -107,6 +107,8 @@ body {
 	font-size: 1.1em;
 	font-weight: bolder;
 	text-align: center;
+	color : rgb(54, 141, 218);
+	margin-bottom: 1em;
 }
 .img_choice_area {
 	position: relative;

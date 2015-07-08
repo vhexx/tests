@@ -253,9 +253,16 @@ def final(request):
 
 
 def failed(request):
+     test_id = request.session.get('test_id')
+    try:
+        test_ending = Test.objects.get(id=test_id).ending
+    except Exception:
+        test_ending = ''
+    context = {'test_ending': test_ending}
+
     request.session['test_id'] = None
 
-    return render_to_response('final.html')
+    return render_to_response('final.html', context)
 
 
 def results(request):

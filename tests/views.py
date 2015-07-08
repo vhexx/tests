@@ -216,7 +216,7 @@ def pairs(request):
     seconds = Test.objects.get(id=test_id).seconds if not None else -1
     image_pair_ids = request.session.get('image_pair_ids')
 
-    ptr = request.session.get('image_pair_id_ptr') + 1
+    ptr = int(request.session.get('image_pair_id_ptr')) + 1
     if ptr > len(image_pair_ids) - 1:
         request.session['state'] = postquestions_state
         postquestions = PostQuestion.objects.filter(test=test_id).order_by('order')
@@ -224,7 +224,7 @@ def pairs(request):
 
     request.session['image_pair_id_ptr'] = ptr
     try:
-        image_pair = ImagePair.objects.get(id=image_pair_ids[ptr])
+        image_pair = ImagePair.objects.get(id=int(image_pair_ids[ptr]))
     except Exception:
         return HttpResponseNotFound('Произошла ошибка')
     left = '/media/' + str(image_pair.left.img)

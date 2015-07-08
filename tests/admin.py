@@ -211,6 +211,12 @@ class TestAdmin(admin.ModelAdmin):
     def response_add(self, request, obj, post_url_continue=None):
         return HttpResponseRedirect('../%s' % str(obj.id))
 
+    def delete_model(self, request, obj):
+        imgs_to_del = Image.objects.filter(test=obj.id)
+        for i in imgs_to_del:
+            os.remove(i.img.path)
+        return super(TestAdmin, self).delete_model(request, obj)
+
 
 admin.site.register(PreQuestion, PreQuestionAdmin)
 admin.site.register(PostQuestion, PostQuestionAdmin)

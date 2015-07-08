@@ -12,9 +12,8 @@
       width: auto;
      }
      table {
-        position: absolute;
         border: 1px rgb(194, 201, 219) solid;
-        width : 350%;
+        width : auto;
      }
      td {
         border: 1px rgb(194, 201, 219) solid;
@@ -47,14 +46,22 @@
                       <td class="session_key">{{ r.0.1 }} <br/><br/> {{ r.0.2 }}</td>
                       <td class="test">{{ test }}</td>
                       <td class="questions_answers">
+                       <table>
                         {% for qa in results.0 %}
-                          <div class="inline_div hor"><b>{{ qa.0.title }}</b> : {{ qa.1 }}</div>
+                          <tr>
+                            <td><b>{{ qa.0.title }}</b> : </td><td>{{ qa.1 }</td>
+                          </tr>
                         {% endfor %}
+                       </table>
                       </td>
                       <td class="pairs_choices">
-                          {% for pc in results.1 %}
-                            <div class="inline_div ver">{{ pc|safe  }}</div>
-                          {% endfor %}
+                        <table>
+                          <tr>
+                            {% for pc in results.1 %}
+                              <td>{{ pc|safe  }}</td>
+                            {% endfor %}
+                          </tr>
+                        </table>
                       </td>
 
                     </tr>

@@ -123,7 +123,11 @@ def question(request, question_id):
                    [request.session.session_key, int(request.session.get('start_time'))])
     question_passed = cursor.fetchone()[0]
 
-    question_instance = model.objects.get(id=question_id)
+    try:
+        question_instance = model.objects.get(id=question_id)
+    except Exception:
+        return HttpResponseNotFound('Произошла ошибка')
+
     context = {
         'titles': question_instance.title,
         'qa': questions_and_answers,
@@ -154,7 +158,11 @@ def training(request, training_image_pair_id):
     training_image_pair_id = int(training_image_pair_id)
 
     test_id = request.session.get('test_id')
-    seconds = Test.objects.get(id=test_id).seconds if not None else -1
+
+    try:
+        seconds = Test.objects.get(id=test_id).seconds if not None else -1
+    except Exception:
+        return HttpResponseNotFound('Произошла ошибка')
 
     training_image_pairs = TrainingImagePair.objects.all().order_by('id')
 
@@ -208,7 +216,10 @@ def pairs(request):
         return question(request, next((q.id for q in postquestions if not q.isSeparator), None))
 
     request.session['image_pair_id_ptr'] = ptr
-    image_pair = ImagePair.objects.get(id=image_pair_ids[ptr])
+    try:
+        image_pair = ImagePair.objects.get(id=image_pair_ids[ptr])
+    except Exception:
+        return HttpResponseNotFound('Произошла ошибка')
     left = '/media/' + str(image_pair.left.img)
     right = '/media/' + str(image_pair.right.img)
 
@@ -225,10 +236,9 @@ def pairs(request):
 def final(request):
     check_question_results(request)
     test_id = request.session.get('test_id')
-    test = Test.objects.get(id=test_id)
-    if test is not None:
-        test_ending = test.ending
-    else:
+    try:
+        test_ending = Test.objects.get(id=test_id).ending
+    except Exception:
         test_ending = ''
     context = {'test_ending': test_ending}
 
@@ -265,7 +275,10 @@ def results(request):
         for uqr in uqrs:
             uqr_question = uqr.question
             uqr_test = uqr.question.test
-            uqr_answer = uqr.input_text if uqr.input_text is not None else uqr.answer.statement
+            try:
+                uqr_answer = uqr.input_text if uqr.input_text is not None else uqr.answer.statement
+            except Exception:
+                uqr_answer = ''
 
             if uqr_test not in keys_times[key_time]:
                 keys_times[key_time][uqr_test] = ([], [])

@@ -1,4 +1,4 @@
-from django.http import HttpResponseServerError, Http404
+from django.http import Http404
 from django.shortcuts import render_to_response, redirect
 from django.db import connection
 import time
@@ -15,26 +15,25 @@ def index(requst):
 
 
 def test(request, test_id):
-
     if test_id is None:
         test_id = request.session.get('test_id')
         if test_id is not None:
-            return redirect('/test/'+str(test_id))
+            return redirect('/test/' + str(test_id))
         else:
-            return HttpResponseServerError()('Страница недоступна')
+            return page_unavailable('Страница недоступна')
 
     try:
         test_instance = Test.objects.get(id=test_id)
 
     except Exception:
-        return HttpResponseServerError()('Запрашиваемый тест не найден')
+        return page_unavailable('Запрашиваемый тест не найден')
 
     # put current test id in session
     request.session['start_time'] = int(time.time())
     request.session['test_id'] = test_id
     request.session['state'] = prequestions_state
 
-    #set expiration time - one month
+    # set expiration time - one month
     request.session.set_expiry(2592000)
 
     # retrieve image pairs, shuffle them and put in session
@@ -60,22 +59,22 @@ def question(request, question_id):
 
     test_id = request.session.get('test_id')
     if test_id is None:
-        return HttpResponseServerError()('Страница недоступна')
+        return page_unavailable('Страница недоступна')
 
     if request.session.get('state') == prequestions_state:
         model = PreQuestion
     elif request.session.get('state') == postquestions_state:
         model = PostQuestion
     else:
-        return HttpResponseServerError()('Страница недоступна')
+        return page_unavailable('Страница недоступна')
 
     questions = model.objects.filter(test=test_id).order_by('order')
 
     if len(questions) == 0:
-        return HttpResponseServerError()('Страница недоступна')
+        return page_unavailable('Страница недоступна')
 
     if question_id not in list(map(lambda q: q.id, questions)):
-        return HttpResponseServerError()('Страница недоступна')
+        return page_unavailable('Страница недоступна')
 
     separator_found = False
     first_found = False
@@ -109,8 +108,8 @@ def question(request, question_id):
                         elif questions[i - 1].isSeparator:
                             prev_id = questions[i].id
 
-    if not first_found == 1:
-        return HttpResponseServerError()
+    if first_found != 1:
+        return page_unavailable('Произошла ошибка')
 
     questions_and_answers = []
 
@@ -130,7 +129,7 @@ def question(request, question_id):
     try:
         question_instance = model.objects.get(id=question_id)
     except Exception:
-        return HttpResponseServerError()('Произошла ошибка')
+        return page_unavailable('Произошла ошибка')
 
     context = {
         'titles': question_instance.title,
@@ -168,9 +167,9 @@ def training(request, training_image_pair_id):
             test_instance = Test.objects.get(id=test_id)
             seconds = test_instance.seconds if test_instance.seconds is not None else ''
         except Exception:
-            return HttpResponseServerError()('Произошла ошибка')
+            return page_unavailable('Произошла ошибка')
     else:
-        return HttpResponseServerError()
+        return page_unavailable('Страница недоступна')
 
     training_image_pairs = TrainingImagePair.objects.all().order_by('id')
 
@@ -200,7 +199,7 @@ def after_training(request):
             test_instance = Test.objects.get(id=test_id)
             seconds = test_instance.seconds if test_instance.seconds is not None else ''
         except Exception:
-            return HttpResponseServerError()('Произошла ошибка')
+            return page_unavailable('Произошла ошибка')
 
     context = {
         'test_seconds': seconds
@@ -218,7 +217,7 @@ def go_to_pairs(request):
         else:
             return after_training(request)
     else:
-        return HttpResponseServerError()
+        return page_unavailable('Страница недоступна')
 
 
 def pairs(request):
@@ -232,10 +231,9 @@ def pairs(request):
             test_instance = Test.objects.get(id=test_id)
             seconds = test_instance.seconds if test_instance.seconds is not None else ''
         except Exception:
-            return HttpResponseServerError()('Произошла ошибка')
+            page_unavailable('Произошла ошибка')
     else:
-        return HttpResponseServerError()
-
+        return page_unavailable('Страница недоступна')
 
     image_pair_ids_string = str(request.session.get('image_pair_ids'))
     image_pair_ids = deserialize_image_pair_ids(image_pair_ids_string)
@@ -250,7 +248,7 @@ def pairs(request):
     try:
         image_pair = ImagePair.objects.get(id=int(image_pair_ids[ptr]))
     except Exception:
-        return HttpResponseServerError()('Произошла ошибка')
+        return page_unavailable('Произошла ошибка')
 
     left = '/media/' + str(image_pair.left.img)
     right = '/media/' + str(image_pair.right.img)
@@ -270,12 +268,12 @@ def final(request):
 
     test_id = request.session.get('test_id')
     if test_id is None:
-        return HttpResponseServerError()
+        return page_unavailable('Страница недоступна')
     try:
         test_instance = Test.objects.get(id=test_id)
         test_ending = test_instance.ending if test_instance.ending is not None else ''
     except Exception:
-        return HttpResponseServerError()
+        return page_unavailable('Произошла ошибка')
 
     request.session['test_id'] = None
     request.session['state'] = initial_state
@@ -283,26 +281,24 @@ def final(request):
     context = {
         'test_ending': test_ending
     }
-
     return render_to_response('final.html', context)
 
 
 def failed(request):
     test_id = request.session.get('test_id')
     if test_id is None:
-        return HttpResponseServerError()
+        return page_unavailable('Страница недоступна')
     try:
         test_instance = Test.objects.get(id=test_id)
         test_ending = test_instance.ending if test_instance.ending is not None else ''
     except Exception:
-        return HttpResponseServerError()
+        return page_unavailable('Произошла ошибка')
 
     request.session['test_id'] = None
 
     context = {
         'test_ending': test_ending
     }
-
     return render_to_response('final.html', context)
 
 
@@ -371,7 +367,10 @@ def results(request):
     context = {
         'time_res': time_res
     }
-
     return render_to_response('results.html', context)
+
+
+def page_unavailable(request, message):
+    return render_to_response('unavailable.html', {'message': message})
 
 

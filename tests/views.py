@@ -164,10 +164,14 @@ def training(request, training_image_pair_id):
 
     test_id = request.session.get('test_id')
 
-    try:
-        seconds = Test.objects.get(id=test_id).seconds if not None else -1
-    except Exception:
-        return HttpResponseNotFound('Произошла ошибка')
+    if test_id is not None:
+        try:
+            test_instance = Test.objects.get(id=test_id)
+            seconds = test_instance.seconds if test_instance.seconds is not None else ''
+        except Exception:
+            return HttpResponseNotFound('Произошла ошибка')
+    else:
+        raise Http404
 
     training_image_pairs = TrainingImagePair.objects.all().order_by('id')
 
@@ -192,29 +196,48 @@ def training(request, training_image_pair_id):
 
 def after_training(request):
     test_id = request.session.get('test_id')
-    try:
-        seconds = Test.objects.get(id=test_id).seconds
-    except Exception:
-        seconds = ''  
-    context = {'test_seconds': seconds}
+    if test_id is not None:
+        try:
+            test_instance = Test.objects.get(id=test_id)
+            seconds = test_instance.seconds if test_instance.seconds is not None else ''
+        except Exception:
+            return HttpResponseNotFound('Произошла ошибка')
+
+    context = {
+        'test_seconds': seconds
+    }
     return render_to_response('after_training.html', context)
 
 
 def go_to_pairs(request):
-    if request.session.get('state') == training_state:
-        request.session['state'] = pairs_state
-        return redirect('/pairs')
+    test_id = request.session.get('test_id')
+
+    if test_id is not None:
+        if request.session.get('state') == training_state:
+            request.session['state'] = pairs_state
+            return redirect('/pairs')
+        else:
+            return after_training(request)
     else:
-        return after_training(request)
+        raise Http404
 
 
 def pairs(request):
     check_image_pair_results(request)
-    if request.session.get('state') != pairs_state:
-        return after_training(request)
-
     test_id = request.session.get('test_id')
-    seconds = Test.objects.get(id=test_id).seconds if not None else -1
+
+    if test_id is not None:
+        if request.session.get('state') != pairs_state:
+            return after_training(request, test_id)
+        try:
+            test_instance = Test.objects.get(id=test_id)
+            seconds = test_instance.seconds if test_instance.seconds is not None else ''
+        except Exception:
+            return HttpResponseNotFound('Произошла ошибка')
+    else:
+        raise Http404
+
+
     image_pair_ids_string = str(request.session.get('image_pair_ids'))
     print('string:'+image_pair_ids_string)
     image_pair_ids = deserialize_image_pair_ids(image_pair_ids_string)
@@ -247,28 +270,41 @@ def pairs(request):
 
 def final(request):
     check_question_results(request)
+
     test_id = request.session.get('test_id')
+    if test_id is None:
+        raise Http404
     try:
-        test_ending = Test.objects.get(id=test_id).ending
+        test_instance = Test.objects.get(id=test_id)
+        test_ending = test_instance.ending if test_instance.ending is not None else ''
     except Exception:
-        test_ending = ''
-    context = {'test_ending': test_ending}
+        raise Http404
 
     request.session['test_id'] = None
     request.session['state'] = initial_state
+
+    context = {
+        'test_ending': test_ending
+    }
 
     return render_to_response('final.html', context)
 
 
 def failed(request):
     test_id = request.session.get('test_id')
+    if test_id is None:
+        raise Http404
     try:
-        test_ending = Test.objects.get(id=test_id).ending
+        test_instance = Test.objects.get(id=test_id)
+        test_ending = test_instance.ending if test_instance.ending is not None else ''
     except Exception:
-        test_ending = ''
-    context = {'test_ending': test_ending}
+        raise Http404
 
     request.session['test_id'] = None
+
+    context = {
+        'test_ending': test_ending
+    }
 
     return render_to_response('final.html', context)
 

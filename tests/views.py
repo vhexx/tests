@@ -40,7 +40,6 @@ def test(request, test_id):
     # retrieve image pairs, shuffle them and put in session
     image_pair_ids = prepare_images(test_id)
     request.session['image_pair_ids'] = serialize_image_pair_ids(image_pair_ids)
-    print(str(request.session['image_pair_ids']))
     request.session['image_pair_id_ptr'] = -1
 
     # retrieve related questions and put them in session
@@ -239,9 +238,7 @@ def pairs(request):
 
 
     image_pair_ids_string = str(request.session.get('image_pair_ids'))
-    print('string:'+image_pair_ids_string)
     image_pair_ids = deserialize_image_pair_ids(image_pair_ids_string)
-    print(image_pair_ids)
 
     ptr = int(request.session.get('image_pair_id_ptr')) + 1
     if ptr > len(image_pair_ids) - 1:

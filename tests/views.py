@@ -273,7 +273,7 @@ def pairs(request):
     return render_to_response('image_pair.html', context)
 
 
-def final(request, isFailed):
+def final(request, isFailed=False):
     if isFailed is None or isFailed is not True:
     	check_question_results(request)
 

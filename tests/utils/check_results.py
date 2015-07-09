@@ -5,8 +5,10 @@ from tests.models import UserQuestionResults, Question, UserImagePairResults, FC
 
 
 def check_question_results(request):
+
     session_key = request.session.session_key
     start_time = request.session.get('start_time')
+
     questions = dict(request.GET)
     cached_questions = {}
     for q in questions:
@@ -21,6 +23,7 @@ def check_question_results(request):
                                                    question=q_id).delete()
             else:
                 return False
+                #TODO raise Error
 
         if cached_questions.get(q).type.type == 'Text Input':
             is_text_input = True

@@ -120,8 +120,8 @@ def question(request, question_id):
     cursor.execute('''select count(*)
                         from (select question_id
                                 from tests_userquestionresults
-                                group by question_id, session_key_id, start_time
-                                having session_key_id=%s
+                                group by question_id, session_key, start_time
+                                having session_key=%s
                                 and start_time=%s) as q''',
                    [request.session.session_key, int(request.session.get('start_time'))])
     question_passed = cursor.fetchone()[0]
@@ -309,7 +309,7 @@ def results(request):
     keys_times = {}
 
     cursor = connection.cursor()
-    cursor.execute('''select distinct session_key_id, start_time
+    cursor.execute('''select distinct session_key, start_time
                         from tests_userquestionresults
                         order by start_time desc''')
     key_time = cursor.fetchone()
@@ -332,7 +332,7 @@ def results(request):
 
         key_time = cursor.fetchone()
 
-    cursor.execute('''select distinct session_key_id, start_time
+    cursor.execute('''select distinct session_key, start_time
                         from tests_userimagepairresults
                         order by start_time desc''')
     key_time = cursor.fetchone()

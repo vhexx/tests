@@ -53,7 +53,7 @@ def test(request, test_id):
 
 
 def question(request, question_id):
-    state request.session.get('state')
+    state = request.session.get('state')
     if state is None or state not in (prequestions_state, postquestions_state):
         return page_unavailable(request, 'Страница недоступна')
 
@@ -148,7 +148,7 @@ def question(request, question_id):
 
 
 def before_training(request):
-    state request.session.get('state')
+    state = request.session.get('state')
     if state is None or state != prequestions_state:
         return page_unavailable(request, 'Страница недоступна')
 

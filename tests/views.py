@@ -58,7 +58,7 @@ def question(request, question_id):
         return page_unavailable(request, 'Страница недоступна')
 
     if check_question_results(request):
-        return failed(request)
+        return final(request, True)
     question_id = int(question_id)
 
     test_id = request.session.get('test_id')
@@ -153,7 +153,8 @@ def before_training(request):
         return page_unavailable(request, 'Страница недоступна')
 
     if check_question_results(request):
-        return failed(request)
+        return final(request, True)
+
     request.session['state'] = training_state
     training_image_pairs = TrainingImagePair.objects.all().order_by('id')
     context = {
@@ -272,8 +273,9 @@ def pairs(request):
     return render_to_response('image_pair.html', context)
 
 
-def final(request):
-    check_question_results(request)
+def final(request, isFailed):
+    if isFailed is None or isFailed is not True:
+    	check_question_results(request)
 
     test_id = request.session.get('test_id')
     if test_id is None:
@@ -286,24 +288,6 @@ def final(request):
 
     request.session['test_id'] = None
     request.session['state'] = initial_state
-
-    context = {
-        'test_ending': test_ending
-    }
-    return render_to_response('final.html', context)
-
-
-def failed(request):
-    test_id = request.session.get('test_id')
-    if test_id is None:
-        return page_unavailable(request, 'Страница недоступна')
-    try:
-        test_instance = Test.objects.get(id=test_id)
-        test_ending = test_instance.ending if test_instance.ending is not None else ''
-    except Exception:
-        return page_unavailable(request, 'Произошла ошибка')
-
-    request.session['test_id'] = None
 
     context = {
         'test_ending': test_ending

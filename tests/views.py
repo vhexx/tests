@@ -20,13 +20,13 @@ def test(request, test_id):
         if test_id is not None:
             return redirect('/test/' + str(test_id))
         else:
-            return page_unavailable('Страница недоступна')
+            return page_unavailable(request, 'Страница недоступна')
 
     try:
         test_instance = Test.objects.get(id=test_id)
 
     except Exception:
-        return page_unavailable('Запрашиваемый тест не найден')
+        return page_unavailable(request, 'Запрашиваемый тест не найден')
 
     # put current test id in session
     request.session['start_time'] = int(time.time())
@@ -59,22 +59,22 @@ def question(request, question_id):
 
     test_id = request.session.get('test_id')
     if test_id is None:
-        return page_unavailable('Страница недоступна')
+        return page_unavailable(request, 'Страница недоступна')
 
     if request.session.get('state') == prequestions_state:
         model = PreQuestion
     elif request.session.get('state') == postquestions_state:
         model = PostQuestion
     else:
-        return page_unavailable('Страница недоступна')
+        return page_unavailable(request, 'Страница недоступна')
 
     questions = model.objects.filter(test=test_id).order_by('order')
 
     if len(questions) == 0:
-        return page_unavailable('Страница недоступна')
+        return page_unavailable(request, 'Страница недоступна')
 
     if question_id not in list(map(lambda q: q.id, questions)):
-        return page_unavailable('Страница недоступна')
+        return page_unavailable(request, 'Страница недоступна')
 
     separator_found = False
     first_found = False
@@ -109,7 +109,7 @@ def question(request, question_id):
                             prev_id = questions[i].id
 
     if first_found != 1:
-        return page_unavailable('Произошла ошибка')
+        return page_unavailable(request, 'Произошла ошибка')
 
     questions_and_answers = []
 
@@ -121,7 +121,7 @@ def question(request, question_id):
                         from (select question_id
                                 from tests_userquestionresults
                                 group by question_id, session_key, start_time
-                                having session_key=%s
+                                having session_key_id=%s
                                 and start_time=%s) as q''',
                    [request.session.session_key, int(request.session.get('start_time'))])
     question_passed = cursor.fetchone()[0]
@@ -129,7 +129,7 @@ def question(request, question_id):
     try:
         question_instance = model.objects.get(id=question_id)
     except Exception:
-        return page_unavailable('Произошла ошибка')
+        return page_unavailable(request, 'Произошла ошибка')
 
     context = {
         'titles': question_instance.title,
@@ -167,9 +167,9 @@ def training(request, training_image_pair_id):
             test_instance = Test.objects.get(id=test_id)
             seconds = test_instance.seconds if test_instance.seconds is not None else ''
         except Exception:
-            return page_unavailable('Произошла ошибка')
+            return page_unavailable(request, 'Произошла ошибка')
     else:
-        return page_unavailable('Страница недоступна')
+        return page_unavailable(request, 'Страница недоступна')
 
     training_image_pairs = TrainingImagePair.objects.all().order_by('id')
 
@@ -199,7 +199,7 @@ def after_training(request):
             test_instance = Test.objects.get(id=test_id)
             seconds = test_instance.seconds if test_instance.seconds is not None else ''
         except Exception:
-            return page_unavailable('Произошла ошибка')
+            return page_unavailable(request, 'Произошла ошибка')
 
     context = {
         'test_seconds': seconds
@@ -217,7 +217,7 @@ def go_to_pairs(request):
         else:
             return after_training(request)
     else:
-        return page_unavailable('Страница недоступна')
+        return page_unavailable(request, 'Страница недоступна')
 
 
 def pairs(request):
@@ -231,9 +231,9 @@ def pairs(request):
             test_instance = Test.objects.get(id=test_id)
             seconds = test_instance.seconds if test_instance.seconds is not None else ''
         except Exception:
-            page_unavailable('Произошла ошибка')
+            page_unavailable(request, 'Произошла ошибка')
     else:
-        return page_unavailable('Страница недоступна')
+        return page_unavailable(request, 'Страница недоступна')
 
     image_pair_ids_string = str(request.session.get('image_pair_ids'))
     image_pair_ids = deserialize_image_pair_ids(image_pair_ids_string)
@@ -248,7 +248,7 @@ def pairs(request):
     try:
         image_pair = ImagePair.objects.get(id=int(image_pair_ids[ptr]))
     except Exception:
-        return page_unavailable('Произошла ошибка')
+        return page_unavailable(request, 'Произошла ошибка')
 
     left = '/media/' + str(image_pair.left.img)
     right = '/media/' + str(image_pair.right.img)
@@ -268,12 +268,12 @@ def final(request):
 
     test_id = request.session.get('test_id')
     if test_id is None:
-        return page_unavailable('Страница недоступна')
+        return page_unavailable(request, 'Страница недоступна')
     try:
         test_instance = Test.objects.get(id=test_id)
         test_ending = test_instance.ending if test_instance.ending is not None else ''
     except Exception:
-        return page_unavailable('Произошла ошибка')
+        return page_unavailable(request, 'Произошла ошибка')
 
     request.session['test_id'] = None
     request.session['state'] = initial_state
@@ -287,12 +287,12 @@ def final(request):
 def failed(request):
     test_id = request.session.get('test_id')
     if test_id is None:
-        return page_unavailable('Страница недоступна')
+        return page_unavailable(request, 'Страница недоступна')
     try:
         test_instance = Test.objects.get(id=test_id)
         test_ending = test_instance.ending if test_instance.ending is not None else ''
     except Exception:
-        return page_unavailable('Произошла ошибка')
+        return page_unavailable(request, 'Произошла ошибка')
 
     request.session['test_id'] = None
 
@@ -309,7 +309,7 @@ def results(request):
     keys_times = {}
 
     cursor = connection.cursor()
-    cursor.execute('''select distinct session_key, start_time
+    cursor.execute('''select distinct session_key_id, start_time
                         from tests_userquestionresults
                         order by start_time desc''')
     key_time = cursor.fetchone()
@@ -332,7 +332,7 @@ def results(request):
 
         key_time = cursor.fetchone()
 
-    cursor.execute('''select distinct session_key, start_time
+    cursor.execute('''select distinct session_key_id, start_time
                         from tests_userimagepairresults
                         order by start_time desc''')
     key_time = cursor.fetchone()

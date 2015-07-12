@@ -46,7 +46,7 @@ $(document).ready(function() {
 	$('#next').closest('form').submit(function(eventObject) {
 		c = checkboxes_valid(main_form);
 		r = radios_valid(main_form);
-		if ( (!c) || (!r) ) {
+		if (!(c && r)) {
 			alert('Пожалуйста, ответьте на все вопросы анкеты.');
 			eventObject.preventDefault();
 		}

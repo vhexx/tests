@@ -42,12 +42,13 @@ function radios_valid(element)
 
 $(document).ready(function() {
 	var main_form = $('#main_form');
+	var r = true, c = true;
 	$('#next').closest('form').submit(function(eventObject) {
-		if !( checkboxes_valid(main_form) {
-			if !(radios_valid(main_form)) {
-				alert('Пожалуйста, ответьте на все вопросы анкеты.');
-			    eventObject.preventDefault();
-			}
+		c = checkboxes_valid(main_form);
+		r =radios_valid(main_form);
+		if ( (!c) && (!r) ) {
+			alert('Пожалуйста, ответьте на все вопросы анкеты.');
+			eventObject.preventDefault();
 		}
 	});
 });

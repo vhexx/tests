@@ -210,6 +210,15 @@ def after_training(request):
         except Exception:
             return page_unavailable(request, 'Произошла ошибка')
 
+    state = request.session.get('state')
+    if state is None or state != prequestions_state:
+        return page_unavailable(request, 'Страница недоступна')
+
+    if check_question_results(request):
+        return final(request, True)
+
+    request.session['state'] = training_state
+    
     context = {
         'test_seconds': seconds
     }

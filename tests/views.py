@@ -202,7 +202,6 @@ def training(request, training_image_pair_id):
 
 
 def after_training(request):
-
     test_id = request.session.get('test_id')
     if test_id is not None:
         try:
@@ -275,7 +274,7 @@ def pairs(request):
 
 def final(request, isFailed=False):
     if isFailed is None or isFailed is not True:
-    	check_question_results(request)
+        check_question_results(request)
 
     test_id = request.session.get('test_id')
     if test_id is None:
@@ -319,6 +318,7 @@ def results(request):
             except Exception:
                 uqr_answer = ''
 
+            #Todo view of session key
             if uqr_test not in keys_times[key_time]:
                 keys_times[key_time][uqr_test] = ([], [])
             keys_times[key_time][uqr_test][0].append((uqr_question, uqr_answer))

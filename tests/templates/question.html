@@ -7,6 +7,13 @@
     <script src="/static/js/main.js"></script>
     <script src="/static/js/questions.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/css/main_style.css">
+    <style>
+      .required {
+        display: none;
+        color : #ff0000;
+        font-weight: bolder;
+      }
+    </style>
     <script type="text/javascript">
       $(document).ready(function() {
         $('#progress_passed').css({'width' : '{{ question_ration }}%'});//======сюда вместо 100 проценты от общего числа вопросов
@@ -37,10 +44,9 @@
     {% endif %}
 {% endif %}
 
-
 {% for q in qa %}
 
-<div class="qtitle">{{ q.0.title }}</div>
+<div class="qtitle" id="{{ q.0.id }}_question"><div class="required">*</div>{{ q.0.title }}</div>
 
     {% if q.0.type_id == 1 %}
       {% for a in q.1 %}

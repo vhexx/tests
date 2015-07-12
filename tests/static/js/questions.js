@@ -43,9 +43,11 @@ function radios_valid(element)
 $(document).ready(function() {
 	var main_form = $('#main_form');
 	$('#next').closest('form').submit(function(eventObject) {
-		if ( !( checkboxes_valid(main_form) && radios_valid(main_form) ) ) {
-			alert('Пожалуйста, ответьте на все вопросы анкеты.');
-			eventObject.preventDefault();
+		if !( checkboxes_valid(main_form) {
+			if !(radios_valid(main_form)) {
+				alert('Пожалуйста, ответьте на все вопросы анкеты.');
+			    eventObject.preventDefault();
+			}
 		}
 	});
 });

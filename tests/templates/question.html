@@ -14,6 +14,10 @@
         font-weight: bolder;
         font-size: 1.2em;
       }
+      .answer_img {
+        max-height: 100px;
+        max-width: 150px;
+      }
     </style>
     <script type="text/javascript">
       $(document).ready(function() {
@@ -75,7 +79,7 @@
 
     {% if q.0.type_id == 5 %}
       {% for a in q.1 %}
-        <input type="radio" name="{{ q.0.id }}" value="{{ a.id }}" >{{ a.statement|default_if_none:"" }}<img src="{{ a.statement }}"></img><br/>
+        <input type="radio" name="{{ q.0.id }}" value="{{ a.id }}" >{{ a.statement|default_if_none:"" }}<img src="{{ a.statement }}" class="answer_img"></img><br/>
       {% endfor %}
     {% endif %}
 

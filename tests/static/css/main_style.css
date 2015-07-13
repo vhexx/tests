@@ -135,6 +135,7 @@ body {
 }
 .qtitle {
 	margin-top : 1em; margin-bottom: 1em;
+	line-height: 150%;
 }
 input, select, textarea {
 	margin-left: 2em;

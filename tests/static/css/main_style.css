@@ -192,9 +192,13 @@ input {margin-top : 0.3em; margin-bottom: 0.3em;}
 	width : 100%;
 	z-index : 3;
 }
+#small_screen_message {
+	display: none;
+	color : #ff0000;
+}
 @media all and (max-device-width: 960px) {
-	#main_area {
-		display: none;
+	#small_screen_message {
+		display: block;
 	}
 }
 @media all and (min-width: 1200px) {

@@ -14,7 +14,7 @@
                 <!-- {% if is_failed %}
                     текст в случе не прохождения по критериям
                 {% else %} -->
-                    {{ test_ending }}
+                    {{ test_ending|safe }}
                 <!-- {% endif %} -->
             </div>
         </div>

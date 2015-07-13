@@ -15,8 +15,8 @@
         font-size: 1.2em;
       }
       .answer_img {
-        max-height: 100px;
-        max-width: 150px;
+        max-height: 350px;
+        max-width: 350px;
       }
     </style>
     <script type="text/javascript">
@@ -79,7 +79,7 @@
 
     {% if q.0.type_id == 5 %}
       {% for a in q.1 %}
-        <input type="radio" name="{{ q.0.id }}" value="{{ a.id }}" >{{ a.statement|default_if_none:"" }}<img src="{{ a.statement }}" class="answer_img"></img><br/>
+        <input type="radio" name="{{ q.0.id }}" value="{{ a.id }}" ><br/>{{ a.statement|default_if_none:"" }}<img src="{{ a.statement }}" class="answer_img"></img>
       {% endfor %}
     {% endif %}
 

@@ -79,7 +79,8 @@
 
     {% if q.0.type_id == 5 %}
       {% for a in q.1 %}
-        <input type="radio" name="{{ q.0.id }}" value="{{ a.id }}" ><br/>{{ a.statement|default_if_none:"" }}<img src="{{ a.statement }}" class="answer_img"></img>
+        <input type="radio" name="{{ q.0.id }}" value="{{ a.id }}" ><br/>
+        <img src="{{ a.statement }}" class="answer_img"></img>
       {% endfor %}
     {% endif %}
 

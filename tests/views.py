@@ -395,7 +395,7 @@ def results(request):
                 for r in question_uqrs:
                     if r.answer:
                         answers_string = answers_string+r.answer.statement+', '
-                    else if r.input_text:
+                    elif r.input_text:
                         answers_string = answers_string+r.input_text
             qa[q.title] = answers_string
 

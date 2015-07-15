@@ -36,17 +36,13 @@
   <table>
   {% for kt,v in keytimes.items %}
     <tr>
-    <td>{{ kt }}</td>
-    <td>
+    {{ kt }} |
     {% for q,a in v.0.items %}
-      {{ q }} - {{ a }}
+      {{ a }} |
     {% endfor %}
-    </td>
-    <td>
     {% for i,c in v.1.items %}
-      {{ i }} - {{ c }}
+      {{ c }} |
     {% endfor %}
-    </td>
     </tr>
   {% endfor %}
   </table>

@@ -34,8 +34,8 @@
 </head>
 <body>
   <table>
-    <tr>
   {% for kt,v in keytimes.items %}
+    <tr>
     <td>{{ kt }}</td>
     <td>
     {% for q,a in v.0.items %}
@@ -47,8 +47,8 @@
       {{ i }} - {{ c }}
     {% endfor %}
     </td>
-  {% endfor %}
     </tr>
+  {% endfor %}
   </table>
 </body>
 </html>

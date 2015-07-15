@@ -393,7 +393,10 @@ def results(request):
             question_uqrs = uqrs.filter(question=q.id)
             if question_uqrs:
                 for r in question_uqrs:
-                    answers_string = answers_string+r.answer.statement+', '
+                    if r.answer:
+                        answers_string = answers_string+r.answer.statement+', '
+                    else if r.input_text:
+                        answers_string = answers_string+r.input_text
             qa[q.title] = answers_string
 
         uirs = UserImagePairResults.objects.filter(session_key=key_time[0], start_time=key_time[1])

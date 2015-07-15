@@ -69,17 +69,14 @@
                   {% endfor %}
                 {% endfor %}
             </table-->
-            <!--{% for r in time_res%}
-              {% for test,results in r.1.items %}
-                {{ r.0.1 }} | {{r.0.2}} |
-                {% for qa in results.0 %}
-                  {{ qa.0.title }} - {{ qa.1 }}
-                {% endfor %}
-                {% for pc in results.1 %}
-                  {{ pc|safe  }}
-                {% endfor %}
-                <br>
+            {% for kt,v in keytimes %}
+              {{ kt }}
+              {% for q,a in v.0 %}
+                {{ q }} - {{ a }}
               {% endfor %}
-            {% endfor %}-->
+              {% for i,c in v.1 %}
+                {{ i }} - {{ c }}
+              {% endfor %}
+            {% endfor %}
 </body>
 </html>

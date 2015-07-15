@@ -303,7 +303,7 @@ def final(request, isFailed=False):
     return render_to_response('final.html', context)
 
 
-def results(request):
+def results1(request):
     if not request.user.is_superuser:
         return redirect('/admin')
 
@@ -369,6 +369,47 @@ def results(request):
     context = {
         'time_res': time_res
     }
+    return render_to_response('results.html', context)
+
+
+def results(request):
+    if not request.user.is_superuser:
+        return redirect('/admin')
+
+    keys_times = {}
+
+    cursor = connection.cursor()
+    cursor.execute('''select distinct session_key, start_time
+                        from tests_userquestionresults
+                        order by start_time desc''')
+    key_time = cursor.fetchone()
+    while key_time is not None:
+        uqrs = UserQuestionResults.objects.filter(session_key=key_time[0], start_time=key_time[1])
+        test_instance = uqrs.get().question.test
+        test_questions = Question.objects.filter(test=test_instance).order_by('order')
+        qa = {}
+        for q in test_questions:
+            answers_string = ''
+            question_uqrs = uqrs.filter(question=q)
+            for r in question_uqrs:
+                answers_string = answers_string+r.answer.statement+', '
+            qa[q.title] = answers_string
+
+        uirs = UserImagePairResults.objects.filter(session_key=key_time[0], start_time=key_time[1])
+        test_imagepairs = ImagePair.objects.filter(test=test_instance)
+        ic = {}
+        for i in test_imagepairs:
+            choices_string=''
+            imagepair_uirs = uirs.filter(pair=i).order_by('id')
+            for r in imagepair_uirs:
+                choices_string = choices_string+str(r.choice)
+            ic[str(i.left.img.url)+' or '+str(i.right.img.url)] = choices_string
+
+        keys_times[str(key_time[0])+str(key_time[1])] = (qa, ic)
+
+        key_time = cursor.fetchone()
+
+    context = {'keytimes' : keys_times}
     return render_to_response('results.html', context)
 
 

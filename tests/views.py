@@ -303,7 +303,7 @@ def final(request, isFailed=False):
     return render_to_response('final.html', context)
 
 
-def results1(request):
+def results_old(request):
     if not request.user.is_superuser:
         return redirect('/admin')
 
@@ -407,10 +407,15 @@ def results(request):
             imagepair_uirs = uirs.filter(pair=i.id).order_by('id')
             if imagepair_uirs:
                 for r in imagepair_uirs:
-                    choices_string = choices_string+str(r.choice)
+                    cur_choice = ''
+                    if r.choice:
+                        cur_choice = 'right'
+                    else:
+                        cur_choice = 'left'
+                    choices_string = choices_string+cur_choice+', '
             ic[str(i.left.img.url)+' or '+str(i.right.img.url)] = choices_string
 
-        keys_times[str(key_time[0])+str(key_time[1])] = (qa, ic)
+        keys_times[str(key_time[0])+'_'+str(key_time[1])] = (qa, ic)
 
         key_time = cursor.fetchone()
 

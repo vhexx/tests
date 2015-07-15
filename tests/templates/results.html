@@ -35,14 +35,15 @@
 <body>
   <table>
   {% for id,v in qi_list.items %}
+    <tr><td>Test {{ id }}</td></tr>
     <tr>
       <td>
-      {{ id }} 
+      id | 
       {% for q in v.0 %}
-        {{ q }}
+        {{ q }} |
       {% endfor %}
       {% for i in v.1 %}
-        {{ i }}
+        {{ i }} |
       {% endfor %}
       </td>
     </tr>

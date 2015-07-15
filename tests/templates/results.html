@@ -33,12 +33,12 @@
     <title></title>
 </head>
 <body>
-  {% for kt,v in keytimes %}
+  {% for kt,v in keytimes.items %}
     {{ kt }}
-    {% for q,a in v.0 %}
+    {% for q,a in v.0.items %}
       {{ q }} - {{ a }}
     {% endfor %}
-    {% for i,c in v.1 %}
+    {% for i,c in v.1.items %}
       {{ i }} - {{ c }}
     {% endfor %}
     <br>

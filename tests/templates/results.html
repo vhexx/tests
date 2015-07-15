@@ -33,50 +33,6 @@
     <title></title>
 </head>
 <body>
-            <!--table>
-                <tr class="header_row">
-                    <td class="session_key">Ключ сессии и время начала прохождения теста</td>
-                    <td class="test">Тест</td>
-                    <td class="questions_answers">Вопрос : Ответ</td>
-                    <td class="pairs_choices">Выборы изображений из пар</td>
-                </tr>
-
-                {% for r in time_res %}
-                  {% for test,results in r.1.items %}
-                    <tr class="result_row">
-                      <td class="session_key">{{ r.0.1 }} <br/><br/> {{ r.0.2 }}</td>
-                      <td class="test">{{ test }}</td>
-                      <td class="questions_answers">
-                       <table>
-                        {% for qa in results.0 %}
-                          <tr>
-                            <td><b>{{ qa.0.title }}</b> : </td><td>{{ qa.1 }}</td>
-                          </tr>
-                        {% endfor %}
-                       </table>
-                      </td>
-                      <td class="pairs_choices">
-                        <table>
-                          <tr>
-                            {% for pc in results.1 %}
-                              <td>{{ pc|safe  }}</td>
-                            {% endfor %}
-                          </tr>
-                        </table>
-                      </td>
-
-                    </tr>
-                  {% endfor %}
-                {% endfor %}
-            </table-->
-            {% for kt,v in keytimes %}
-              {{ kt }}
-              {% for q,a in v.0 %}
-                {{ q }} - {{ a }}
-              {% endfor %}
-              {% for i,c in v.1 %}
-                {{ i }} - {{ c }}
-              {% endfor %}
-            {% endfor %}
+            yo man
 </body>
 </html>

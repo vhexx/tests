@@ -391,8 +391,9 @@ def results(request):
         for q in test_questions:
             answers_string = ''
             question_uqrs = uqrs.filter(question=q.id)
-            for r in question_uqrs:
-                answers_string = answers_string+r.answer.statement+', '
+            if question_uqrs:
+                for r in question_uqrs:
+                    answers_string = answers_string+r.answer.statement+', '
             qa[q.title] = answers_string
 
         uirs = UserImagePairResults.objects.filter(session_key=key_time[0], start_time=key_time[1])
@@ -401,8 +402,9 @@ def results(request):
         for i in test_imagepairs:
             choices_string=''
             imagepair_uirs = uirs.filter(pair=i.id).order_by('id')
-            for r in imagepair_uirs:
-                choices_string = choices_string+str(r.choice)
+            if imagepair_uirs:
+                for r in imagepair_uirs:
+                    choices_string = choices_string+str(r.choice)
             ic[str(i.left.img.url)+' or '+str(i.right.img.url)] = choices_string
 
         keys_times[str(key_time[0])+str(key_time[1])] = (qa, ic)

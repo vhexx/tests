@@ -426,7 +426,7 @@ def results(request):
                     choices_string = choices_string+cur_choice+', '
             ic.append(choices_string)
 
-        keys_times[str(key_time[0])+'_'+time.strftime('%b %d %Y %H:%M', time.gmtime(key_time[1])) ] = (test_instance.id, qa, ic)
+        keys_times[str(key_time[0])+' | '+time.strftime('%b %d %Y %H:%M', time.gmtime(key_time[1])) ] = (test_instance.id, qa, ic)
 
         key_time = cursor.fetchone()
 

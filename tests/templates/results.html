@@ -36,6 +36,7 @@
   <table>
   {% for kt,v in keytimes.items %}
     <tr>
+      <td>
     {{ kt }} |
     {% for q,a in v.0.items %}
       {{ a }} |
@@ -43,6 +44,7 @@
     {% for i,c in v.1.items %}
       {{ c }} |
     {% endfor %}
+      </td>
     </tr>
   {% endfor %}
   </table>

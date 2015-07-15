@@ -303,7 +303,7 @@ def final(request, isFailed=False):
     return render_to_response('final.html', context)
 
 
-def results1(request):
+def results(request):
     if not request.user.is_superuser:
         return redirect('/admin')
 
@@ -370,11 +370,6 @@ def results1(request):
         'time_res': time_res
     }
     return render_to_response('results.html', context)
-
-def results(request):
-    if not request.user.is_superuser:
-        return redirect('/admin')
-    return render_to_response('results.html')
 
 
 def page_unavailable(request, message):

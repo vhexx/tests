@@ -386,21 +386,21 @@ def results(request):
     while key_time is not None:
         uqrs = UserQuestionResults.objects.filter(session_key=key_time[0], start_time=key_time[1])
         test_instance = uqrs[:1].get().question.test
-        test_questions = Question.objects.filter(test=test_instance).order_by('order')
+        test_questions = Question.objects.filter(test=test_instance.id).order_by('order')
         qa = {}
         for q in test_questions:
             answers_string = ''
-            question_uqrs = uqrs.filter(question=q)
+            question_uqrs = uqrs.filter(question=q.id)
             for r in question_uqrs:
                 answers_string = answers_string+r.answer.statement+', '
             qa[q.title] = answers_string
 
         uirs = UserImagePairResults.objects.filter(session_key=key_time[0], start_time=key_time[1])
-        test_imagepairs = ImagePair.objects.filter(test=test_instance)
+        test_imagepairs = ImagePair.objects.filter(test=test_instance.id)
         ic = {}
         for i in test_imagepairs:
             choices_string=''
-            imagepair_uirs = uirs.filter(pair=i).order_by('id')
+            imagepair_uirs = uirs.filter(pair=i.id).order_by('id')
             for r in imagepair_uirs:
                 choices_string = choices_string+str(r.choice)
             ic[str(i.left.img.url)+' or '+str(i.right.img.url)] = choices_string

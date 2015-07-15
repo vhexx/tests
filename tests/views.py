@@ -415,7 +415,7 @@ def results(request):
         key_time = cursor.fetchone()
 
     context = {'keytimes' : keys_times}
-    return render_to_response('results.html')#, context)
+    return render_to_response('results.html', context)
 
 
 def page_unavailable(request, message):

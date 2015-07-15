@@ -33,7 +33,7 @@
     <title></title>
 </head>
 <body>
-            <table>
+            <!--table>
                 <tr class="header_row">
                     <td class="session_key">Ключ сессии и время начала прохождения теста</td>
                     <td class="test">Тест</td>
@@ -68,6 +68,18 @@
                     </tr>
                   {% endfor %}
                 {% endfor %}
-            </table>
+            </table-->
+            {% for r in time_res%}
+              {% for test,results in r.1.items %}
+                {{ r.0.1 }} | {{r.0.2}} |
+                {% for qa in results.0 %}
+                  {{ qa.0.title }} - {{ qa.1 }}
+                {% endfor %}
+                {% for pc in results.1 %}
+                  {{ pc|safe  }}
+                {% endfor %}
+                <br>
+              {% endfor %}
+            {% endfor %}
 </body>
 </html>

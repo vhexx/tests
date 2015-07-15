@@ -33,6 +33,15 @@
     <title></title>
 </head>
 <body>
-            yo man
+  {% for kt,v in keytimes %}
+    {{ kt }}
+    {% for q,a in v.0 %}
+      {{ q }} - {{ a }}
+    {% endfor %}
+    {% for i,c in v.1 %}
+      {{ i }} - {{ c }}
+    {% endfor %}
+    <br>
+  {% endfor %}
 </body>
 </html>

@@ -385,7 +385,7 @@ def results(request):
     key_time = cursor.fetchone()
     while key_time is not None:
         uqrs = UserQuestionResults.objects.filter(session_key=key_time[0], start_time=key_time[1])
-        test_instance = uqrs.get().question.test
+        test_instance = uqrs[:1].question.test
         test_questions = Question.objects.filter(test=test_instance).order_by('order')
         qa = {}
         for q in test_questions:

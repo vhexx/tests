@@ -394,18 +394,13 @@ def results(request):
         if test_instance.id not in qi_list:
             qlist = []
             ilist = []
-            j = 0
             for q in test_questions:
-                qlist[j] = q.title
-                j = j + 1
-            j = 0
+                qlist.append(q.title)
             for i in test_imagepairs:
-                ilist[j] = i.left.name+'-'+i.right.name
-                j = j + 1
+                ilist.append(i.left.name+'-'+i.right.name)
             qi_list[test_instance.id] = (qlist, ilist)
 
         qa = []
-        q_indx = 0
         for q in test_questions:
             answers_string = ''
             question_uqrs = uqrs.filter(question=q.id)
@@ -415,11 +410,9 @@ def results(request):
                         answers_string = answers_string+r.answer.statement+', '
                     elif r.input_text:
                         answers_string = answers_string+r.input_text
-            qa[q_indx] = answers_string
-            q_indx = q_indx + 1
+            qa.append(answers_string)
 
         ic = []
-        i_indx = 0
         for i in test_imagepairs:
             choices_string=''
             imagepair_uirs = uirs.filter(pair=i.id).order_by('id')
@@ -431,8 +424,7 @@ def results(request):
                     else:
                         cur_choice = 'left'
                     choices_string = choices_string+cur_choice+', '
-            ic[i_indx] = choices_string
-            i_indx = i_indx + 1
+            ic.append(choices_string)
 
         keys_times[str(key_time[0])+'_'+str(key_time[1])] = (test_instance.id, qa, ic)
 

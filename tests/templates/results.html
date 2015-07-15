@@ -34,24 +34,33 @@
 </head>
 <body>
   <table>
+  {% for id,v in qi_list.items %}
     <tr>
       <td>
-        {{ keytimes.items.0.0 }}
-        {{ keytimes.items.0.1 }}
+      {{ id }} 
+      {% for q in v.0 %}
+        {{ q }}
+      {% endfor %}
+      {% for i in v.1 %}
+        {{ i }}
+      {% endfor %}
       </td>
     </tr>
-  {% for kt,v in keytimes.items %}
-    <tr>
-      <td>
-    {{ kt }} |
-    {% for q,a in v.0.items %}
-      {{ a }} |
+    {% for k,r in keytimes.items %}
+        {% if r.0 == id %}
+        <tr>
+          <td>
+            {{ k }} |
+            {% for a in r.1 %}
+              {{ a }} |
+            {% endfor %}
+            {% for c in r.2 %}
+              {{ c }} |
+            {% endfor %}
+          </td>
+        </tr>
+        {% endif %}
     {% endfor %}
-    {% for i,c in v.1.items %}
-      {{ c }} |
-    {% endfor %}
-      </td>
-    </tr>
   {% endfor %}
   </table>
 </body>

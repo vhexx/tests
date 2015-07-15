@@ -377,6 +377,7 @@ def results(request):
         return redirect('/admin')
 
     keys_times = {}
+    qi_list = {}
 
     cursor = connection.cursor()
     cursor.execute('''select distinct session_key, start_time
@@ -385,9 +386,26 @@ def results(request):
     key_time = cursor.fetchone()
     while key_time is not None:
         uqrs = UserQuestionResults.objects.filter(session_key=key_time[0], start_time=key_time[1])
+        uirs = UserImagePairResults.objects.filter(session_key=key_time[0], start_time=key_time[1])
         test_instance = uqrs[:1].get().question.test
         test_questions = Question.objects.filter(test=test_instance.id).order_by('order')
-        qa = {}
+        test_imagepairs = ImagePair.objects.filter(test=test_instance.id)
+
+        if test_instance.id not in qi_list:
+            qlist = []
+            ilist = []
+            j = 0
+            for q in test_questions:
+                qlist[j] = q.title
+                j = j + 1
+            j = 0
+            for i in test_imagepairs:
+                ilist[j] = i.left.name+'-'+i.right.name
+                j = j + 1
+            qi_list[test_instance.id] = (qlist, ilist)
+
+        qa = []
+        q_indx = 0
         for q in test_questions:
             answers_string = ''
             question_uqrs = uqrs.filter(question=q.id)
@@ -397,11 +415,11 @@ def results(request):
                         answers_string = answers_string+r.answer.statement+', '
                     elif r.input_text:
                         answers_string = answers_string+r.input_text
-            qa[q.title] = answers_string
+            qa[q_indx] = answers_string
+            q_indx = q_indx + 1
 
-        uirs = UserImagePairResults.objects.filter(session_key=key_time[0], start_time=key_time[1])
-        test_imagepairs = ImagePair.objects.filter(test=test_instance.id)
-        ic = {}
+        ic = []
+        i_indx = 0
         for i in test_imagepairs:
             choices_string=''
             imagepair_uirs = uirs.filter(pair=i.id).order_by('id')
@@ -413,13 +431,15 @@ def results(request):
                     else:
                         cur_choice = 'left'
                     choices_string = choices_string+cur_choice+', '
-            ic[str(i.left.img.url)+' or '+str(i.right.img.url)] = choices_string
+            ic[i_indx] = choices_string
+            i_indx = i_indx + 1
 
-        keys_times[str(key_time[0])+'_'+str(key_time[1])] = (qa, ic)
+        keys_times[str(key_time[0])+'_'+str(key_time[1])] = (test_instance.id, qa, ic)
 
         key_time = cursor.fetchone()
 
-    context = {'keytimes' : keys_times}
+    context = {'keytimes' : keys_times,
+               'qi_list' : qi_list       }
     return render_to_response('results.html', context)
 
 

@@ -397,9 +397,9 @@ def results(request):
         uirs = UserImagePairResults.objects.filter(session_key=key_time[0], start_time=key_time[1])
         test_instance = None
         if uqrs:
-            test_instance = uqrs[:1].question.test
+            test_instance = uqrs.get().question.test
         elif uirs:
-            test_instance = uirs[:1].pair.test
+            test_instance = uirs.get().pair.test
         test_questions = Question.objects.filter(test=test_instance.id).order_by('order')
         test_imagepairs = ImagePair.objects.filter(test=test_instance.id)
 

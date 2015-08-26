@@ -397,7 +397,7 @@ def results(request):
         uirs = UserImagePairResults.objects.filter(session_key=key_time[0], start_time=key_time[1])
         test_instance = uirs[:1][0].pair.test
         test_questions = Question.objects.filter(test=test_instance.id).order_by('order')
-        test_imagepairs = ImagePair.objects.filter(test=test_instance.id)
+        test_imagepairs = ImagePair.objects.filter(test=test_instance.id).order_by('id')
 
         if test_instance.id not in qi_list:
             qlist = []

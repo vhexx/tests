@@ -389,17 +389,13 @@ def results(request):
 
     cursor = connection.cursor()
     cursor.execute('''select distinct session_key, start_time
-                        from tests_userquestionresults
+                        from tests_userimagepairresults
                         order by start_time desc''')
     key_time = cursor.fetchone()
     while key_time is not None:
         uqrs = UserQuestionResults.objects.filter(session_key=key_time[0], start_time=key_time[1])
         uirs = UserImagePairResults.objects.filter(session_key=key_time[0], start_time=key_time[1])
-        test_instance = None
-        if uqrs:
-            test_instance = uqrs[:1][0].question.test
-        elif uirs:
-            test_instance = uirs[:1][0].pair.test
+        test_instance = uirs[:1][0].pair.test
         test_questions = Question.objects.filter(test=test_instance.id).order_by('order')
         test_imagepairs = ImagePair.objects.filter(test=test_instance.id)
 

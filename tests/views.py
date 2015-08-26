@@ -80,7 +80,7 @@ def question(request, question_id):
 
     if (question_id is None) or (len(questions) == 0):
         if state == prequestions_state:
-            return redirect('/before_training/')
+            return redirect('/after_training/')
         else:
             return redirect('/final/')
         #return page_unavailable(request, 'Страница недоступна')

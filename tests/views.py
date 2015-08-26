@@ -65,9 +65,9 @@ def question(request, question_id):
     if test_id is None:
         return page_unavailable(request, 'Страница недоступна')
 
-    if request.session.get('state') == prequestions_state:
+    if state == prequestions_state:
         model = PreQuestion
-    elif request.session.get('state') == postquestions_state:
+    elif state == postquestions_state:
         model = PostQuestion
     else:
         return page_unavailable(request, 'Страница недоступна')

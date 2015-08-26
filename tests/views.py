@@ -75,7 +75,11 @@ def question(request, question_id):
     questions = model.objects.filter(test=test_id).order_by('order')
 
     if len(questions) == 0:
-        return page_unavailable(request, 'Страница недоступна')
+        if state == prequestions_state:
+            return redirect('/before_training/')
+        else:
+            return redirect('/final/')
+        #return page_unavailable(request, 'Страница недоступна')
 
     if question_id not in list(map(lambda q: q.id, questions)):
         return page_unavailable(request, 'Страница недоступна')

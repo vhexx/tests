@@ -59,7 +59,11 @@ def question(request, question_id):
 
     if check_question_results(request):
         return final(request, True)
-    question_id = int(question_id)
+    
+    try:
+        question_id = int(question_id)
+    except Exception:
+        question_id = None
 
     test_id = request.session.get('test_id')
     if test_id is None:
@@ -74,7 +78,7 @@ def question(request, question_id):
 
     questions = model.objects.filter(test=test_id).order_by('order')
 
-    if len(questions) == 0:
+    if (question_id is None) or (len(questions) == 0):
         if state == prequestions_state:
             return redirect('/before_training/')
         else:

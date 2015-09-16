@@ -109,6 +109,7 @@ class PostQuestionInline(admin.StackedInline):
 class FailureCriterionForm(forms.ModelForm):
     class Meta:
         model = FailureCriterion
+        fields = '__all__'
 
     test_id = None
 

@@ -43,6 +43,7 @@ class AnswerInline(admin.StackedInline):
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)

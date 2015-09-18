@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 import os
 from django.contrib.admin import widgets
 from django.utils.safestring import mark_safe
+from .settings import ALLOWED_HOSTS
 
 
 class ImageInlineFormset(forms.models.BaseInlineFormSet):
@@ -153,7 +154,8 @@ class TestForm(forms.ModelForm):
         fields = ['title', 'seconds', 'description', 'ending', 'images', 'link']
 
     images = forms.ImageField(required=False, widget=MultiFileInput)
-    link = forms.URLField(widget=forms.widgets.URLInput);
+    #link = forms.URLField(widget=forms.widgets.URLInput);
+    link = forms.CharField()
 
     test_url = None
 
@@ -178,7 +180,8 @@ class TestAdmin(admin.ModelAdmin):
                         FailureCriterionInline, FCFunctionInline]
         ImagePairInline.test_id = object_id
         FailureCriterionForm.test_id = object_id
-        self.form.test_url = str(request.get_host())+'/test/'+str(object_id)
+        #self.form.test_url = str(request.get_host())+'/test/'+str(object_id)
+        self.form.test_url = ALLOWED_HOSTS[0]+'/test/'+str(object_id)
         #for swapping orders
         if (request.method == 'GET') and ('swap_order1' in request.GET) and ('swap_order2' in request.GET):
             ord1 = int(request.GET.get('swap_order1'))

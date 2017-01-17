@@ -1,0 +1,87 @@
+swagger: '2.0'
+info:
+  title: IPAM  API
+  description: IP Address Management  API 
+  version: 0.1.0
+host: ipam.instance.url
+schemes:
+  - http
+  - https
+basePath: /ipam/api
+consumes:
+  - application/x-www-form-urlencoded
+produces:
+  - application/json
+paths:
+  /ippool/{poolIds}:
+    get:
+      summary: Get IP Pools
+      description: Get detailed info for specified IP Pools in the system 
+      parameters:
+        - name: poolIds
+          in: path
+          required: true
+          description: Comma separated list of target IP Pools
+          type: string
+      responses:
+        200:
+          description: List of IP Pools
+          schema:
+            type: array
+            items:
+              schema:
+                $ref: '#/definitions/IPPool'    
+        400:
+          description: Invalid input
+        500:
+          description: Internal Server Error
+        default:
+          description: Bad request
+definitions:
+  BaseObject:
+    type: object
+    properties:
+      id:
+        type: long
+      name:
+        type: string
+    required:
+      - id
+      - name
+  Tenant:
+    type: object
+    allOf:
+      - $ref: "#/definitions/BaseObject"
+      - properties:
+          tenantId:
+            type: string
+        required:
+          - tenantId 
+  IPPool:
+    type: object
+    allOf:
+      - $ref: "#/definitions/BaseObject"  
+      - properties:
+          tenant:
+            type: object
+            schema:
+              $ref: '#/definitions/Tenant'
+          type:
+            type: string
+            enum:
+              - Public
+              - Private
+              - Template
+          rrr:
+            type: object
+            schema:
+              $ref: '#/definitions/BaseObject'
+          vrf:
+            type: object
+            schema:
+              $ref: '#/definitions/BaseObject'
+          ipranges:
+            type: array
+            items:
+              schema:
+                $ref: '#/definitions/BaseObject' 

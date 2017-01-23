@@ -12,32 +12,137 @@ consumes:
   - application/x-www-form-urlencoded
 produces:
   - application/json
+  
 paths:
-  /ippool/{poolIds}:
+  /ippool/{rangeIds}:
     get:
-      summary: Get IP Pools
-      description: Get detailed info for specified IP Pools in the system 
+      summary: Get IP Ranges
+      description: Get detailed info for specified IP Ranges in the system
       parameters:
-        - name: poolIds
+        - name: rangeIds
           in: path
           required: true
-          description: Comma separated list of target IP Pools
+          description: Comma separated list of target IP Ranges
           type: string
       responses:
         200:
-          description: List of IP Pools
+          description: List of IP Ranges
           schema:
             type: array
             items:
-              schema:
-                $ref: '#/definitions/IPPool'    
+              $ref: '#/definitions/IPRange'
         400:
           description: Invalid input
         500:
           description: Internal Server Error
         default:
           description: Bad request
+#  /iprange/{rangeIds}/conflicts:
+#    get:
+#      summary: Get IP Range conflicts
+#      description: Get detailed info about IP Ranges in conflict state
+#      parameters:
+#        - name: rangeIds
+#          in: path
+#          required: true
+#          description: Comma separated list of target IP Ranges
+#          type: string
+#      responses:
+#        200:
+#          description: List of IP Range conflicts
+#          schema:
+#            type: object
+#            properties:
+#              nconflicts:
+#                type: integer
+#              conflicts:
+#                type: array
+#                items:
+#                  $ref: '#/definitions/BaseObject'
+#        400:
+#          description: Invalid input
+#        500:
+#          description: Internal Server Error
+#        default:
+#          description: Bad request
+  /iprange/{rangeIds}/children:
+    get:
+      summary: Get range children
+      description: Get all subranges or IP addresses under specified ranges
+      parameters:
+        - name: rangeIds
+          in: path
+          required: true
+          description: Comma separated list of target IP Ranges
+          type: string
+        - name: type
+          in: query
+          required: true
+          type: string
+          enum:
+            - iprange
+            - ipaddress
+      responses:
+        200:
+          description: List of IP Ranges with corresponding IP andresses or subranges
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/IPRange'
+        400:
+          description: Invalid input
+        500:
+          description: Internal Server Error
+        default:
+          description: Bad request
+  /iprange/{rangeIds}/freeaddressess:
+    get:
+      summary: Get number and percent of free addressess in IP Ranges.
+      parameters:
+        - name: rangeIds
+          in: path
+          type: array
+          items:
+            type: integer
+          required: true
+          description: Set of ip range ids.
+      
+      tags:
+        - IP address 
+      responses:
+        '200':
+          description: Success
+          schema:
+             type: array
+             items:
+              $ref: '#/definitions/ipaddressStatistic'
+        '400':
+          description: Invalid input.
+        '500':
+          description: Internal Server Error.
+          
+        
 definitions:
+  ipaddressStatistic:
+        type: object
+        properties:
+          id:
+              type: integer
+              description: IPAM System id for object.
+        additionalProperties:
+          $ref: '#/definitions/statistic'
+              
+  statistic:
+        type: object
+        properties:
+          freeNumber:
+              type: integer
+              description: Free number of IP Addresses
+          freePercent:
+              type: number
+              format: double
+              description: Free percent of IP Addresses              
+
   BaseObject:
     type: object
     properties:
@@ -56,23 +161,28 @@ definitions:
           tenantId:
             type: string
         required:
-          - tenantId 
-  IPPool:
+          - tenantId
+  IPRange:
     type: object
     allOf:
-      - $ref: "#/definitions/BaseObject"  
+      - $ref: "#/definitions/BaseObject"
       - properties:
-          tenant:
+          isSubnet:
+            type: string
+            enum:
+              - Yes
+              - No
+          status:
+            type: string
+            enum:
+              - Free
+              - Reserved
+              - Assigned
+          usedBy:
             type: object
             schema:
               $ref: '#/definitions/Tenant'
-          type:
-            type: string
-            enum:
-              - Public
-              - Private
-              - Template
-          rrr:
+          subnet:
             type: object
             schema:
               $ref: '#/definitions/BaseObject'
@@ -80,8 +190,26 @@ definitions:
             type: object
             schema:
               $ref: '#/definitions/BaseObject'
-          ipranges:
+          routingDomain:
+            type: object
+            schema:
+              $ref: '#/definitions/BaseObject'
+          defaultGateway:
+            type: object
+            schema:
+              $ref: '#/definitions/BaseObject'
+          dnsServers:
             type: array
             items:
               schema:
-                $ref: '#/definitions/BaseObject' 
+                $ref: '#/definitions/BaseObject'
+  IPRangeChildren:
+  type: object
+  allOf:
+    - $ref: "#/definitions/BaseObject"
+    - properties:
+        children:
+          type: array
+          items:
+            schema:
+              $ref: '#/definitions/BaseObject'
